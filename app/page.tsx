@@ -4,18 +4,19 @@ import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
 import HeroSection from "@/components/home/HeroSection";
 import QuickLinks from "@/components/home/QuickLinks";
 import VillageIntro from "@/components/home/VillageIntro";
+import MemorySection from "@/components/home/MemorySection";
 import NewsSection from "@/components/home/NewsSection";
 import AgendaSection from "@/components/home/AgendaSection";
 import ContributionFormClient from "@/components/home/ContributionFormClient";
 import { footerCommunityLinks, footerDiscoverLinks } from "@/data/navigation";
-import { memoryItems, places, voiceCategories } from "@/data/home";
+import { places, voiceCategories } from "@/data/home";
 export default function Home(){return <main>
 <SiteHeaderClient />
 <HeroSection />
 <QuickLinks />
 <div className="word-river" aria-hidden="true"><div>TERRE <i>✦</i> TRANSMISSION <i>✦</i> VILLAGE <i>✦</i> MÉMOIRE <i>✦</i> SOLIDARITÉ <i>✦</i> AVENIR <i>✦</i></div></div>
 <VillageIntro />
-<section id="memoire" className="memory dark-section section-pad"><div className="section-head"><div><p className="eyebrow light">Histoire & transmission</p><h2>Une histoire<br/>à <em>transmettre</em></h2></div><p>Les souvenirs racontés par nos aînés, les photographies de famille et les récits de chacun composent une histoire précieuse. Ensemble, préservons-la.</p></div><div className="memory-grid"><article className="feature-card"><div className="feature-image photo-placeholder"><span>Archive photographique<br/><small>à intégrer</small></span></div><div><span className="card-no">01</span><h3>Aux origines<br/>du village</h3><p>Un récit documenté des origines et de l’évolution d’Aït Mesbah — contenu historique à compléter et à valider collectivement.</p><a href="#contribuer">Découvrir le récit →</a></div></article><div className="memory-list">{memoryItems.map(item=><article key={item.number}><span>{item.number}</span><div><small>{item.category}</small><h3>{item.title}</h3><p>{item.description}</p></div><b>↗</b></article>)}</div></div></section>
+<MemorySection />
 <section className="places section-pad"><div className="section-head light-head"><div><p className="eyebrow">Chemins & patrimoine</p><h2>Les lieux qui racontent<br/><em>Aït Mesbah</em></h2></div><p>Fontaines, places, chemins et points de vue : chaque lieu porte une mémoire. Les noms et contenus seront ajoutés avec les habitants.</p></div><div className="place-grid">{places.map(place=><article className={`place${place.large?" large":""} photo-placeholder`} key={place.title}><span className="draft">{place.draftLabel}</span><div><small>{place.category}</small><h3>{place.title}</h3>{place.description&&<p>{place.description}</p>}</div></article>)}</div><a className="outline-btn" href="#">Explorer tous les lieux →</a></section>
 <NewsSection />
 <AgendaSection />
