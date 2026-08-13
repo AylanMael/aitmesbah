@@ -8,6 +8,7 @@ import PlacesSection from "@/components/home/PlacesSection";
 import NewsSection from "@/components/home/NewsSection";
 import AgendaSection from "@/components/home/AgendaSection";
 import VoicesSection from "@/components/home/VoicesSection";
+import DiasporaSection from "@/components/home/DiasporaSection";
 import ContributionFormClient from "@/components/home/ContributionFormClient";
 import { footerCommunityLinks, footerDiscoverLinks } from "@/data/navigation";
 export default function Home(){return <main>
@@ -21,6 +22,6 @@ export default function Home(){return <main>
 <NewsSection />
 <AgendaSection />
 <VoicesSection />
-<section id="diaspora" className="diaspora section-pad"><div className="world">⌁<span>PARIS</span><span>MONTRÉAL</span><span>ALGER</span><span>AILLEURS</span></div><div className="diaspora-copy"><p className="eyebrow light">La communauté sans frontières</p><h2>Aït Mesbah<br/><em>au-delà des montagnes</em></h2><p>De l’Algérie à la France, du Canada à d’autres horizons, la diaspora continue de faire vivre les liens, les souvenirs et les projets du village.</p><div className="diaspora-actions"><a href="#contribuer">Raconter mon parcours →</a><a href="#contribuer">Envoyer une archive →</a></div></div></section>
+<DiasporaSection />
 <section id="contribuer" className="contribution section-pad"><div><p className="eyebrow">Notre mémoire vous appartient</p><h2>Vous avez une photo,<br/>un document, <em>une histoire ?</em></h2><p>Contribuez à enrichir la mémoire collective d’Aït Mesbah. Chaque témoignage sera étudié et valorisé avec soin.</p></div><ContributionFormClient /></section>
 <footer><div className="footer-main"><div><Brand/><p>La mémoire d’un village, partagée entre les générations et au-delà des frontières.</p></div><div><h4>Découvrir</h4>{footerDiscoverLinks.map(item=><a href={item.href} key={item.label}>{item.label}</a>)}</div><div><h4>Communauté</h4>{footerCommunityLinks.map(item=><a href={item.href} key={item.label}>{item.label}</a>)}</div><div><h4>Rester en lien</h4><p>Recevez les nouvelles du village.</p><form className="newsletter"><input type="email" placeholder="Votre adresse e-mail"/><button>→</button></form></div></div><div className="footer-bottom"><span>© 2026 Aït Mesbah — Projet communautaire</span><span>Mentions légales · Confidentialité · Crédits</span><span>FR · KAB · ع</span></div></footer></main>}
