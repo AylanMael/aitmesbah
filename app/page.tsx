@@ -5,11 +5,12 @@ import HeroSection from "@/components/home/HeroSection";
 import QuickLinks from "@/components/home/QuickLinks";
 import VillageIntro from "@/components/home/VillageIntro";
 import MemorySection from "@/components/home/MemorySection";
+import PlacesSection from "@/components/home/PlacesSection";
 import NewsSection from "@/components/home/NewsSection";
 import AgendaSection from "@/components/home/AgendaSection";
 import ContributionFormClient from "@/components/home/ContributionFormClient";
 import { footerCommunityLinks, footerDiscoverLinks } from "@/data/navigation";
-import { places, voiceCategories } from "@/data/home";
+import { voiceCategories } from "@/data/home";
 export default function Home(){return <main>
 <SiteHeaderClient />
 <HeroSection />
@@ -17,7 +18,7 @@ export default function Home(){return <main>
 <div className="word-river" aria-hidden="true"><div>TERRE <i>✦</i> TRANSMISSION <i>✦</i> VILLAGE <i>✦</i> MÉMOIRE <i>✦</i> SOLIDARITÉ <i>✦</i> AVENIR <i>✦</i></div></div>
 <VillageIntro />
 <MemorySection />
-<section className="places section-pad"><div className="section-head light-head"><div><p className="eyebrow">Chemins & patrimoine</p><h2>Les lieux qui racontent<br/><em>Aït Mesbah</em></h2></div><p>Fontaines, places, chemins et points de vue : chaque lieu porte une mémoire. Les noms et contenus seront ajoutés avec les habitants.</p></div><div className="place-grid">{places.map(place=><article className={`place${place.large?" large":""} photo-placeholder`} key={place.title}><span className="draft">{place.draftLabel}</span><div><small>{place.category}</small><h3>{place.title}</h3>{place.description&&<p>{place.description}</p>}</div></article>)}</div><a className="outline-btn" href="#">Explorer tous les lieux →</a></section>
+<PlacesSection />
 <NewsSection />
 <AgendaSection />
 <section className="voices section-pad"><p className="eyebrow">Paroles d’Aït Mesbah</p><blockquote>« Notre village vit dans les souvenirs de ceux qui sont partis, dans les gestes de ceux qui y restent, et dans les rêves de ceux qui reviendront. »</blockquote><p className="quote-note">Texte éditorial provisoire — à remplacer par un témoignage authentique</p><div className="voice-types">{voiceCategories.map((category,index)=><Fragment key={category}><span>{category}</span>{index<voiceCategories.length-1&&<i/>}</Fragment>)}</div></section>
