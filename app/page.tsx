@@ -1,15 +1,16 @@
 "use client";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import Brand from "@/components/layout/Brand";
+import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
 import HeroSection from "@/components/home/HeroSection";
 import QuickLinks from "@/components/home/QuickLinks";
 import VillageIntro from "@/components/home/VillageIntro";
 import NewsSection from "@/components/home/NewsSection";
 import AgendaSection from "@/components/home/AgendaSection";
-import { footerCommunityLinks, footerDiscoverLinks, mainNavigation } from "@/data/navigation";
+import { footerCommunityLinks, footerDiscoverLinks } from "@/data/navigation";
 import { contributionTypes, memoryItems, places, voiceCategories } from "@/data/home";
-export default function Home(){const[menu,setMenu]=useState(false),[scrolled,setScrolled]=useState(false),[search,setSearch]=useState(false);useEffect(()=>{const f=()=>setScrolled(scrollY>40);f();addEventListener("scroll",f);return()=>removeEventListener("scroll",f)},[]);return <main>
-<header className={`site-header ${scrolled||menu?"solid":""}`}><Brand/><nav className={menu?"open":""} onClick={()=>setMenu(false)}>{mainNavigation.map(item=><a href={item.href} key={item.href}>{item.label}</a>)}</nav><div className="header-actions"><button className="lang">FR⌄</button><button className="icon-btn" onClick={()=>setSearch(!search)} aria-label="Rechercher">⌕</button><a className="contribute small" href="#contribuer">Contribuer ↗</a><button className="menu-btn" onClick={()=>setMenu(!menu)} aria-label="Menu">{menu?"×":"☰"}</button></div>{search&&<div className="searchbar"><label>Que cherchez-vous ?</label><input autoFocus placeholder="Une archive, un événement, un lieu…"/><button onClick={()=>setSearch(false)}>Fermer</button></div>}</header>
+export default function Home(){return <main>
+<SiteHeaderClient />
 <HeroSection />
 <QuickLinks />
 <div className="word-river" aria-hidden="true"><div>TERRE <i>✦</i> TRANSMISSION <i>✦</i> VILLAGE <i>✦</i> MÉMOIRE <i>✦</i> SOLIDARITÉ <i>✦</i> AVENIR <i>✦</i></div></div>
