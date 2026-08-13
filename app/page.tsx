@@ -1,4 +1,3 @@
-"use client";
 import { Fragment } from "react";
 import Brand from "@/components/layout/Brand";
 import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
