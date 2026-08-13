@@ -9,7 +9,7 @@ import NewsSection from "@/components/home/NewsSection";
 import AgendaSection from "@/components/home/AgendaSection";
 import VoicesSection from "@/components/home/VoicesSection";
 import DiasporaSection from "@/components/home/DiasporaSection";
-import ContributionFormClient from "@/components/home/ContributionFormClient";
+import ContributionSection from "@/components/home/ContributionSection";
 import { footerCommunityLinks, footerDiscoverLinks } from "@/data/navigation";
 export default function Home(){return <main>
 <SiteHeaderClient />
@@ -23,5 +23,5 @@ export default function Home(){return <main>
 <AgendaSection />
 <VoicesSection />
 <DiasporaSection />
-<section id="contribuer" className="contribution section-pad"><div><p className="eyebrow">Notre mémoire vous appartient</p><h2>Vous avez une photo,<br/>un document, <em>une histoire ?</em></h2><p>Contribuez à enrichir la mémoire collective d’Aït Mesbah. Chaque témoignage sera étudié et valorisé avec soin.</p></div><ContributionFormClient /></section>
+<ContributionSection />
 <footer><div className="footer-main"><div><Brand/><p>La mémoire d’un village, partagée entre les générations et au-delà des frontières.</p></div><div><h4>Découvrir</h4>{footerDiscoverLinks.map(item=><a href={item.href} key={item.label}>{item.label}</a>)}</div><div><h4>Communauté</h4>{footerCommunityLinks.map(item=><a href={item.href} key={item.label}>{item.label}</a>)}</div><div><h4>Rester en lien</h4><p>Recevez les nouvelles du village.</p><form className="newsletter"><input type="email" placeholder="Votre adresse e-mail"/><button>→</button></form></div></div><div className="footer-bottom"><span>© 2026 Aït Mesbah — Projet communautaire</span><span>Mentions légales · Confidentialité · Crédits</span><span>FR · KAB · ع</span></div></footer></main>}
