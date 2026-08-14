@@ -7,7 +7,6 @@ import { mainNavigation } from "@/data/navigation";
 export default function SiteHeaderClient() {
   const [menu, setMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [search, setSearch] = useState(false);
 
   useEffect(() => {
     const f = () => setScrolled(scrollY > 40);
@@ -27,14 +26,7 @@ export default function SiteHeaderClient() {
         ))}
       </nav>
       <div className="header-actions">
-        <button className="lang">FR⌄</button>
-        <button
-          className="icon-btn"
-          onClick={() => setSearch(!search)}
-          aria-label="Rechercher"
-        >
-          ⌕
-        </button>
+        <span className="lang">FR</span>
         <a className="contribute small" href="#contribuer">
           Contribuer ↗
         </a>
@@ -46,16 +38,6 @@ export default function SiteHeaderClient() {
           {menu ? "×" : "☰"}
         </button>
       </div>
-      {search && (
-        <div className="searchbar">
-          <label>Que cherchez-vous ?</label>
-          <input
-            autoFocus
-            placeholder="Une archive, un événement, un lieu…"
-          />
-          <button onClick={() => setSearch(false)}>Fermer</button>
-        </div>
-      )}
     </header>
   );
 }
