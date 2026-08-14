@@ -1,4 +1,4 @@
-import ContributionFormClient from "@/components/home/ContributionFormClient";
+import { contributionTypes } from "@/data/home";
 
 export default function ContributionSection() {
   return (
@@ -15,7 +15,15 @@ export default function ContributionSection() {
           témoignage sera étudié et valorisé avec soin.
         </p>
       </div>
-      <ContributionFormClient />
+      <div className="contribution-info">
+        <p>Vous pourrez bientôt contribuer avec :</p>
+        <ul>
+          {contributionTypes.map((type) => (
+            <li key={type.label}>{type.label}</li>
+          ))}
+        </ul>
+        <p>Le formulaire de contribution sera bientôt disponible.</p>
+      </div>
     </section>
   );
 }
