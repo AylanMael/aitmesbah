@@ -1,5 +1,10 @@
 import type { NavigationItem } from "@/types/content";
 
+type FooterCommunityItem = {
+  label: string;
+  href: string | null;
+};
+
 export const mainNavigation: NavigationItem[] = [
   { label: "Découvrir", href: "#decouvrir" },
   { label: "Histoire & mémoire", href: "#memoire" },
@@ -15,9 +20,9 @@ export const footerDiscoverLinks: NavigationItem[] = [
   { label: "Agenda", href: "#agenda" },
 ];
 
-export const footerCommunityLinks: NavigationItem[] = [
+export const footerCommunityLinks: FooterCommunityItem[] = [
   { label: "Diaspora", href: "#diaspora" },
   { label: "Contribuer", href: "#contribuer" },
-  { label: "Associations", href: "#" },
-  { label: "Galerie & archives", href: "#" },
+  { label: "Associations — bientôt", href: null },
+  { label: "Galerie & archives — bientôt", href: null },
 ];

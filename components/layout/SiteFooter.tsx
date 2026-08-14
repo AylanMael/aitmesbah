@@ -18,18 +18,24 @@ export default function SiteFooter() {
         <div>
           <h4>Découvrir</h4>
           {footerDiscoverLinks.map((item) => (
-            <a href={item.href} key={item.label}>
+            <a className="footer-link" href={item.href} key={item.label}>
               {item.label}
             </a>
           ))}
         </div>
         <div>
           <h4>Communauté</h4>
-          {footerCommunityLinks.map((item) => (
-            <a href={item.href} key={item.label}>
-              {item.label}
-            </a>
-          ))}
+          {footerCommunityLinks.map((item) =>
+            item.href ? (
+              <a className="footer-link" href={item.href} key={item.label}>
+                {item.label}
+              </a>
+            ) : (
+              <span className="footer-link unavailable" key={item.label}>
+                {item.label}
+              </span>
+            ),
+          )}
         </div>
         <div>
           <h4>Rester en lien</h4>
