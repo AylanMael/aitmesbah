@@ -39,11 +39,7 @@ export default function SiteFooter() {
         </div>
         <div>
           <h4>Rester en lien</h4>
-          <p>Recevez les nouvelles du village.</p>
-          <form className="newsletter">
-            <input type="email" placeholder="Votre adresse e-mail" />
-            <button>→</button>
-          </form>
+          <p>La lettre du village sera bientôt disponible.</p>
         </div>
       </div>
       <div className="footer-bottom">
