@@ -14,9 +14,7 @@ export default function AgendaSection() {
           Fêtes, rencontres sportives, actions associatives et temps forts de
           la diaspora.
         </p>
-        <a className="primary pale" href="#">
-          Voir tout l’agenda →
-        </a>
+        <span className="primary pale">Agenda à venir</span>
       </div>
       <div className="event-list">
         {events.map((e) => (

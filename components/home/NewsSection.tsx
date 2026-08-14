@@ -10,9 +10,7 @@ export default function NewsSection() {
             La vie du <em>village</em>
           </h2>
         </div>
-        <a className="text-link" href="#">
-          Toutes les actualités →
-        </a>
+        <span className="text-link">Actualités à venir</span>
       </div>
       <div className="news-grid">
         {news.map((n, i) => (
@@ -27,7 +25,7 @@ export default function NewsSection() {
               </p>
               <h3>{n.title}</h3>
               <p>{n.text}</p>
-              <a href="#">Lire la suite →</a>
+              <span>Publication à venir</span>
             </div>
           </article>
         ))}

@@ -32,9 +32,7 @@ export default function PlacesSection() {
           </article>
         ))}
       </div>
-      <a className="outline-btn" href="#">
-        Explorer tous les lieux →
-      </a>
+      <span className="outline-btn">Lieux à découvrir prochainement</span>
     </section>
   );
 }
