@@ -1,4 +1,5 @@
 import Brand from "@/components/layout/Brand";
+import Link from "next/link";
 import {
   footerCommunityLinks,
   footerDiscoverLinks,
@@ -44,7 +45,13 @@ export default function SiteFooter() {
       </div>
       <div className="footer-bottom">
         <span>© 2026 Aït Mesbah — Projet communautaire</span>
-        <span>Mentions légales · Confidentialité · Crédits</span>
+        <nav className="footer-legal" aria-label="Pages légales">
+          <Link href="/mentions-legales">Mentions légales</Link>
+          <span aria-hidden="true">·</span>
+          <Link href="/confidentialite">Confidentialité</Link>
+          <span aria-hidden="true">·</span>
+          <Link href="/credits">Crédits</Link>
+        </nav>
         <span>FR · KAB · ع</span>
       </div>
     </footer>
