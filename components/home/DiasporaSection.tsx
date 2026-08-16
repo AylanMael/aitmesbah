@@ -1,7 +1,7 @@
 export default function DiasporaSection() {
   return (
     <section id="diaspora" className="diaspora section-pad">
-      <div className="world">
+      <div className="world" aria-hidden="true">
         ⌁<span>VILLAGE</span>
         <span>KABYLIE</span>
         <span>DIASPORA</span>

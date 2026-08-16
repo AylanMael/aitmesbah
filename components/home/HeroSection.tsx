@@ -14,7 +14,9 @@ export default function HeroSection() {
         <span>Tizi Ouzou · Algérie</span>
       </div>
       <div className="hero-content">
-        <p className="eyebrow light">ⵣ &nbsp; Un village de Haute Kabylie</p>
+        <p className="eyebrow light">
+          <span aria-hidden="true">ⵣ</span> &nbsp; Un village de Haute Kabylie
+        </p>
         <h1>
           <span>Aït Mesbah,</span>
           <br />
@@ -27,14 +29,14 @@ export default function HeroSection() {
         </p>
         <div className="hero-buttons">
           <a href="#decouvrir" className="primary">
-            Découvrir le village <b>↗</b>
+            Découvrir le village <b aria-hidden="true">↗</b>
           </a>
           <a href="#memoire" className="ghost">
             Explorer notre mémoire
           </a>
         </div>
       </div>
-      <div className="hero-seal">
+      <div className="hero-seal" aria-hidden="true">
         <span>ⵣ</span>
         <svg viewBox="0 0 100 100" aria-hidden="true">
           <defs>
@@ -49,7 +51,7 @@ export default function HeroSection() {
         </svg>
       </div>
       <div className="hero-note">
-        <span>▧</span>
+        <span aria-hidden="true">▧</span>
         <div>
           <b>Votre image, notre paysage</b>
           <small>Vue authentique d’Aït Mesbah à intégrer</small>

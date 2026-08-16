@@ -59,7 +59,7 @@ export default function SiteHeaderClient() {
       <div className="header-actions">
         <span className="lang">FR</span>
         <a className="contribute small" href="#contribuer">
-          Contribuer ↗
+          Contribuer <span aria-hidden="true">↗</span>
         </a>
         <button
           ref={menuButtonRef}

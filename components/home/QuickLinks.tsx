@@ -7,7 +7,7 @@ export default function QuickLinks() {
         <a href={item.href} key={item.number}>
           <span>{item.number}</span>
           <b>{item.label}</b>
-          <i>↗</i>
+          <i aria-hidden="true">↗</i>
         </a>
       ))}
     </aside>
