@@ -1,3 +1,5 @@
+import MotionControlClient from "./MotionControlClient";
+
 export default function HeroSection() {
   return (
     <section id="accueil" className="hero">
@@ -36,6 +38,7 @@ export default function HeroSection() {
           </a>
         </div>
       </div>
+      <MotionControlClient />
       <div className="hero-seal" aria-hidden="true">
         <span>ⵣ</span>
         <svg viewBox="0 0 100 100" aria-hidden="true">
