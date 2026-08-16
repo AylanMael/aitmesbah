@@ -1,38 +1,19 @@
-import { places } from "@/data/home";
-
 export default function PlacesSection() {
   return (
     <section className="places section-pad">
       <div className="section-head light-head">
         <div>
-          <p className="eyebrow">Chemins & patrimoine</p>
-          <h2>
-            Les lieux qui racontent
-            <br />
-            <em>Aït Mesbah</em>
-          </h2>
+          <p className="eyebrow">Lieux et patrimoine</p>
+          <h2>Un inventaire du village à construire</h2>
         </div>
         <p>
-          Fontaines, places, chemins et points de vue : chaque lieu porte une
-          mémoire. Les noms et contenus seront ajoutés avec les habitants.
+          Cette rubrique présentera progressivement les lieux, les chemins, les fontaines, les places et les paysages qui participent à l’identité d’Aït Mesbah.
         </p>
       </div>
-      <div className="place-grid">
-        {places.map((place) => (
-          <article
-            className={`place${place.large ? " large" : ""} photo-placeholder`}
-            key={place.title}
-          >
-            <span className="draft">{place.draftLabel}</span>
-            <div>
-              <small>{place.category}</small>
-              <h3>{place.title}</h3>
-              {place.description && <p>{place.description}</p>}
-            </div>
-          </article>
-        ))}
+      <div className="section-empty">
+        <p>Chaque lieu sera documenté avec son nom validé, sa localisation, son histoire, une photographie authentique et les crédits nécessaires.</p>
+        <p>Les premiers lieux seront publiés après validation éditoriale.</p>
       </div>
-      <span className="outline-btn">Lieux à découvrir prochainement</span>
     </section>
   );
 }

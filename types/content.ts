@@ -19,14 +19,6 @@ export interface MemoryItem {
   description: string;
 }
 
-export interface PlaceItem {
-  category: string;
-  title: string;
-  description?: string;
-  draftLabel: string;
-  large?: boolean;
-}
-
 export interface ContributionType {
   label: string;
 }

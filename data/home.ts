@@ -1,7 +1,6 @@
 import type {
   ContributionType,
   MemoryItem,
-  PlaceItem,
   QuickLinkItem,
   VillageFact,
 } from "@/types/content";
@@ -37,26 +36,6 @@ export const memoryItems: MemoryItem[] = [
     category: "Chronologie",
     title: "Repères chronologiques",
     description: "Une chronologie pourra être constituée progressivement à partir de sources identifiées et recoupées.",
-  },
-];
-
-export const places: PlaceItem[] = [
-  {
-    category: "Lieu emblématique",
-    title: "Un lieu, une histoire",
-    description: "Nom et récit à documenter",
-    draftLabel: "CONTENU À COMPLÉTER",
-    large: true,
-  },
-  {
-    category: "Patrimoine",
-    title: "Fontaines & places",
-    draftLabel: "À COMPLÉTER",
-  },
-  {
-    category: "Paysages",
-    title: "Chemins & horizons",
-    draftLabel: "À COMPLÉTER",
   },
 ];
 
