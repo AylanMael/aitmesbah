@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mentions légales — Aït Mesbah",
   description: "Mentions légales du site communautaire Aït Mesbah.",
+  alternates: {
+    canonical: "/mentions-legales",
+  },
 };
 
 export default function LegalNoticePage() {

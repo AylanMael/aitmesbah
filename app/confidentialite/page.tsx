@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Confidentialité — Aït Mesbah",
   description: "Informations sur la confidentialité du site Aït Mesbah.",
+  alternates: {
+    canonical: "/confidentialite",
+  },
 };
 
 export default function PrivacyPage() {

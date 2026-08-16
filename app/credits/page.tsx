@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Crédits — Aït Mesbah",
   description: "Crédits éditoriaux et techniques du site Aït Mesbah.",
+  alternates: {
+    canonical: "/credits",
+  },
 };
 
 export default function CreditsPage() {
