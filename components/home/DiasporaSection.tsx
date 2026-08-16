@@ -19,10 +19,9 @@ export default function DiasporaSection() {
           continue de faire vivre les liens, les souvenirs et les projets du
           village.
         </p>
-        <div className="diaspora-actions">
-          <a href="#contribuer">Raconter mon parcours →</a>
-          <a href="#contribuer">Envoyer une archive →</a>
-        </div>
+        <p className="diaspora-note">
+          Les modalités de contribution seront annoncées prochainement.
+        </p>
       </div>
     </section>
   );
