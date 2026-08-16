@@ -34,12 +34,12 @@ export default function PrivacyPage() {
           fiabilité du service. Ces traitements relèvent des services Google
           Cloud et Firebase. Davantage d’informations sont disponibles dans
           les{" "}
-          <a href="https://firebase.google.com/terms" rel="noreferrer" target="_blank">
-            conditions Firebase
+          <a href="https://firebase.google.com/terms" rel="noopener noreferrer" target="_blank">
+            conditions Firebase<span className="sr-only"> (nouvel onglet)</span>
           </a>{" "}
           et la{" "}
-          <a href="https://policies.google.com/privacy" rel="noreferrer" target="_blank">
-            politique de confidentialité Google
+          <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">
+            politique de confidentialité Google<span className="sr-only"> (nouvel onglet)</span>
           </a>
           .
         </p>

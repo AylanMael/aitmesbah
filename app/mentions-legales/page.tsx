@@ -44,16 +44,16 @@ export default function LegalNoticePage() {
         </ul>
         <p>
           Consultez les{" "}
-          <a href="https://firebase.google.com/terms" rel="noreferrer" target="_blank">
-            conditions Firebase
+          <a href="https://firebase.google.com/terms" rel="noopener noreferrer" target="_blank">
+            conditions Firebase<span className="sr-only"> (nouvel onglet)</span>
           </a>{" "}
           et les{" "}
           <a
             href="https://cloud.google.com/terms/google-entity"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             target="_blank"
           >
-            informations sur les entités contractantes Google Cloud
+            informations sur les entités contractantes Google Cloud<span className="sr-only"> (nouvel onglet)</span>
           </a>
           .
         </p>

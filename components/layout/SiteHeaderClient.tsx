@@ -57,7 +57,6 @@ export default function SiteHeaderClient() {
         ))}
       </nav>
       <div className="header-actions">
-        <span className="lang">FR</span>
         <a className="contribute small" href="#contribuer">
           Contribuer <span aria-hidden="true">↗</span>
         </a>
