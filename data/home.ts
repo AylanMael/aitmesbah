@@ -14,9 +14,9 @@ export const quickLinks: QuickLinkItem[] = [
 ];
 
 export const villageFacts: VillageFact[] = [
-  { value: "≈ 4 000", label: "résidents" },
-  { value: "Haute Kabylie", label: "Algérie" },
-  { value: "Une diaspora", label: "à travers le monde" },
+  { value: "Près de 4 000", label: "habitants — estimation communautaire" },
+  { value: "Aït Douala", label: "wilaya de Tizi Ouzou · Algérie" },
+  { value: "Ici et ailleurs", label: "une communauté liée au village" },
 ];
 
 export const memoryItems: MemoryItem[] = [

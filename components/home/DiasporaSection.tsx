@@ -2,9 +2,9 @@ export default function DiasporaSection() {
   return (
     <section id="diaspora" className="diaspora section-pad">
       <div className="world">
-        ⌁<span>PARIS</span>
-        <span>MONTRÉAL</span>
-        <span>ALGER</span>
+        ⌁<span>VILLAGE</span>
+        <span>KABYLIE</span>
+        <span>DIASPORA</span>
         <span>AILLEURS</span>
       </div>
       <div className="diaspora-copy">
@@ -15,9 +15,7 @@ export default function DiasporaSection() {
           <em>au-delà des montagnes</em>
         </h2>
         <p>
-          De l’Algérie à la France, du Canada à d’autres horizons, la diaspora
-          continue de faire vivre les liens, les souvenirs et les projets du
-          village.
+          Du village aux différents lieux de vie de sa diaspora, Aït Mesbah entretient des liens humains, familiaux et culturels qui restent à documenter.
         </p>
         <p className="diaspora-note">
           Les modalités de contribution seront annoncées prochainement.

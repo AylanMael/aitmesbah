@@ -9,9 +9,9 @@ export default function HeroSection() {
       <div className="hero-sun" />
       <div className="grain" />
       <div className="hero-index">
-        <span>36° N</span>
+        <span>Aït Douala</span>
         <i />
-        <span>Haute Kabylie</span>
+        <span>Tizi Ouzou · Algérie</span>
       </div>
       <div className="hero-content">
         <p className="eyebrow light">ⵣ &nbsp; Un village de Haute Kabylie</p>

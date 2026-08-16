@@ -12,13 +12,10 @@ export default function VillageIntro() {
           garde nos <em>racines</em>
         </h2>
         <p className="lead">
-          Aït Mesbah est un village kabyle d’environ 4 000 résidents, niché au
-          cœur de la Haute Kabylie.
+          Aït Mesbah est un village de la commune d’Aït Douala, dans la wilaya de Tizi Ouzou, en Algérie.
         </p>
         <p>
-          Une communauté unie par une terre, une culture et des valeurs de
-          solidarité. Ce site rassemble sa mémoire et raconte son présent, pour
-          les habitants, la diaspora et les générations à venir.
+          Une communauté unie par une terre, une culture et des valeurs de solidarité. Ce site a pour vocation de recueillir, préserver et transmettre progressivement la mémoire du village.
         </p>
         <a className="text-link" href="#memoire">
           L’histoire du village →
@@ -38,6 +35,7 @@ export default function VillageIntro() {
           </div>
         ))}
       </div>
+      <p className="facts-note">L’estimation de population est fournie par le responsable éditorial du projet et reste à rapprocher d’une source officielle.</p>
     </section>
   );
 }
