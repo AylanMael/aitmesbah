@@ -21,3 +21,8 @@ body{background:#f3eee3}.site-header{mix-blend-mode:normal}.site-header:not(.sol
 :where(a,button,input,select,textarea):focus-visible{outline:3px solid #fff;outline-offset:3px;box-shadow:0 0 0 5px #0b2d24;transition:none!important}
 #contenu-principal:focus{outline:none}
 @media(forced-colors:active){:where(a,button,input,select,textarea):focus-visible{outline:3px solid Highlight;box-shadow:none}}
+
+.quick-links span{color:#754832}.quick-links a:last-child span,.quick-links a:hover span{color:#fff}
+.intro-left>.eyebrow,.places .eyebrow,.voices>.eyebrow,.contribution>div:first-child>.eyebrow,.card-no{color:#8f452f}
+.intro h2 em,.contribution h2 em{color:#9a742f}
+.contribution>div:first-child>p:not(.eyebrow){color:#4f5a54}
