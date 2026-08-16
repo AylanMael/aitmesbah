@@ -27,19 +27,6 @@ export interface PlaceItem {
   large?: boolean;
 }
 
-export interface NewsItem {
-  tag: string;
-  title: string;
-  text: string;
-  tone: "olive" | "clay" | "blue";
-}
-
-export interface EventItem {
-  kind: string;
-  title: string;
-  meta: string;
-}
-
 export interface ContributionType {
   label: string;
 }

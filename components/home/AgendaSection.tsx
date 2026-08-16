@@ -1,36 +1,17 @@
-import { events } from "@/data/home";
-
 export default function AgendaSection() {
   return (
     <section id="agenda" className="agenda section-pad">
       <div>
         <p className="eyebrow light">À vos agendas</p>
-        <h2>
-          Les prochains
-          <br />
-          <em>rendez-vous</em>
-        </h2>
+        <h2>Agenda</h2>
         <p className="agenda-intro">
           Fêtes, rencontres sportives, actions associatives et temps forts de
           la diaspora.
         </p>
-        <span className="primary pale">Agenda à venir</span>
       </div>
-      <div className="event-list">
-        {events.map((e) => (
-          <article key={e.title}>
-            <div className="date">
-              <b>—</b>
-              <span>DATE</span>
-            </div>
-            <div>
-              <small>{e.kind}</small>
-              <h3>{e.title}</h3>
-              <p>{e.meta}</p>
-            </div>
-            <span className="event-arrow">↗</span>
-          </article>
-        ))}
+      <div className="section-empty light">
+        <p>Aucun événement n’est actuellement annoncé.</p>
+        <p>Les prochains rendez-vous du village seront publiés ici après confirmation de leur date, de leur lieu et de leur organisation.</p>
       </div>
     </section>
   );

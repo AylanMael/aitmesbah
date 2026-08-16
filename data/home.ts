@@ -1,8 +1,6 @@
 import type {
   ContributionType,
-  EventItem,
   MemoryItem,
-  NewsItem,
   PlaceItem,
   QuickLinkItem,
   VillageFact,
@@ -59,45 +57,6 @@ export const places: PlaceItem[] = [
     category: "Paysages",
     title: "Chemins & horizons",
     draftLabel: "À COMPLÉTER",
-  },
-];
-
-export const news: NewsItem[] = [
-  {
-    tag: "Vie du village",
-    title: "Les nouvelles d’Aït Mesbah",
-    text: "Un espace éditorial pour partager les initiatives, les projets et les informations qui rythment la vie du village.",
-    tone: "olive",
-  },
-  {
-    tag: "Mémoire",
-    title: "Une photographie, une histoire",
-    text: "Chaque archive confiée par une famille contribue à préserver la mémoire collective et à la transmettre.",
-    tone: "clay",
-  },
-  {
-    tag: "Diaspora",
-    title: "Des liens par-delà les montagnes",
-    text: "Portraits, parcours et nouvelles de celles et ceux qui font vivre Aït Mesbah à travers le monde.",
-    tone: "blue",
-  },
-];
-
-export const events: EventItem[] = [
-  {
-    kind: "Culture",
-    title: "Rencontre culturelle",
-    meta: "Programme et lieu à compléter",
-  },
-  {
-    kind: "Village",
-    title: "Assemblée ou initiative locale",
-    meta: "Informations à venir",
-  },
-  {
-    kind: "Diaspora",
-    title: "Rencontre de la communauté",
-    meta: "Ville et horaires à compléter",
   },
 ];
 
