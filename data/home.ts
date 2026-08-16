@@ -60,13 +60,6 @@ export const places: PlaceItem[] = [
   },
 ];
 
-export const voiceCategories: string[] = [
-  "Aînés",
-  "Habitants",
-  "Jeunesse",
-  "Diaspora",
-];
-
 export const contributionTypes: ContributionType[] = [
   { label: "Une photographie" },
   { label: "Un document d’archive" },

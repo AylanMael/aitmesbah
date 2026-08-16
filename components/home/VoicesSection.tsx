@@ -1,24 +1,11 @@
-import { Fragment } from "react";
-import { voiceCategories } from "@/data/home";
-
 export default function VoicesSection() {
   return (
     <section className="voices section-pad">
-      <p className="eyebrow">Paroles d’Aït Mesbah</p>
-      <blockquote>
-        « Notre village vit dans les souvenirs de ceux qui sont partis, dans les
-        gestes de ceux qui y restent, et dans les rêves de ceux qui reviendront. »
-      </blockquote>
-      <p className="quote-note">
-        Texte éditorial provisoire — à remplacer par un témoignage authentique
-      </p>
-      <div className="voice-types">
-        {voiceCategories.map((category, index) => (
-          <Fragment key={category}>
-            <span>{category}</span>
-            {index < voiceCategories.length - 1 && <i />}
-          </Fragment>
-        ))}
+      <p className="eyebrow">Témoignages</p>
+      <h2>Les voix du village seront recueillies ici</h2>
+      <div className="section-empty">
+        <p>Cette rubrique accueillera progressivement les récits des habitantes, des habitants, des aînés, de la jeunesse et de la diaspora.</p>
+        <p>Chaque témoignage sera publié avec l’accord de la personne concernée et après validation éditoriale.</p>
       </div>
     </section>
   );
