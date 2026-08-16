@@ -23,20 +23,20 @@ export const memoryItems: MemoryItem[] = [
   {
     number: "02",
     category: "Archives",
-    title: "Les images du temps",
-    description: "Photographies, documents et objets confiés par les familles.",
+    title: "Photographies et archives",
+    description: "Des photographies, documents et objets pourront être présentés après identification de leur origine et validation des droits de publication.",
   },
   {
     number: "03",
     category: "Témoignages",
-    title: "La voix de nos aînés",
-    description: "Récits audio et vidéo pour écouter celles et ceux qui savent.",
+    title: "Témoignages",
+    description: "Des témoignages pourront être recueillis avec le consentement des personnes concernées, puis vérifiés et contextualisés avant publication.",
   },
   {
     number: "04",
     category: "Chronologie",
-    title: "Les dates qui nous relient",
-    description: "Une frise collective, enrichie et vérifiée au fil du temps.",
+    title: "Repères chronologiques",
+    description: "Une chronologie pourra être constituée progressivement à partir de sources identifiées et recoupées.",
   },
 ];
 
