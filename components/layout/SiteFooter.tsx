@@ -17,7 +17,7 @@ export default function SiteFooter() {
           </p>
         </div>
         <div>
-          <h4>Découvrir</h4>
+          <h2>Découvrir</h2>
           {footerDiscoverLinks.map((item) => (
             <a className="footer-link" href={item.href} key={item.label}>
               {item.label}
@@ -25,7 +25,7 @@ export default function SiteFooter() {
           ))}
         </div>
         <div>
-          <h4>Communauté</h4>
+          <h2>Communauté</h2>
           {footerCommunityLinks.map((item) =>
             item.href ? (
               <a className="footer-link" href={item.href} key={item.label}>
@@ -39,7 +39,7 @@ export default function SiteFooter() {
           )}
         </div>
         <div>
-          <h4>Rester en lien</h4>
+          <h2>Rester en lien</h2>
           <p>La lettre du village sera bientôt disponible.</p>
         </div>
       </div>

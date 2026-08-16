@@ -18,7 +18,11 @@ export default function SiteHeaderClient() {
   return (
     <header className={`site-header ${scrolled || menu ? "solid" : ""}`}>
       <Brand />
-      <nav className={menu ? "open" : ""} onClick={() => setMenu(false)}>
+      <nav
+        aria-label="Navigation principale"
+        className={menu ? "open" : ""}
+        onClick={() => setMenu(false)}
+      >
         {mainNavigation.map((item) => (
           <a href={item.href} key={item.href}>
             {item.label}
