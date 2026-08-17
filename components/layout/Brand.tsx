@@ -1,8 +1,17 @@
+import Image from "next/image";
+
 export default function Brand() {
   return (
     <a href="#accueil" className="brand">
-      <span className="brand-mark" aria-hidden="true">AM</span>
-      <span>Aït Mesbah<small>Haute Kabylie</small></span>
+      <Image
+        className="brand-logo"
+        src="/logo-ait-mesbah.webp"
+        width={48}
+        height={48}
+        alt=""
+        aria-hidden="true"
+      />
+      <span>Aït Mesbah<small>Village kabyle</small></span>
     </a>
   );
 }

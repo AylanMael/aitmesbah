@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import MotionControlClient from "./MotionControlClient";
 
 export default function HeroSection() {
@@ -8,7 +10,18 @@ export default function HeroSection() {
         <i />
         <i />
       </div>
-      <div className="hero-sun" />
+      <div className="hero-sun">
+        <div className="hero-photo-frame">
+          <Image
+            className="hero-photo"
+            src="/ait-mesbah-village.jpg"
+            alt="Vue de Tanajelt à Aït Mesbah"
+            fill
+            sizes="(max-width: 800px) 370px, (max-width: 1440px) 39vw, 560px"
+            preload
+          />
+        </div>
+      </div>
       <div className="grain" />
       <div className="hero-index">
         <span>Aït Douala</span>
@@ -52,13 +65,6 @@ export default function HeroSection() {
             <textPath href="#circle">AÏT MESBAH • TERRE • MÉMOIRE • </textPath>
           </text>
         </svg>
-      </div>
-      <div className="hero-note">
-        <span aria-hidden="true">▧</span>
-        <div>
-          <b>Votre image, notre paysage</b>
-          <small>Vue authentique d’Aït Mesbah à intégrer</small>
-        </div>
       </div>
     </section>
   );
