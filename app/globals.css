@@ -23,8 +23,8 @@ body{background:#f3eee3}.site-header{mix-blend-mode:normal}.site-header:not(.sol
 @keyframes sealspin{to{transform:rotate(360deg)}}
 
 .brand-logo{width:48px;height:48px;object-fit:contain}
-.site-header .brand-logo{width:64px;height:64px}
-@media(max-width:700px){.brand-logo{width:41px;height:41px}.site-header .brand-logo{width:52px;height:52px}}
+.site-header .brand-logo{width:76px;height:76px}
+@media(max-width:700px){.brand-logo{width:41px;height:41px}.site-header .brand-logo{width:62px;height:62px}}
 
 .hero-sun{z-index:1;top:12vh;right:auto;left:75%;width:min(39vw,560px);aspect-ratio:auto;margin:0;border:0;background:none;box-shadow:none;transform:translateX(-50%)}
 .hero-seal{bottom:45px}
