@@ -6,23 +6,23 @@ type FooterCommunityItem = {
 };
 
 export const mainNavigation: NavigationItem[] = [
-  { label: "Découvrir", href: "#decouvrir" },
-  { label: "Histoire & mémoire", href: "#memoire" },
-  { label: "Vie du village", href: "#vivre" },
-  { label: "Agenda", href: "#agenda" },
-  { label: "Diaspora", href: "#diaspora" },
+  { label: "Découvrir", href: "/village" },
+  { label: "Histoire & mémoire", href: "/#memoire" },
+  { label: "Vie du village", href: "/#vivre" },
+  { label: "Agenda", href: "/#agenda" },
+  { label: "Diaspora", href: "/#diaspora" },
 ];
 
 export const footerDiscoverLinks: NavigationItem[] = [
-  { label: "Le village", href: "#decouvrir" },
-  { label: "Histoire & mémoire", href: "#memoire" },
-  { label: "Actualités", href: "#vivre" },
-  { label: "Agenda", href: "#agenda" },
+  { label: "Le village", href: "/village" },
+  { label: "Histoire & mémoire", href: "/#memoire" },
+  { label: "Actualités", href: "/#vivre" },
+  { label: "Agenda", href: "/#agenda" },
 ];
 
 export const footerCommunityLinks: FooterCommunityItem[] = [
-  { label: "Diaspora", href: "#diaspora" },
-  { label: "Contribuer", href: "#contribuer" },
+  { label: "Diaspora", href: "/#diaspora" },
+  { label: "Contribuer", href: "/#contribuer" },
   { label: "Associations — bientôt", href: null },
   { label: "Galerie & archives — bientôt", href: null },
 ];

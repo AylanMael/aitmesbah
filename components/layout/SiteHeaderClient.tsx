@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import Brand from "@/components/layout/Brand";
 import { mainNavigation } from "@/data/navigation";
 
@@ -57,9 +58,9 @@ export default function SiteHeaderClient() {
         ))}
       </nav>
       <div className="header-actions">
-        <a className="contribute small" href="#contribuer">
+        <Link className="contribute small" href="/#contribuer">
           Contribuer <span aria-hidden="true">↗</span>
-        </a>
+        </Link>
         <button
           ref={menuButtonRef}
           type="button"

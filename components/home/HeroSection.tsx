@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import MotionControlClient from "./MotionControlClient";
 
@@ -43,12 +44,12 @@ export default function HeroSection() {
           ici et ailleurs.
         </p>
         <div className="hero-buttons">
-          <a href="#decouvrir" className="primary">
+          <Link href="/village" className="primary">
             Découvrir le village <b aria-hidden="true">↗</b>
-          </a>
-          <a href="#memoire" className="ghost">
+          </Link>
+          <Link href="/#memoire" className="ghost">
             Explorer notre mémoire
-          </a>
+          </Link>
         </div>
       </div>
       <MotionControlClient />
