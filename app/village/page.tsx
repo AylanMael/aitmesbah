@@ -56,9 +56,40 @@ export default function VillagePage() {
         <p className="village-note">Les délimitations, les distances et certaines graphies seront affinées à partir de documents cartographiques et de contributions locales validées.</p>
       </section>
 
+      <section className="village-map-section" aria-labelledby="village-map-title">
+        <div className="village-map-copy">
+          <p className="eyebrow">Situer Aït Mesbah</p>
+          <h2 id="village-map-title">Au cœur des reliefs d’Ath Douala</h2>
+          <p>La carte permet de situer le village dans son environnement immédiat, au sud de Tizi Ouzou et à proximité des localités qui l’entourent.</p>
+          <dl className="village-coordinates">
+            <div><dt>Latitude</dt><dd>36.61233° N</dd></div>
+            <div><dt>Longitude</dt><dd>4.06181° E</dd></div>
+          </dl>
+          <a className="village-map-link" href="https://www.openstreetmap.org/?mlat=36.61233&mlon=4.06181#map=14/36.61233/4.06181" target="_blank" rel="noreferrer">Ouvrir la carte détaillée <span aria-hidden="true">↗</span></a>
+        </div>
+        <div className="village-map-frame">
+          <iframe title="Carte OpenStreetMap centrée sur Aït Mesbah" src="https://www.openstreetmap.org/export/embed.html?bbox=4.03181%2C36.58733%2C4.09181%2C36.63733&layer=mapnik&marker=36.61233%2C4.06181" loading="lazy" />
+          <span className="village-map-attribution">© contributeurs OpenStreetMap</span>
+        </div>
+      </section>
+
       <section id="quartiers" className="village-districts village-section">
         <ChapterHeading number="02" eyebrow="Le village habité" title="Un village composé de plusieurs quartiers" />
         <div className="village-prose"><p>Aït Mesbah est constitué de plusieurs quartiers et ensembles d’habitations répartis sur son territoire. Leur implantation, plus ou moins dispersée, reflète la géographie du village et son développement au fil du temps.</p><ol className="district-list">{districts.map((district, index) => <li key={district}><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{district}</li>)}</ol><p className="village-note">La graphie, les limites et la présentation historique de ces quartiers seront progressivement précisées avec les habitants et les personnes ressources du village.</p></div>
+      </section>
+
+      <section className="village-gallery" aria-labelledby="village-gallery-title">
+        <div className="village-gallery-heading">
+          <p className="eyebrow">Regards sur le village</p>
+          <h2 id="village-gallery-title">Tanajelt, entre habitat et paysage</h2>
+          <p>Une même vue, observée à différentes échelles, révèle la silhouette du village, le tissu des habitations et la présence de la végétation.</p>
+        </div>
+        <div className="village-gallery-grid">
+          <figure className="village-gallery-main"><Image src="/ait-mesbah-village.jpg" alt="Vue d’ensemble de Tanajelt à Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 58vw" /><figcaption><span>01</span> Vue d’ensemble</figcaption></figure>
+          <figure className="village-gallery-detail village-gallery-roofs"><Image src="/ait-mesbah-village.jpg" alt="Détail des habitations de Tanajelt à Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 28vw" /><figcaption><span>02</span> Le village habité</figcaption></figure>
+          <figure className="village-gallery-detail village-gallery-landscape"><Image src="/ait-mesbah-village.jpg" alt="Détail du paysage autour de Tanajelt à Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 28vw" /><figcaption><span>03</span> Relief et végétation</figcaption></figure>
+        </div>
+        <p className="village-gallery-credit">Photographie : vue de Tanajelt à Aït Mesbah.</p>
       </section>
 
       <section id="reperes" className="village-facts">
