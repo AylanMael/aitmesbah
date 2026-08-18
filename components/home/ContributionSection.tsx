@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { contributionTypes } from "@/data/home";
 
 export default function ContributionSection() {
@@ -23,6 +24,9 @@ export default function ContributionSection() {
           ))}
         </ul>
         <p>Le formulaire de contribution sera bientôt disponible.</p>
+        <Link className="text-link" href="/contribuer">
+          Découvrir les modalités de contribution <span aria-hidden="true">↗</span>
+        </Link>
       </div>
     </section>
   );

@@ -22,7 +22,7 @@ export const footerDiscoverLinks: NavigationItem[] = [
 
 export const footerCommunityLinks: FooterCommunityItem[] = [
   { label: "Diaspora", href: "/diaspora" },
-  { label: "Contribuer", href: "/#contribuer" },
+  { label: "Contribuer", href: "/contribuer" },
   { label: "Associations — bientôt", href: null },
   { label: "Galerie & archives — bientôt", href: null },
 ];

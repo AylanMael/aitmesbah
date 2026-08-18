@@ -58,7 +58,7 @@ export default function SiteHeaderClient() {
         ))}
       </nav>
       <div className="header-actions">
-        <Link className="contribute small" href="/#contribuer">
+        <Link className="contribute small" href="/contribuer">
           Contribuer <span aria-hidden="true">↗</span>
         </Link>
         <button
