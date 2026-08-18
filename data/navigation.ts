@@ -10,7 +10,7 @@ export const mainNavigation: NavigationItem[] = [
   { label: "Histoire et mémoire", href: "/histoire-memoire" },
   { label: "Vie du village", href: "/#vivre" },
   { label: "Agenda", href: "/#agenda" },
-  { label: "Diaspora", href: "/#diaspora" },
+  { label: "Diaspora", href: "/diaspora" },
 ];
 
 export const footerDiscoverLinks: NavigationItem[] = [
@@ -21,7 +21,7 @@ export const footerDiscoverLinks: NavigationItem[] = [
 ];
 
 export const footerCommunityLinks: FooterCommunityItem[] = [
-  { label: "Diaspora", href: "/#diaspora" },
+  { label: "Diaspora", href: "/diaspora" },
   { label: "Contribuer", href: "/#contribuer" },
   { label: "Associations — bientôt", href: null },
   { label: "Galerie & archives — bientôt", href: null },
