@@ -7,7 +7,7 @@ type FooterCommunityItem = {
 
 export const mainNavigation: NavigationItem[] = [
   { label: "Découvrir", href: "/village" },
-  { label: "Histoire & mémoire", href: "/#memoire" },
+  { label: "Histoire et mémoire", href: "/histoire-memoire" },
   { label: "Vie du village", href: "/#vivre" },
   { label: "Agenda", href: "/#agenda" },
   { label: "Diaspora", href: "/#diaspora" },
@@ -15,7 +15,7 @@ export const mainNavigation: NavigationItem[] = [
 
 export const footerDiscoverLinks: NavigationItem[] = [
   { label: "Le village", href: "/village" },
-  { label: "Histoire & mémoire", href: "/#memoire" },
+  { label: "Histoire & mémoire", href: "/histoire-memoire" },
   { label: "Actualités", href: "/#vivre" },
   { label: "Agenda", href: "/#agenda" },
 ];

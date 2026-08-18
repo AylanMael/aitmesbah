@@ -47,7 +47,7 @@ export default function HeroSection() {
           <Link href="/village" className="primary">
             Découvrir le village <b aria-hidden="true">↗</b>
           </Link>
-          <Link href="/#memoire" className="ghost">
+          <Link href="/histoire-memoire" className="ghost">
             Explorer notre mémoire
           </Link>
         </div>

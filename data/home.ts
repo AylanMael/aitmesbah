@@ -6,7 +6,7 @@ import type {
 } from "@/types/content";
 
 export const quickLinks: QuickLinkItem[] = [
-  { number: "01", label: "Notre histoire", href: "#memoire" },
+  { number: "01", label: "Notre histoire", href: "/histoire-memoire" },
   { number: "02", label: "En ce moment", href: "#vivre" },
   { number: "03", label: "Prochains rendez-vous", href: "#agenda" },
   { number: "04", label: "Comment contribuer", href: "#contribuer" },
