@@ -9,7 +9,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "firebase:emulators": "firebase emulators:start --only auth,firestore,storage --project demo-aitmesbah",
+    "test:firebase:rules": "firebase emulators:exec --only auth,firestore,storage --project demo-aitmesbah \"node --test --test-concurrency=1 tests/firebase/*.test.mjs\""
   },
   "dependencies": {
     "next": "16.2.6",
@@ -17,12 +19,15 @@
     "react-dom": "19.2.6"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "5.0.2",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
+    "firebase": "12.18.0",
+    "firebase-tools": "15.11.0",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3"
   },
