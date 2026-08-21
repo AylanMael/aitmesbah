@@ -36,6 +36,13 @@ service cloud.firestore {
       }
     }
 
+    match /contributions/{contributionId} {
+      allow read, write: if false;
+      match /{subdocument=**} {
+        allow read, write: if false;
+      }
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
