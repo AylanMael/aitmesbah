@@ -4,7 +4,7 @@ import {
   assertFails,
   initializeTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { getBytes, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getBytes, listAll, ref, uploadBytes } from "firebase/storage";
 
 import {
   PROJECT_ID,
@@ -57,4 +57,15 @@ test("Storage refuse faux administrateur et type MIME favorable", async () => {
       customMetadata: { approved: "true" },
     }),
   );
+});
+
+test("Storage refuse aussi liste et suppression dans l'espace privé", async () => {
+  const context = environment.authenticatedContext("member-a", {
+    admin: true,
+    organizationId: "organization-a",
+  });
+  const object = ref(context.storage(), "private/contributions/contribution-a/asset-a/original");
+  await assertFails(listAll(ref(context.storage(), "private/contributions/contribution-a")));
+  await assertFails(deleteObject(object));
+  await assertFails(uploadBytes(object, new Uint8Array([0xff, 0xd8, 0xff])));
 });

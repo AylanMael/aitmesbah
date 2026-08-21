@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { applicationDefault, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { Timestamp, getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 
 import {
   createInvitedProfile,
@@ -17,6 +18,7 @@ export function assertLocalAdminSafety() {
   assert.equal(process.env.GCLOUD_PROJECT, LOCAL_PROJECT_ID);
   assert.equal(process.env.FIREBASE_AUTH_EMULATOR_HOST, "127.0.0.1:9099");
   assert.equal(process.env.FIRESTORE_EMULATOR_HOST, "127.0.0.1:8080");
+  assert.equal(process.env.FIREBASE_STORAGE_EMULATOR_HOST, "127.0.0.1:9199");
 }
 
 export function getLocalAdminServices() {
@@ -25,8 +27,13 @@ export function getLocalAdminServices() {
   const app = getApps()[0] ?? initializeApp({
     projectId: LOCAL_PROJECT_ID,
     credential: applicationDefault(),
+    storageBucket: `${LOCAL_PROJECT_ID}.appspot.com`,
   });
-  return { auth: getAuth(app), database: getFirestore(app) };
+  return {
+    auth: getAuth(app),
+    database: getFirestore(app),
+    bucket: getStorage(app).bucket(`${LOCAL_PROJECT_ID}.appspot.com`),
+  };
 }
 
 async function writeProfileAndAudit(database, profile, auditEvent) {
