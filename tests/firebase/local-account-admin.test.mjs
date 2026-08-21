@@ -31,9 +31,9 @@ test("le cycle administratif local produit profils et audits", async () => {
   assert.deepEqual([active.status, suspended.status, reactivated.status, revoked.status], ["active", "suspended", "active", "revoked"]);
   assert.equal(revoked.version, 5);
 
-  const audit = await getFirestore().collection("auditLogs").where("targetUid", "==", invited.uid).get();
+  const audit = await getFirestore().collection("auditLogs").where("targetId", "==", invited.uid).get();
   assert.equal(audit.size, 5);
-  assert.deepEqual(new Set(audit.docs.map((entry) => entry.data().action)), new Set(["account.invited", "account.status_changed"]));
+  assert.deepEqual(new Set(audit.docs.map((entry) => entry.data().eventType)), new Set(["account.invited", "account.status_changed"]));
 
   await assert.rejects(changeLocalAccountStatus({ uid: invited.uid, nextStatus: "active", actorUid: "local-admin", reason: "réactivation interdite" }), /interdite/);
 });

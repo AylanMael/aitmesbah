@@ -1,10 +1,13 @@
 import { Timestamp } from "firebase-admin/firestore";
 import { getLocalAdminServices } from "./local-account-admin.mjs";
 import { createConsentRecord, createRightsRecord, inspectUpload, reserveAsset, transitionAsset, updateAssetClearances } from "../../lib/crm/private-assets.mjs";
+import { normalizeLegacyAudit } from "../../lib/crm/audit-log.mjs";
 
 function assetRef(database, contributionId, assetId) { return database.doc(`contributions/${contributionId}/assets/${assetId}`); }
 async function audit(database, action, actorUid, asset, reason = null) {
-  await database.collection("auditLogs").add({ action, actorUid, contributionId: asset.contributionId, assetId: asset.assetId, assetVersion: asset.version, reason, occurredAt: Timestamp.now() });
+  const reference=database.collection("auditLogs").doc();
+  const legacy={action,actorUid,targetId:asset.assetId,contributionId:asset.contributionId,assetId:asset.assetId,previousState:null,nextState:action.split(".").at(-1),reason,occurredAt:Timestamp.now()};
+  await reference.create(normalizeLegacyAudit(legacy,{eventId:reference.id}));
 }
 export async function reserveLocalAsset(input) {
   const { database } = getLocalAdminServices(); const now = Timestamp.now();

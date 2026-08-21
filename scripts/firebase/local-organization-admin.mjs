@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase-admin/firestore";
+import { normalizeLegacyAudit } from "../../lib/crm/audit-log.mjs";
 
 import {
   changeMembershipRoles,
@@ -15,7 +16,8 @@ async function saveWithAudit(reference, value, auditEvent) {
   const { database } = getLocalAdminServices();
   const batch = database.batch();
   batch.set(reference, value);
-  batch.create(database.collection("auditLogs").doc(), auditEvent);
+  const auditReference = database.collection("auditLogs").doc();
+  batch.create(auditReference, normalizeLegacyAudit(auditEvent, { eventId: auditReference.id }));
   await batch.commit();
   return value;
 }

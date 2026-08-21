@@ -26,6 +26,6 @@ test("cycle administratif organisationnel local complet et audité", async () =>
   await changeLocalOrganizationMandate({ organizationId: "committee-test", nextStatus: "withdrawn", actorUid: "local-admin", reason: "retrait fictif" });
 
   const audit = await getFirestore().collection("auditLogs").get();
-  const actions = new Set(audit.docs.map((entry) => entry.data().action));
+  const actions = new Set(audit.docs.map((entry) => entry.data().eventType));
   for (const action of ["organization.created", "organization.status_changed", "organization.verification_changed", "organization.mandate_changed", "membership.invited", "membership.status_changed", "membership.roles_changed"]) assert.ok(actions.has(action));
 });

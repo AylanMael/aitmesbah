@@ -8,6 +8,7 @@ import {
   createInvitedProfile,
   transitionAccount,
 } from "../../lib/crm/account-lifecycle.mjs";
+import { normalizeLegacyAudit } from "../../lib/crm/audit-log.mjs";
 
 export const LOCAL_PROJECT_ID = "demo-aitmesbah";
 
@@ -38,8 +39,9 @@ export function getLocalAdminServices() {
 
 async function writeProfileAndAudit(database, profile, auditEvent) {
   const batch = database.batch();
+  const auditReference = database.collection("auditLogs").doc();
   batch.set(database.doc(`users/${profile.uid}`), profile);
-  batch.create(database.collection("auditLogs").doc(), auditEvent);
+  batch.create(auditReference, normalizeLegacyAudit(auditEvent, { eventId: auditReference.id }));
   await batch.commit();
 }
 
