@@ -19,7 +19,7 @@ export function assertLocalAdminSafety() {
   assert.equal(process.env.FIRESTORE_EMULATOR_HOST, "127.0.0.1:8080");
 }
 
-function services() {
+export function getLocalAdminServices() {
   assertLocalAdminSafety();
   process.env.METADATA_SERVER_DETECTION = "none";
   const app = getApps()[0] ?? initializeApp({
@@ -37,7 +37,7 @@ async function writeProfileAndAudit(database, profile, auditEvent) {
 }
 
 export async function prepareLocalInvitation({ displayName, email, actorUid }) {
-  const { auth, database } = services();
+  const { auth, database } = getLocalAdminServices();
   const identity = await auth.createUser({
     email: email.trim().toLowerCase(),
     displayName: displayName.trim().replace(/\s+/g, " "),
@@ -66,7 +66,7 @@ export async function prepareLocalInvitation({ displayName, email, actorUid }) {
 }
 
 export async function changeLocalAccountStatus({ uid, nextStatus, actorUid, reason }) {
-  const { auth, database } = services();
+  const { auth, database } = getLocalAdminServices();
   const reference = database.doc(`users/${uid}`);
   const snapshot = await reference.get();
   if (!snapshot.exists) throw new Error("profil introuvable");
@@ -84,7 +84,7 @@ export async function changeLocalAccountStatus({ uid, nextStatus, actorUid, reas
 }
 
 export async function clearLocalAccountFixtures() {
-  const { auth, database } = services();
+  const { auth, database } = getLocalAdminServices();
   const users = await auth.listUsers(1000);
   if (users.users.length) await auth.deleteUsers(users.users.map(({ uid }) => uid));
   for (const collectionName of ["users", "auditLogs"]) {

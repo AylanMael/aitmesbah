@@ -13,6 +13,29 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    function accountIsActive() {
+      return request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.status == "active";
+    }
+
+    function organizationIsActive(organizationId) {
+      return get(/databases/$(database)/documents/organizations/$(organizationId)).data.status == "active";
+    }
+
+    match /organizations/{organizationId} {
+      allow read, write: if false;
+
+      match /memberships/{memberId} {
+        allow get: if accountIsActive()
+          && request.auth.uid == memberId
+          && organizationIsActive(organizationId)
+          && resource.data.organizationId == organizationId
+          && resource.data.uid == memberId
+          && resource.data.status == "active";
+        allow list, create, update, delete: if false;
+      }
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

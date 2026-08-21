@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "eslint .",
     "firebase:emulators": "firebase emulators:start --only auth,firestore,storage --project demo-aitmesbah",
-    "test:crm:unit": "node --test --test-concurrency=1 tests/firebase/account-lifecycle.unit.test.mjs",
+    "test:crm:unit": "node --test --test-concurrency=1 tests/firebase/*.unit.test.mjs",
     "test:firebase:rules": "firebase emulators:exec --only auth,firestore,storage --project demo-aitmesbah \"node --test --test-concurrency=1 tests/firebase/*.test.mjs\""
   },
   "dependencies": {
