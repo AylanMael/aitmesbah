@@ -1,0 +1,3 @@
+"use client";
+import { useState } from "react";
+export function LogoutButton(){const [busy,setBusy]=useState(false);async function logout(){if(busy)return;setBusy(true);try{const csrf=await fetch("/api/auth/csrf",{cache:"no-store"});const {csrfToken}=await csrf.json();const response=await fetch("/api/auth/session",{method:"DELETE",headers:{"Content-Type":"application/json","X-CSRF-Token":csrfToken},body:"{}"});if(!response.ok)throw new Error();window.location.replace("/connexion");}catch{setBusy(false);}}return <button className="crm-logout" type="button" onClick={logout} disabled={busy}>{busy?"Déconnexion…":"Se déconnecter"}</button>}
