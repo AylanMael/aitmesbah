@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint .",
     "firebase:emulators": "firebase emulators:start --only auth,firestore,storage --project demo-aitmesbah",
+    "test:crm:unit": "node --test --test-concurrency=1 tests/firebase/account-lifecycle.unit.test.mjs",
     "test:firebase:rules": "firebase emulators:exec --only auth,firestore,storage --project demo-aitmesbah \"node --test --test-concurrency=1 tests/firebase/*.test.mjs\""
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
     "firebase": "12.18.0",
+    "firebase-admin": "14.3.0",
     "firebase-tools": "15.11.0",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3"
