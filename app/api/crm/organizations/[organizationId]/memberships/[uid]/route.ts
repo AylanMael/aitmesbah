@@ -1,0 +1,4 @@
+import {NextRequest,NextResponse} from "next/server";
+import {changeMembershipRecord} from "@/lib/firebase/organization-admin";
+import {CRM_HEADERS,crmError,exactBody,requireCrmActor,validateCrmMutation} from "@/lib/firebase/crm-request";
+export async function PATCH(request:NextRequest,{params}:{params:Promise<{organizationId:string;uid:string}>}){try{validateCrmMutation(request);const {organizationId,uid}=await params,body=exactBody(await request.json(),["operation","value","reason","expectedVersion"]);const permission=body.operation==="roles"?"role.local.manage":"organization.member.manage";const actor=await requireCrmActor(permission);return NextResponse.json(await changeMembershipRecord(actor.uid,organizationId,uid,{operation:String(body.operation),value:body.value,reason:String(body.reason),expectedVersion:Number(body.expectedVersion)}),{headers:CRM_HEADERS});}catch(error){return crmError(error);}}
