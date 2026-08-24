@@ -1,0 +1,5 @@
+import {NextRequest,NextResponse} from "next/server";
+import {mutateContributionRecord} from "@/lib/firebase/contribution-admin";
+import {CRM_HEADERS,crmError,exactBody,requireCrmActor,validateCrmMutation} from "@/lib/firebase/crm-request";
+const useful=["draft.self.manage","review.assigned.comment","editorial.assign","editorial.completeness.review","editorial.provenance.verify","editorial.rights.verify","editorial.consent.verify","editorial.ordinary.approve"];
+export async function PATCH(request:NextRequest,{params}:{params:Promise<{contributionId:string}>}){try{validateCrmMutation(request);let actor=null;for(const permission of useful)try{actor=await requireCrmActor(permission);break;}catch{}if(!actor)throw Object.assign(new Error("permission insuffisante"),{http:403});const body=exactBody(await request.json(),["operation","expectedVersion","reason","value","field","reviewerUid","versionNumber","body","title","summary"]);const {contributionId}=await params;return NextResponse.json(await mutateContributionRecord(actor.uid,contributionId,body),{headers:CRM_HEADERS});}catch(error){return crmError(error);}}
