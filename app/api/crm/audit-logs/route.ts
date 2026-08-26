@@ -1,0 +1,4 @@
+import {NextRequest,NextResponse} from "next/server";
+import {listAuditRecords} from "@/lib/firebase/audit-admin";
+import {CRM_HEADERS,crmError,requireCrmActor,validateCrmRead} from "@/lib/firebase/crm-request";
+export async function GET(request:NextRequest){try{validateCrmRead(request);await requireCrmActor("audit.read");return NextResponse.json(await listAuditRecords(Object.fromEntries(request.nextUrl.searchParams)),{headers:{...CRM_HEADERS,"Cache-Control":"private, no-store, max-age=0"}});}catch(error){const value=error as {code?:string;message?:string};if(error instanceof TypeError||value.code==="ERR_ASSERTION")return NextResponse.json({error:String(value.message).includes("curseur")?"Le curseur de pagination n’est plus valable.":"Les filtres transmis sont invalides."},{status:400,headers:CRM_HEADERS});return crmError(error);}}

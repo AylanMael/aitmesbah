@@ -1,0 +1,12 @@
+import test from "node:test";import assert from "node:assert/strict";import {readFile} from "node:fs/promises";
+const route=await readFile(new URL("../../app/api/crm/audit-logs/route.ts",import.meta.url),"utf8"),page=await readFile(new URL("../../app/crm/journal/page.tsx",import.meta.url),"utf8"),client=await readFile(new URL("../../components/crm/AuditLogViewer.tsx",import.meta.url),"utf8"),rules=await readFile(new URL("../../firestore.rules",import.meta.url),"utf8"),admin=await readFile(new URL("../../lib/firebase/audit-admin.ts",import.meta.url),"utf8");
+test("route privée exige session et audit.read",()=>{assert.match(route,/requireCrmActor\("audit\.read"\)/);assert.match(route,/validateCrmRead/)});
+test("route expose uniquement GET",()=>{assert.match(route,/export async function GET/);assert.doesNotMatch(route,/export async function (POST|PATCH|PUT|DELETE)/)});
+test("réponse impose cache privé no-store",()=>assert.match(route,/private, no-store, max-age=0/));
+test("Admin SDK interroge uniquement auditLogs avec une limite",()=>{assert.match(admin,/collection\("auditLogs"\)/);assert.match(admin,/limit\(101\)/);assert.doesNotMatch(admin,/bucket|storage/i)});
+test("tri Firestore stable sans offset",()=>{assert.match(admin,/orderBy\("occurredAt","desc"\).*orderBy\(FieldPath\.documentId\(\),"desc"\)/s);assert.doesNotMatch(admin,/offset\(/)});
+test("Firestore Rules restent fermées aux clients",()=>assert.match(rules,/match \/auditLogs\/\{eventId\}[\s\S]*allow read, write: if false/));
+test("page refuse explicitement la permission absente",()=>{assert.match(page,/permissions\.includes\("audit\.read"\)/);assert.match(page,/Vous n’êtes pas autorisé/)});
+test("interface n'utilise aucun SDK Firebase client",()=>{assert.doesNotMatch(client,/firebase\/(firestore|storage)|getFirestore|collection\(/);assert.match(client,/fetch\(`\/api\/crm\/audit-logs/)});
+test("interface ne propose aucune mutation ou export",()=>{assert.doesNotMatch(client,/method\s*:\s*["'](?:POST|PATCH|PUT|DELETE)["']/);assert.doesNotMatch(client,/>\s*(?:Exporter|Imprimer|Tout afficher)\s*</i)});
+test("interface contient filtres, labels et résultats textuels",()=>{for(const text of ["Catégorie","Type d’événement","Résultat","UID acteur","Organisation","Contribution","Type de cible","Identifiant cible","Date de début","Date de fin","Réussi","Refusé","Échec"])assert.match(client,new RegExp(text))});
