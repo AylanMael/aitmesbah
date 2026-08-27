@@ -40,7 +40,7 @@ Un rôle local ne produit jamais de rôle global. `technical_owner` reste proté
 
 ## Appartenances, projection et cloisonnement
 
-La source d’autorité reste `organizations/{organizationId}/memberships/{uid}`. États : `invited`, `active`, `suspended`, `revoked` avec transitions 8E ; `revoked` est terminal. La cible est un compte existant non révoqué. L’interface demande un UID exact et n’expose aucune recherche générale.
+La source d’autorité reste `organizations/{organizationId}/memberships/{uid}`. États : `invited`, `active`, `suspended`, `revoked` avec transitions 8E complétées par la réactivation contrôlée `revoked → invited|active` de 8O-C1. La cible est un compte existant non révoqué. L’interface demande un UID exact et n’expose aucune recherche générale.
 
 Un responsable de A ne reçoit que A, ne liste pas B et ne lit aucun membre de B. Chaque permission locale est recalculée avec le profil actif, l’organisation active et l’appartenance active correspondante. Une organisation ou appartenance suspendue ne confère aucun droit.
 

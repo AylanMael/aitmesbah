@@ -26,7 +26,7 @@ Transitions d’organisation : `registered → active|archived`, `active → sus
 
 ## Appartenances et cloisonnement
 
-Le modèle contient `organizationId`, `uid`, `roles`, `status`, `createdAt`, `updatedAt`, `createdBy`, `updatedBy` et `version`. États : `invited`, `active`, `suspended`, `revoked`. Transitions : `invited → active|revoked`, `active → suspended|revoked`, `suspended → active|revoked`. `revoked` est terminal.
+Le modèle contient `organizationId`, `uid`, `roles`, `status`, `createdAt`, `updatedAt`, `createdBy`, `updatedBy` et `version`. États : `invited`, `active`, `suspended`, `revoked`. Transitions : `invited → active|revoked`, `active → suspended|revoked`, `suspended → active|revoked`, `revoked → invited|active`. Une réactivation est exclusivement serveur, ciblée et couplée transactionnellement au quota.
 
 Les permissions effectives exigent simultanément un compte `active`, une organisation `active`, une appartenance `active`, un rôle local connu et une correspondance exacte de l’organisation. Le représentant du comité exige aussi un mandat `valid`. Les appartenances multiples sont calculées séparément. Toute incohérence ferme les droits.
 

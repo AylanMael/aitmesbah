@@ -43,13 +43,13 @@ test("appartenance stricte, rôles locaux uniquement et aucune auto-attribution"
   assert.throws(() => membership({ roles: ["unknown"] }), /rôle/);
   assert.throws(() => membership({ uid: ACTOR }), /auto-attribution/);
 });
-test("transitions d'appartenance autorisées, interdites, définitives et auditées", () => {
+test("transitions d'appartenance autorisées, réactivation contrôlée et auditée", () => {
   const active = transitionMembership(membership(), "active", { actorUid: ACTOR, reason: "activation", now: NOW });
   assert.equal(active.auditEvent.action, "membership.status_changed");
   const suspended = transitionMembership(active.membership, "suspended", { actorUid: ACTOR, reason: "pause", now: NOW }).membership;
   assert.equal(transitionMembership(suspended, "active", { actorUid: ACTOR, reason: "retour", now: NOW }).membership.status, "active");
   const revoked = transitionMembership(active.membership, "revoked", { actorUid: ACTOR, reason: "fin", now: NOW }).membership;
-  assert.throws(() => transitionMembership(revoked, "active", { actorUid: ACTOR, reason: "non", now: NOW }), /interdite/);
+  assert.equal(transitionMembership(revoked, "active", { actorUid: ACTOR, reason: "réactivation", now: NOW }).membership.status, "active");
   assert.throws(() => transitionMembership(membership(), "suspended", { actorUid: ACTOR, reason: "non", now: NOW }), /interdite/);
 });
 test("changement de rôles produit un audit et interdit l'auto-attribution", () => {

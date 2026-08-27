@@ -5,6 +5,7 @@ import {normalizeLegacyAudit} from "@/lib/crm/audit-log.mjs";
 import {effectivePermissions} from "@/lib/crm/organization-authorization.mjs";
 import {inspectUpload,reserveAsset,transitionAsset,updateAssetClearances} from "@/lib/crm/private-assets.mjs";
 import {getLocalFirebaseAdmin} from "./admin";
+import {loadAuthoritativeMemberships} from "./membership-quota-admin";
 
 type Actor={uid:string;permissions:string[];organizations:string[]};
 type AssetMutation={operation:string;value?:string;field?:string;reason:string;expectedVersion:number};
@@ -47,7 +48,7 @@ async function actor(uid:string):Promise<Actor>{
   const {database}=getLocalFirebaseAdmin(),profile=await database.doc(`users/${uid}`).get();
   if(!profile.exists||profile.data()!.status!=="active")throw fail("acteur inactif",403);
   const data=profile.data()!,permissions=effectivePermissions({accountStatus:data.status,globalRoles:data.globalRoles,organization:null,membership:null,organizationId:null}).global,organizations:string[]=[];
-  for(const snap of (await database.collectionGroup("memberships").where("uid","==",uid).get()).docs){const membership=snap.data(),organization=await database.doc(`organizations/${membership.organizationId}`).get();if(membership.status==="active"&&organization.exists&&organization.data()!.status==="active")organizations.push(membership.organizationId);}
+  for(const membership of await loadAuthoritativeMemberships(database,uid)){const organization=await database.doc(`organizations/${membership.organizationId}`).get();if(membership.status==="active"&&organization.exists&&organization.data()!.status==="active")organizations.push(membership.organizationId);}
   return {uid,permissions,organizations};
 }
 function audit(database:FirebaseFirestore.Firestore,event:Record<string,unknown>,result:"success"|"failed"="success"){const ref=database.collection("auditLogs").doc();return {ref,value:normalizeLegacyAudit(event,{eventId:ref.id,correlationId:ref.id,result} as never)};}
