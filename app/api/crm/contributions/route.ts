@@ -1,7 +1,7 @@
 import {NextRequest,NextResponse} from "next/server";
 import {createContributionRecord,listContributionRecords} from "@/lib/firebase/contribution-admin";
-import {CRM_HEADERS,crmError,exactBody,requireCrmActor,validateCrmMutation} from "@/lib/firebase/crm-request";
+import {CRM_HEADERS,crmError,exactBody,requireCrmActor,validateCrmMutation,validateCrmRead} from "@/lib/firebase/crm-request";
 const useful=["draft.self.manage","review.assigned.read","review.assigned.comment","editorial.assign","editorial.completeness.review","editorial.provenance.verify","editorial.rights.verify","editorial.consent.verify","editorial.ordinary.approve"];
 async function actor(){for(const permission of useful)try{return await requireCrmActor(permission);}catch{}throw Object.assign(new Error("permission insuffisante"),{http:403});}
-export async function GET(request:NextRequest){try{const current=await actor();return NextResponse.json(await listContributionRecords(current.uid,Object.fromEntries(request.nextUrl.searchParams)),{headers:CRM_HEADERS});}catch(error){return crmError(error);}}
+export async function GET(request:NextRequest){try{validateCrmRead(request);const current=await actor();return NextResponse.json(await listContributionRecords(current.uid,Object.fromEntries(request.nextUrl.searchParams)),{headers:CRM_HEADERS});}catch(error){return crmError(error);}}
 export async function POST(request:NextRequest){try{validateCrmMutation(request);const current=await requireCrmActor("draft.self.manage");const body=exactBody(await request.json(),["title","summary","category","sensitivity","body","organizationId","organizationRepresentation"]);return NextResponse.json(await createContributionRecord(current.uid,body),{status:201,headers:CRM_HEADERS});}catch(error){return crmError(error);}}

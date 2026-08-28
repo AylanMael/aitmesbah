@@ -3,7 +3,7 @@ const route=await readFile(new URL("../../app/api/crm/audit-logs/route.ts",impor
 test("route privée exige session et audit.read",()=>{assert.match(route,/requireCrmActor\("audit\.read"\)/);assert.match(route,/validateCrmRead/)});
 test("route expose uniquement GET",()=>{assert.match(route,/export async function GET/);assert.doesNotMatch(route,/export async function (POST|PATCH|PUT|DELETE)/)});
 test("réponse impose cache privé no-store",()=>assert.match(route,/private, no-store, max-age=0/));
-test("Admin SDK interroge uniquement auditLogs avec une limite",()=>{assert.match(admin,/collection\("auditLogs"\)/);assert.match(admin,/limit\(101\)/);assert.doesNotMatch(admin,/bucket|storage/i)});
+test("Admin SDK interroge uniquement auditLogs avec une limite exacte",()=>{assert.match(admin,/collection\("auditLogs"\)/);assert.match(admin,/limit\(spec\.limit\+1\)/);assert.doesNotMatch(admin,/bucket|storage/i)});
 test("tri Firestore stable sans offset",()=>{assert.match(admin,/orderBy\("occurredAt","desc"\).*orderBy\(FieldPath\.documentId\(\),"desc"\)/s);assert.doesNotMatch(admin,/offset\(/)});
 test("Firestore Rules restent fermées aux clients",()=>assert.match(rules,/match \/auditLogs\/\{eventId\}[\s\S]*allow read, write: if false/));
 test("page refuse explicitement la permission absente",()=>{assert.match(page,/permissions\.includes\("audit\.read"\)/);assert.match(page,/Vous n’êtes pas autorisé/)});

@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { readFile } from "node:fs/promises";
+import { CURSOR_MAX_LENGTH, canonicalFingerprint, signCursor, verifyCursor } from "../../lib/crm/cursor-signing.mjs";
+
+const secret = "deterministic-local-test-secret-at-least-32-bytes";
+test("HMAC-SHA-256 valide et enveloppe versionnée", () => { const cursor = signCursor({ id: "event_001", f: canonicalFingerprint(["asset"]) }, { purpose: "test-cursor", secretValue: secret }); const payload = verifyCursor(cursor, { purpose: "test-cursor", secretValue: secret }); assert.equal(payload.v, 1); assert.equal(payload.id, "event_001"); });
+test("contenu ou signature altérés sont refusés", () => { const cursor = signCursor({ id: "event_001" }, { purpose: "test-cursor", secretValue: secret }); for (const changed of [`${cursor.slice(0, -1)}A`, `A${cursor.slice(1)}`]) assert.throws(() => verifyCursor(changed, { purpose: "test-cursor", secretValue: secret }), /curseur/); });
+test("mauvais secret et mauvais usage sont refusés", () => { const cursor = signCursor({ id: "event_001" }, { purpose: "test-cursor", secretValue: secret }); assert.throws(() => verifyCursor(cursor, { purpose: "test-cursor", secretValue: `${secret}-wrong` })); assert.throws(() => verifyCursor(cursor, { purpose: "other-purpose", secretValue: secret })); });
+test("secret absent ou inférieur à 32 octets échoue fermé", () => { const previous = process.env.CRM_CURSOR_HMAC_SECRET; delete process.env.CRM_CURSOR_HMAC_SECRET; assert.throws(() => signCursor({ id: "event_001" }, { purpose: "test-cursor" })); assert.throws(() => signCursor({ id: "event_001" }, { purpose: "test-cursor", secretValue: "short" })); if (previous) process.env.CRM_CURSOR_HMAC_SECRET = previous; });
+test("curseur excessif, version inconnue et structure inconnue sont refusés", () => { assert.throws(() => verifyCursor("A".repeat(CURSOR_MAX_LENGTH + 1), { purpose: "test-cursor", secretValue: secret })); const unknown = Buffer.from(JSON.stringify({ p: "e30", s: "x", extra: true })).toString("base64url"); assert.throws(() => verifyCursor(unknown, { purpose: "test-cursor", secretValue: secret })); });
+test("la comparaison de signature utilise timingSafeEqual", async () => { const source = await readFile(new URL("../../lib/crm/cursor-signing.mjs", import.meta.url), "utf8"); assert.match(source, /timingSafeEqual\(supplied, expected\)/); assert.match(source, /createHmac\("sha256"/); });

@@ -1,4 +1,5 @@
 import test from "node:test";import assert from "node:assert/strict";
+process.env.CRM_CURSOR_HMAC_SECRET="local-test-only-cursor-secret-32-bytes-minimum";
 import {assertAuditReadOnly,decodeAuditCursor,encodeAuditCursor,matchesAuditFilters,minimizeAuditEvent,parseAuditQuery,stableAuditSort} from "../../lib/crm/audit-management.mjs";
 import {effectivePermissions,GLOBAL_ROLES} from "../../lib/crm/organization-authorization.mjs";
 const perms=(roles,status="active")=>effectivePermissions({accountStatus:status,globalRoles:roles,organization:null,membership:null,organizationId:null}).global;

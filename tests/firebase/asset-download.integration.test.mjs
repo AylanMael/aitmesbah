@@ -8,7 +8,7 @@ const request=await readFile(new URL("../../lib/firebase/crm-request.ts",import.
 
 test("le téléchargement est une route GET serveur",()=>{assert.match(route,/export async function GET/);assert.match(route,/getAssetDownload/);});
 test("une session CRM et une permission de lecture sont exigées",()=>{assert.match(route,/requireCrmActor/);assert.match(route,/asset\.self\.manage/);assert.match(route,/asset\.assigned\.read/);});
-test("Host et Origin sont contrôlés pour les lectures",()=>{assert.match(route,/validateCrmRead/);assert.match(request,/127\\\.0\\\.0\\\.1\|localhost/);assert.match(request,/new URL\(origin\)\.host!==host/);});
+test("Host et Origin sont contrôlés centralement pour les lectures",()=>{assert.match(route,/validateCrmRead/);assert.match(request,/validateRequestSecurity/);assert.match(request,/request\.headers\.get\("host"\)/);});
 test("la réponse force un téléchargement",()=>assert.match(route,/Content-Disposition.*attachment/));
 test("la réponse interdit le sniffing",()=>assert.match(route,/X-Content-Type-Options|CRM_HEADERS/));
 test("la réponse ne peut pas être mise en cache",()=>assert.match(route,/private, no-store, max-age=0/));

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest,NextResponse } from "next/server";
 import { csrfCookiePolicy,generateCsrfToken } from "@/lib/crm/session-policy.mjs";
-const headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Referrer-Policy":"same-origin"};
-export async function GET(){const token=generateCsrfToken();const response=NextResponse.json({csrfToken:token},{headers});response.cookies.set({...csrfCookiePolicy(),value:token});return response;}
+import { PRIVATE_RESPONSE_HEADERS,validateRequestSecurity } from "@/lib/crm/request-security.mjs";
+export async function GET(request:NextRequest){try{validateRequestSecurity({kind:"read",method:request.method,host:request.headers.get("host"),forwardedHost:request.headers.get("x-forwarded-host"),origin:request.headers.get("origin"),fetchSite:request.headers.get("sec-fetch-site"),fetchMode:request.headers.get("sec-fetch-mode"),fetchDestination:request.headers.get("sec-fetch-dest")});const token=generateCsrfToken(),response=NextResponse.json({csrfToken:token},{headers:PRIVATE_RESPONSE_HEADERS});response.cookies.set({...csrfCookiePolicy(),value:token});return response;}catch{return NextResponse.json({error:"Requête interdite."},{status:403,headers:PRIVATE_RESPONSE_HEADERS});}}
