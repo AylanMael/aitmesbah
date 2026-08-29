@@ -31,3 +31,5 @@ Les échecs portent un code stable (`APP_ENV_INVALID`, `APP_ENV_CONFLICT`, `PROJ
 ## Procédures futures
 
 Une mission ultérieure devra définir les domaines et projets réels, l’identité gérée Admin, App Check, le backend distribué, les secrets dans un gestionnaire, puis valider séparément staging et production. Elle devra retirer le verrou d’initialisation distante seulement après revue des Hosts, Origins, cookies, CSP, bundle client, IAM, observabilité et procédures de retour arrière. Aucun déploiement, secret, ressource distante ou activation de service n’appartient à 8P1.
+
+Le contrat documentaire staging détaillé, toujours bloqué avant réseau, est défini dans [la préparation sécurisée de la préproduction](26-preparation-securisee-preproduction.md).
