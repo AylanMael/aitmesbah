@@ -4,6 +4,7 @@ export const PROJECT_ID = "demo-aitmesbah";
 const FORBIDDEN_PROJECT_IDS = new Set(["aitmesbah-d945d", "ccs-compta"]);
 
 export function assertLocalEmulatorSafety() {
+  assert.equal(process.env.AITMESBAH_APP_ENV ?? "local", "local");
   assert.match(PROJECT_ID, /^demo-/);
   assert.equal(FORBIDDEN_PROJECT_IDS.has(PROJECT_ID), false);
 
