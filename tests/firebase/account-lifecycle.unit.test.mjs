@@ -103,3 +103,5 @@ test("les champs inconnus sont refusés", () => {
     now: NOW,
   }), /champs/);
 });
+
+test("versions invalides refusent sans mutation partielle du statut",()=>{for(const version of [undefined,0,-1,1.5,Number.MAX_SAFE_INTEGER]){const source={...invitedProfile(),version},before={...source};assert.throws(()=>transitionAccount(source,"active",{actorUid:ACTOR,reason:"test version",now:NOW}));assert.deepEqual(source,before);assert.equal(source.status,"invited");}});

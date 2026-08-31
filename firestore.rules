@@ -13,6 +13,14 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    match /crmSessions/{sessionId} {
+      allow read, write: if false;
+    }
+
+    match /crmInvitations/{invitationId} {
+      allow read, write: if false;
+    }
+
     match /membershipQuotas/{userId} {
       allow read, create, update, delete: if false;
     }

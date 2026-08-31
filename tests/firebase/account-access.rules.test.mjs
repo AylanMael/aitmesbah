@@ -5,7 +5,7 @@ import {
   assertSucceeds,
   initializeTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc,doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 
 import { PROJECT_ID, assertLocalEmulatorSafety } from "./test-helpers.mjs";
 
@@ -36,6 +36,8 @@ before(async () => {
       await setDoc(doc(database, "users", `${status}-user`), profile(`${status}-user`, status));
     }
     await setDoc(doc(database, "auditLogs", "event-1"), { action: "fixture" });
+    await setDoc(doc(database, "crmSessions", "session-fixture"), { uid: "active-user", accountVersion: 1, status: "active" });
+    await setDoc(doc(database, "crmInvitations", "invitation-fixture"), { uid: "active-user", state: "pending" });
   });
 });
 
@@ -83,3 +85,13 @@ test("un client ne crée, ne lit et ne modifie aucun audit", async () => {
   await assertFails(setDoc(doc(database, "auditLogs", "event-2"), { action: "fake" }));
   await assertFails(updateDoc(reference, { action: "changed" }));
 });
+
+test("un client ne crée, ne lit et ne modifie aucune session CRM", async () => {
+  const database = environment.authenticatedContext("active-user", { admin: true }).firestore();
+  const reference = doc(database, "crmSessions", "session-fixture");
+  await assertFails(getDoc(reference));
+  await assertFails(setDoc(doc(database, "crmSessions", "session-fake"), { uid: "active-user", accountVersion: 99, status: "active" }));
+  await assertFails(updateDoc(reference, { accountVersion: 99 }));
+});
+
+test("sessions et invitations refusent toutes les opérations dans chaque contexte explicite",async()=>{const contexts=[environment.unauthenticatedContext(),environment.authenticatedContext("active-user"),environment.authenticatedContext("contributor",{role:"contributor"}),environment.authenticatedContext("reviewer",{role:"reviewer"}),environment.authenticatedContext("editorial-manager",{role:"editorial_manager"}),environment.authenticatedContext("administrator",{role:"administrator"}),environment.authenticatedContext("technical-owner",{role:"technical_owner"}),environment.authenticatedContext("fake-claims",{admin:true,roles:["administrator"]})];for(const context of contexts){const database=context.firestore();for(const path of [["crmSessions","session-fixture"],["crmInvitations","invitation-fixture"]]){const reference=doc(database,...path);await assertFails(getDoc(reference));await assertFails(setDoc(reference,{state:"used"}));await assertFails(updateDoc(reference,{state:"used"}));await assertFails(deleteDoc(reference));}}});

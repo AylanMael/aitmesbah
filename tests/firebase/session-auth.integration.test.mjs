@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { applicationDefault, deleteApp, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestore,Timestamp } from "firebase-admin/firestore";
 
-import { evaluateCrmAccess } from "../../lib/crm/session-policy.mjs";
+import { createSessionRecord,evaluateCrmAccess,validateSessionRecord } from "../../lib/crm/session-policy.mjs";
 import { PROJECT_ID, assertLocalEmulatorSafety } from "./test-helpers.mjs";
 
 const password = "local-test-only-password";
@@ -29,8 +29,8 @@ test("cycle local Auth, profil autoritatif, session et révocation", async () =>
   const auth = getAuth(app);
   const database = getFirestore(app);
   const email = `session-${Date.now()}@example.test`;
-  const identity = await auth.createUser({ email, password, disabled: false });
-  const baseProfile = { uid: identity.uid, displayName: "Membre session fictif", globalRoles: ["contributor"], organizationMemberships: [] };
+  const identity = await auth.createUser({ email, password, emailVerified:true, disabled: false });
+  const baseProfile = { uid: identity.uid, displayName: "Membre session fictif", email, globalRoles: ["contributor"], organizationMemberships: [],version:1 };
 
   try {
     for (const status of ["invited", "suspended", "revoked"]) {
@@ -46,13 +46,23 @@ test("cycle local Auth, profil autoritatif, session et révocation", async () =>
     assert.equal(evaluateCrmAccess({ authUser: { ...identity, customClaims: { admin: true } }, profile: { ...activeProfile, globalRoles: [] } }).state, "unauthorized");
 
     const token = await signIn(email);
+    const secondToken = await signIn(email);
     const cookie = await auth.createSessionCookie(token.idToken, { expiresIn: 12 * 60 * 60 * 1000 });
-    assert.equal((await auth.verifySessionCookie(cookie, true)).uid, identity.uid);
+    const secondCookie = await auth.createSessionCookie(secondToken.idToken, { expiresIn: 12 * 60 * 60 * 1000 });
+    const now=Date.now(),createdAt=Timestamp.fromMillis(now),expiresAt=Timestamp.fromMillis(now+12*60*60*1000);
+    const decoded=await auth.verifySessionCookie(cookie,true),record=createSessionRecord({cookie,uid:identity.uid,sessionVersion:1,createdAt,expiresAt});
+    const secondDecoded=await auth.verifySessionCookie(secondCookie,true),secondRecord=createSessionRecord({cookie:secondCookie,uid:identity.uid,sessionVersion:1,createdAt,expiresAt});
+    const times={createdAtMs:now,expiresAtMs:expiresAt.toMillis(),nowMs:now};
+    assert.equal(decoded.uid, identity.uid);assert.equal(validateSessionRecord({cookie,decoded,profile:activeProfile,record,...times}),true);
+    assert.equal(secondDecoded.uid, identity.uid);assert.equal(validateSessionRecord({cookie:secondCookie,decoded:secondDecoded,profile:activeProfile,record:secondRecord,...times}),true);
+    assert.throws(()=>validateSessionRecord({cookie,decoded,profile:{...activeProfile,version:2},record,...times}),/obsolète/);
+    assert.throws(()=>validateSessionRecord({cookie:secondCookie,decoded:secondDecoded,profile:{...activeProfile,version:2},record:secondRecord,...times}),/obsolète/);
     await assert.rejects(auth.verifySessionCookie(`${cookie}falsifie`, true));
 
     await new Promise((resolve) => setTimeout(resolve, 1_100));
     await auth.revokeRefreshTokens(identity.uid);
     await assert.rejects(auth.verifySessionCookie(cookie, true));
+    await assert.rejects(auth.verifySessionCookie(secondCookie, true));
     await auth.updateUser(identity.uid, { disabled: true });
     const disabled = await auth.getUser(identity.uid);
     assert.equal(evaluateCrmAccess({ authUser: disabled, profile: activeProfile }).state, "unauthenticated");
