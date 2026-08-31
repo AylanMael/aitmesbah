@@ -1,10 +1,10 @@
-# Rate limiting transactionnel staging — contrat 8P4C
+# Rate limiting staging — contrat backend-neutre et décision d'architecture
 
 ## Portée
 
 Ce document versionne la politique `staging-8p4c-v1`, arbitrée par Amar Hachour le 29 août 2026. Elle vise exclusivement une préproduction privée, avec testeurs identifiés et données fictives. Elle ne constitue ni une politique de production, ni une autorisation de secret, dépense, provisioning ou accès distant.
 
-Le noyau 8P5A reste local, utilise `demo-aitmesbah` et les émulateurs Auth, Firestore et Storage sur loopback, et n'est raccordé à aucune route métier. Les secrets HMAC acceptés par ce noyau sont explicitement fictifs et réservés aux tests locaux.
+Le contrat local n'est raccordé à aucune route métier. Les secrets HMAC acceptés pour ses tests sont explicitement fictifs. Le prototype Firestore publié par 8P5A a été disqualifié par 8P5A-D : il conserve les invariants de sécurité, mais ne démontre pas la capacité exigée de 500 appels simultanés et subit une contention structurelle sur les clés chaudes. Firestore est donc abandonné comme backend autoritatif de ce limiteur. Cette décision n'autorise ni implémentation Valkey, ni secret réel, ni provisioning distant.
 
 ## Catalogue fermé et matrice initiale
 
@@ -18,7 +18,7 @@ Chaque opération appartient à exactement une catégorie. Une route sans catég
 | `ordinaryRead` | `ordinaryRead` | 60 s | — | 60/— | — | — | — | 1 |
 | `privilegedMutation` | `privilegedMutation` | 60 s | 10 s | 20/5 | — | 10/3 | — | 4 |
 | `contentCreate` | `contentMutation` | 60 s | — | 20/— | — | — | — | 1 |
-| `contentMutation` | `contentMutation` | 60 s | — | 20/— | — | 10/— | — | 2 |
+| `contentUpdate` | `contentMutation` | 60 s | — | 20/— | — | 10/— | — | 2 |
 | `editorialDecision` | `editorialDecision` | 60 s | — | 30/— | — | 10/— | — | 2 |
 | `assetMutation` | `assetMutation` | 60 s | — | 20/— | — | 10/— | — | 2 |
 | `upload` | `upload` | 300 s | 30 s | 10/2 | 50/10 | 10/2 | — | 6 |
@@ -36,15 +36,17 @@ La restriction sur les identifiants bruts concerne les clés, documents, compteu
 
 Une cible inexistante, interdite ou invalide ne crée aucun compteur de ressource. `K_session` ne s'applique pas à la création de session et ne remplace jamais `K_uid`. Sans provenance réseau démontrée, aucune valeur directement fournie par le client ou `X-Forwarded-For` n'est utilisable et l'ouverture staging reste bloquée.
 
-## Modèle Firestore et atomicité
+## Contrat de clés backend-neutre
 
-La collection serveur `rateLimitCounters` contient un document par génération HMAC, catégorie, type d'identité et bucket temporel. Son identifiant est un SHA-256 d'un HMAC et des dimensions du bucket ; ni l'identité brute ni le HMAC complet ne sont persistés. Un document contient seulement la version de schéma et de politique, la catégorie, le type d'identité, l'identifiant non secret de génération, les bornes de fenêtre, la consommation et les horodatages.
+Une clé opaque est construite par namespace, profil fermé, génération HMAC, catégorie, type d'identité et bucket temporel. Le namespace local validé est `local:demo-aitmesbah:rate-limit:v1`. Il provient exclusivement de la configuration serveur, n'est ni secret ni contrôlable par le client, est validé avant toute décision et doit différer en local, staging et production.
 
-Toutes les identités, fenêtres et générations d'une décision sont lues dans une transaction Firestore unique. La décision somme les consommations des générations courante et précédente. Si tous les compteurs autorisent, la transaction écrit chaque consommation dans la génération courante ; sinon elle n'écrit rien. Le maximum est de six compteurs logiques, six écritures et, pendant une rotation, douze lectures. Tout dépassement, document incohérent, timeout ou résultat indéterminé échoue fermé.
+L'entrée HMAC canonique ordonnée est `namespace`, `policyVersion`, `profileName`, `category`, `identityKind`, puis identité brute normalisée, avec séparation non ambiguë. La clé opaque est le SHA-256 ordonné du préfixe de schéma, de `namespace`, `policyVersion`, `profileName`, `category`, `generationId`, `identityKind`, pseudonyme HMAC, `windowSeconds` et `windowStartMs`. Ni l'identité brute ni le HMAC complet ne doivent être persistés ou journalisés par le limiteur.
 
-`expiresAt` égale la fin logique du bucket. La décision provient exclusivement du calcul de fenêtre avec l'horloge serveur et de la consommation transactionnelle. Le TTL ne sert qu'au nettoyage asynchrone futur ; aucun index composite n'est requis par ce modèle.
+Le futur backend devra évaluer et consommer atomiquement toutes les identités, fenêtres et générations d'une décision. La consommation des générations courante et précédente est additionnée, tandis que seule la génération courante reçoit une nouvelle consommation. Un bucket absent démarre à zéro ; un état présent mais incomplet, incohérent ou incompatible échoue fermé. Le maximum est de six compteurs logiques et douze clés évaluées pendant une rotation. Un refus n'entraîne aucune consommation partielle.
 
-Les Rules interdisent toute lecture ou écriture cliente de `rateLimitCounters`, indépendamment de l'authentification ou des claims. Seul l'Admin SDK local protégé par les gardes `demo-*` peut exercer les tests 8P5A.
+L'expiration logique égale la fin du bucket. La décision provient exclusivement du calcul de fenêtre avec l'horloge serveur et d'une consommation atomique. Le TTL ne sert qu'au nettoyage asynchrone futur et jamais à la décision.
+
+Le contrat ne définit plus de collection Firestore, de Rules associées ou d'adaptateur Admin SDK. Le futur backend restera exclusivement serveur, inaccessible et non paramétrable par le client.
 
 ## Réponses et pannes
 
@@ -56,7 +58,7 @@ Pour l'upload, aucun parsing complet volontaire, réservation, accès Storage ou
 
 ## Rotation HMAC
 
-Une rotation planifiée autorise deux générations pendant dix minutes. Toutes les fenêtres partagent la même origine temporelle. Le noyau lit la génération précédente et la génération courante, additionne leur consommation et écrit uniquement la génération courante. Les anciens documents expirent logiquement puis suivent leur TTL, sans suppression massive ni conservation permanente.
+Une rotation planifiée autorise deux générations pendant dix minutes. Toutes les fenêtres partagent la même origine temporelle. Le futur backend évalue la génération précédente et la génération courante, additionne leur consommation et incrémente uniquement la génération courante. Les anciennes clés expirent logiquement puis suivent leur TTL, sans suppression massive ni conservation permanente.
 
 En révocation urgente, les admissions cessent, les décisions en cours s'achèvent ou expirent, puis les routes protégées restent fermées pendant au moins la plus longue fenêtre depuis la dernière décision potentiellement autorisée, actuellement 300 secondes. La déconnexion locale reste possible. La réouverture exige une décision humaine documentée.
 
@@ -64,10 +66,10 @@ En révocation urgente, les admissions cessent, les décisions en cours s'achèv
 
 Le limiteur dispose d'une enveloppe d'alerte interne de 10 € par mois, sans autorisation de dépense ni garantie de coupure. Les seuils 5 €, 8 €, 10 € et 12 € utilisent coût réalisé, projection mensuelle et marge d'incertitude. Les modèles normal, pointe, rotation et forte cardinalité devront être mesurés avant activation.
 
-Un critère dur ou deux critères souples persistants pendant trois périodes représentatives prédéfinies autorisent uniquement une étude Valkey. Une migration exige notamment estimation régionale, budget, réseau privé, IAM, gestion des secrets, topologie, tests, seconde validation humaine indépendante et mission distante distincte. Firestore ou Valkey est seul autoritatif à un instant donné. Une bascule ou un rollback ferme les admissions pendant au moins la plus longue fenêtre ; aucun compteur inter-backends n'est fusionné permissivement.
+Le critère dur de contention a été atteint et autorise uniquement l'étude puis le prototype local Valkey 8P5B. Toute migration réelle exige notamment estimation régionale, budget, réseau privé, IAM, gestion des secrets, topologie, tests, seconde validation humaine indépendante et mission distante distincte. Un seul backend peut être autoritatif à un instant donné. Une bascule ou un rollback ferme les admissions pendant au moins la plus longue fenêtre ; aucun compteur inter-backends n'est fusionné permissivement.
 
 ## Validation et conditions d'arrêt
 
-Les tests du catalogue, fenêtres, frontières, atomicité, concurrence jusqu'à 500 appels, rotation, Rules, panne, confidentialité, navigation, upload, coûts et rollback sont obligatoires pendant l'implémentation et avant son intégration ou activation. Certains supposent que le composant technique correspondant existe.
+Les tests du catalogue, fenêtres, frontières, atomicité, collisions entre namespaces et profils, rotation, panne, confidentialité, navigation, upload, coûts et rollback sont obligatoires pendant la future implémentation et avant son intégration ou activation. Le test concurrent à 500 appels conserve son objectif de 60 autorisations, 440 refus `limited`, zéro indisponibilité, zéro résultat inconnu et une consommation autoritative de 60. Certains tests supposent que le composant technique correspondant existe.
 
-Il faut arrêter si les gardes `demo-*`, l'atomicité, la fermeture des Rules, le plafond de compteurs, la provenance réseau future ou l'absence d'identifiants bruts dans le sous-système ne peuvent pas être garantis. L'absence du backend rend staging non prêt. Le NO-GO distant demeure jusqu'à une mission explicitement autorisée.
+Il faut arrêter si les gardes locales, l'atomicité, le plafond de compteurs, la provenance réseau future ou l'absence d'identifiants bruts dans le sous-système ne peuvent pas être garantis. L'absence actuelle de backend autoritatif rend staging non prêt. Le NO-GO distant demeure jusqu'à une mission explicitement autorisée.
