@@ -21,6 +21,10 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    match /crmActivations/{activationId} {
+      allow read, write: if false;
+    }
+
     match /membershipQuotas/{userId} {
       allow read, create, update, delete: if false;
     }
