@@ -1,0 +1,17 @@
+# Parcours local mot de passe et vérification d’adresse
+
+## Décision 8P6B2B
+
+Le parcours est réservé à `demo-aitmesbah` et aux émulateurs loopback. Une invitation consommée produit un cookie de continuation HttpOnly, `SameSite=Strict`, valable au plus quinze minutes. Sa signature HMAC séparée par domaine lie l’environnement, l’identifiant opaque d’activation, l’UID, la version, l’état attendu et l’expiration. Il ne contient ni rôle, email, token d’invitation, code d’action, ID token, mot de passe ni secret. Le cookie brut n’est ni persisté ni journalisé. Le chemin reste `/` afin de conserver la compatibilité obligatoire des futurs cookies `__Host-`.
+
+Les liens de réinitialisation et de vérification sont générés par Firebase Admin et consultables uniquement par le mécanisme OOB de l’Auth Emulator. L’application ne les envoie pas et ne retourne aucun code. Le `oobCode` est traité exclusivement par Firebase Web, puis retiré immédiatement de l’URL avec `history.replaceState`. Les trois pages d’action appliquent `Referrer-Policy: no-referrer`. Le proxy ou le runtime peut néanmoins voir la toute première URL ; une politique d’infrastructure reste obligatoire avant staging. Les réponses applicatives sont génériques et `no-store`.
+
+Après la transaction qui consomme l’invitation, l’identité Auth est activée de façon idempotente tout en restant non vérifiée. Le profil reste `invited`, ses rôles restent vides et aucune `crmSession` n’est créée. Si cette activation Auth échoue, le registre reste `password_pending` et le même cookie permet une reprise bornée ; aucune suppression compensatoire permissive n’est effectuée.
+
+La politique minimale locale impose 12 à 128 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial. Firebase Web vérifie et consomme le code de réinitialisation, définit le mot de passe, puis authentifie l’utilisateur avec une persistance exclusivement en mémoire. Seul un ID token frais est envoyé à la route applicative. Le serveur ne reçoit jamais le mot de passe ni le code OOB. Les formulaires sont de vrais formulaires clavier, désactivés pendant la soumission et effacent leurs valeurs après succès ou erreur terminale.
+
+Chaque réconciliation vérifie la continuation, un ID token révoqué/non révoqué et récemment authentifié, puis relit l’identité Auth. Sa transaction Firestore relit l’activation et le profil canonique `invited` sans rôle avant toute écriture. La progression autorisée est exclusivement `password_pending` vers `email_verification_pending`, puis vers `mfa_enrollment_pending` après `applyActionCode`, rechargement du client et relecture d’un véritable `UserRecord.emailVerified` par le serveur. Le profil reste `invited`, ses rôles restent vides et aucune session CRM n’est créée.
+
+Les transitions sont idempotentes : une réponse perdue après un commit peut être rejouée avec l’ancienne continuation et un nouvel ID token, sans reconsommer le code OOB. Une panne avant commit conserve l’ancien cookie et l’ancien état. Une suspension ou révocation concurrente fait échouer la transaction fermée, efface la continuation et déconnecte Firebase Web. La continuation est aussi supprimée à l’arrivée devant MFA.
+
+Cette mission ne fournit aucune MFA réelle, activation finale, inscription publique ou capacité distante. Toute progression au-delà de `mfa_enrollment_pending` reste bloquée jusqu’à Identity Platform et à une validation staging distincte.
