@@ -7,13 +7,13 @@ import type {
 
 export const quickLinks: QuickLinkItem[] = [
   { number: "01", label: "Notre histoire", href: "/histoire-memoire" },
-  { number: "02", label: "En ce moment", href: "#vivre" },
-  { number: "03", label: "Prochains rendez-vous", href: "#agenda" },
+  { number: "02", label: "Notre village", href: "/village" },
+  { number: "03", label: "La communauté", href: "/diaspora" },
   { number: "04", label: "Comment contribuer", href: "/contribuer" },
 ];
 
 export const villageFacts: VillageFact[] = [
-  { value: "Près de 4 000", label: "habitants — estimation communautaire" },
+  { value: "Mémoire vivante", label: "des récits et des savoirs transmis" },
   { value: "Aït Douala", label: "wilaya de Tizi Ouzou · Algérie" },
   { value: "Ici et ailleurs", label: "une communauté liée au village" },
 ];

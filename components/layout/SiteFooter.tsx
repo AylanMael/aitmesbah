@@ -39,8 +39,9 @@ export default function SiteFooter() {
           )}
         </div>
         <div>
-          <h2>Rester en lien</h2>
-          <p>La lettre du village sera bientôt disponible.</p>
+          <h2>Langue</h2>
+          <p><strong>Français</strong>, langue actuellement disponible.</p>
+          <p className="footer-language-note">Les versions kabyle et arabe seront proposées lorsqu’elles auront été traduites et relues.</p>
         </div>
       </div>
       <div className="footer-bottom">
@@ -52,7 +53,7 @@ export default function SiteFooter() {
           <span aria-hidden="true">·</span>
           <Link href="/credits">Crédits</Link>
         </nav>
-        <span>FR · KAB · ع</span>
+        <span lang="fr">FR — version actuelle</span>
       </div>
     </footer>
   );

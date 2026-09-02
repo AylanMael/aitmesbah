@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { villageFacts } from "@/data/home";
 
 export default function VillageIntro() {
@@ -17,16 +18,17 @@ export default function VillageIntro() {
         <p>
           Une communauté unie par une terre, une culture et des valeurs de solidarité. Ce site a pour vocation de recueillir, préserver et transmettre progressivement la mémoire du village.
         </p>
-        <a className="text-link" href="#memoire">
-          L’histoire du village →
-        </a>
+        <a className="text-link" href="/village">Découvrir le territoire →</a>
       </div>
-      <div className="intro-visual photo-placeholder">
-        <div className="photo-label">
-          <b>Photographie du village</b>
-          <span>À remplacer par une vue authentique</span>
-        </div>
-      </div>
+      <figure className="intro-visual">
+        <Image
+          src="/ait-mesbah-village.jpg"
+          alt="Vue rapprochée des habitations d’Aït Mesbah"
+          fill
+          sizes="(max-width: 980px) 100vw, 42vw"
+        />
+        <figcaption>Aït Mesbah, village vivant</figcaption>
+      </figure>
       <div className="facts">
         {villageFacts.map((fact) => (
           <div key={fact.value}>
@@ -35,7 +37,6 @@ export default function VillageIntro() {
           </div>
         ))}
       </div>
-      <p className="facts-note">L’estimation de population est fournie par le responsable éditorial du projet et reste à rapprocher d’une source officielle.</p>
     </section>
   );
 }

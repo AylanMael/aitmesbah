@@ -1,34 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import MotionControlClient from "./MotionControlClient";
-
 export default function HeroSection() {
   return (
     <section id="accueil" className="hero">
-      <div className="mountains">
-        <i />
-        <i />
-        <i />
-      </div>
-      <div className="hero-sun">
-        <div className="hero-photo-frame">
+      <div className="hero-media">
           <Image
             className="hero-photo"
-            src="/ait-mesbah-village.jpg"
+            src="/images/ait-mesbah-hero.webp"
             alt="Vue de Tanajelt à Aït Mesbah"
             fill
-            sizes="(max-width: 800px) 370px, (max-width: 1440px) 39vw, 560px"
+            sizes="100vw"
             preload
           />
-        </div>
+        <div className="hero-media-shade" />
+        <div className="hero-sunlight" aria-hidden="true" />
       </div>
       <div className="grain" />
-      <div className="hero-index">
-        <span>Aït Douala</span>
-        <i />
-        <span>Tizi Ouzou · Algérie</span>
-      </div>
       <div className="hero-content">
         <p className="eyebrow light">
           <span aria-hidden="true">ⵣ</span> &nbsp; Un village de Haute Kabylie
@@ -39,9 +27,8 @@ export default function HeroSection() {
           <em>une mémoire vivante</em>
         </h1>
         <p className="hero-copy">
-          Un village, des générations, une histoire à transmettre. Bienvenue
-          dans l’espace numérique de celles et ceux qui font vivre Aït Mesbah,
-          ici et ailleurs.
+          Entre crêtes, chemins et maisons, une communauté transmet sa mémoire
+          et fait vivre son village, ici comme au-delà des montagnes.
         </p>
         <div className="hero-buttons">
           <Link href="/village" className="primary">
@@ -52,20 +39,25 @@ export default function HeroSection() {
           </Link>
         </div>
       </div>
-      <MotionControlClient />
       <div className="hero-seal" aria-hidden="true">
         <span>ⵣ</span>
         <svg viewBox="0 0 100 100" aria-hidden="true">
           <defs>
             <path
-              id="circle"
+              id="hero-seal-circle"
               d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"
             />
           </defs>
           <text>
-            <textPath href="#circle">AÏT MESBAH • TERRE • MÉMOIRE • </textPath>
+            <textPath href="#hero-seal-circle">
+              AÏT MESBAH • TERRE • MÉMOIRE • RACINES •
+            </textPath>
           </text>
         </svg>
+      </div>
+      <div className="hero-place">
+        <span>Commune d’Ath Douala</span>
+        <span>Wilaya de Tizi Ouzou · Algérie</span>
       </div>
     </section>
   );

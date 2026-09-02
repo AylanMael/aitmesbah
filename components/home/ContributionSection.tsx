@@ -17,13 +17,13 @@ export default function ContributionSection() {
         </p>
       </div>
       <div className="contribution-info">
-        <p>Vous pourrez bientôt contribuer avec :</p>
+        <p>Préparer une contribution utile :</p>
         <ul>
           {contributionTypes.map((type) => (
             <li key={type.label}>{type.label}</li>
           ))}
         </ul>
-        <p>Le formulaire de contribution sera bientôt disponible.</p>
+        <p>Les dépôts ne sont pas encore ouverts. La page dédiée explique les droits, le consentement et les informations à réunir en amont.</p>
         <Link className="text-link" href="/contribuer">
           Découvrir les modalités de contribution <span aria-hidden="true">↗</span>
         </Link>

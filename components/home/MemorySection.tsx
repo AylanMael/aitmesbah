@@ -9,20 +9,20 @@ export default function MemorySection() {
           <h2>Une mémoire à recueillir et à transmettre</h2>
         </div>
         <div className="memory-intro">
-          <p>Cette rubrique est en cours de construction. Elle réunira progressivement des récits, des photographies, des documents et des repères historiques consacrés à Aït Mesbah.</p>
-          <p>Chaque contribution devra être vérifiée, contextualisée et publiée avec l’accord de ses auteurs ou de ses détenteurs.</p>
+          <p>Récits, photographies et documents prennent sens lorsqu’ils sont identifiés, contextualisés et transmis avec l’accord de leurs auteurs ou de leurs détenteurs.</p>
         </div>
       </div>
+      <div className="memory-gesture" aria-label="Principes de transmission">
+        <span>Identifier</span>
+        <span>Contextualiser</span>
+        <span>Transmettre</span>
+      </div>
       <div className="memory-grid">
-        <article className="feature-card">
-          <div className="feature-image photo-placeholder">
-            <span>Archive authentique à intégrer après validation</span>
-          </div>
-          <div>
-            <span className="card-no">01</span>
-            <h3>Récits et histoire</h3>
-            <p>Cette rubrique accueillera des récits documentés sur le village, ses habitants et son évolution.</p>
-          </div>
+        <article className="feature-card memory-feature">
+          <span className="card-no">01 · Récits</span>
+          <h3>Récits et histoire</h3>
+          <p>Les premiers repères présentent l’histoire du village avec des niveaux de certitude explicites, sans transformer la tradition orale en fait établi.</p>
+          <a className="text-link light-link" href="/histoire-memoire">Lire l’histoire et la mémoire →</a>
         </article>
         <div className="memory-list">
           {memoryItems.map((item) => (

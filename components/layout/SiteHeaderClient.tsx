@@ -2,13 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Brand from "@/components/layout/Brand";
 import { mainNavigation } from "@/data/navigation";
 
 export default function SiteHeaderClient() {
+  const pathname = usePathname();
   const [menu, setMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const f = () => setScrolled(scrollY > 40);
@@ -18,16 +21,51 @@ export default function SiteHeaderClient() {
   }, []);
 
   useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 981px)");
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setMenu(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+
+  useEffect(() => {
     if (!menu) return;
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setMenu(false);
-      menuButtonRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusTimer = window.setTimeout(() => {
+      navRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+    }, 80);
+
+    const handleKeys = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenu(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !navRef.current) return;
+      const focusable = [
+        ...navRef.current.querySelectorAll<HTMLAnchorElement>("a[href]"),
+        menuButtonRef.current,
+      ].filter(Boolean) as HTMLElement[];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    addEventListener("keydown", closeOnEscape);
-    return () => removeEventListener("keydown", closeOnEscape);
+    addEventListener("keydown", handleKeys);
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = previousOverflow;
+      removeEventListener("keydown", handleKeys);
+    };
   }, [menu]);
 
   function closeMenuAndRestoreFocus() {
@@ -40,9 +78,10 @@ export default function SiteHeaderClient() {
   }
 
   return (
-    <header className={`site-header ${scrolled || menu ? "solid" : ""}`}>
+    <header className={`site-header ${scrolled || menu || pathname !== "/" ? "solid" : ""}`}>
       <Brand />
       <nav
+        ref={navRef}
         id="navigation-principale"
         aria-label="Navigation principale"
         className={menu ? "open" : ""}
@@ -52,13 +91,18 @@ export default function SiteHeaderClient() {
             href={item.href}
             key={item.href}
             onClick={closeMenuAndRestoreFocus}
+            aria-current={pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href)) ? "page" : undefined}
           >
             {item.label}
           </a>
         ))}
       </nav>
       <div className="header-actions">
-        <Link className="contribute small" href="/contribuer">
+        <Link
+          className="contribute small"
+          href="/contribuer"
+          aria-current={pathname === "/contribuer" ? "page" : undefined}
+        >
           Contribuer <span aria-hidden="true">↗</span>
         </Link>
         <button

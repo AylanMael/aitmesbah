@@ -2,10 +2,11 @@ export default function DiasporaSection() {
   return (
     <section id="diaspora" className="diaspora section-pad">
       <div className="world" aria-hidden="true">
-        ⌁<span>VILLAGE</span>
-        <span>KABYLIE</span>
-        <span>DIASPORA</span>
-        <span>AILLEURS</span>
+        ⌁<span>LE VILLAGE</span>
+        <span>ALGÉRIE</span>
+        <span>FRANCE</span>
+        <span>CANADA</span>
+        <span>USA</span>
       </div>
       <div className="diaspora-copy">
         <p className="eyebrow light">La communauté sans frontières</p>
@@ -17,9 +18,7 @@ export default function DiasporaSection() {
         <p>
           Du village aux différents lieux de vie de sa diaspora, Aït Mesbah entretient des liens humains, familiaux et culturels qui restent à documenter.
         </p>
-        <p className="diaspora-note">
-          Les modalités de contribution seront annoncées prochainement.
-        </p>
+        <a className="text-link light-link" href="/diaspora">Découvrir les liens de la diaspora →</a>
       </div>
     </section>
   );
