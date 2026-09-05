@@ -19,10 +19,15 @@ const sections = [
 
 const villageForces = [
   { number: "01", href: "/comite-village", icon: "⌂", title: "Comité du village", kicker: "Représenter · coordonner", text: "Un espace de dialogue, de concertation et d’organisation au service de la vie commune." },
-  { number: "02", href: "/asam", icon: "⚽", title: "Association sportive ASAM", kicker: "Football · jeunesse", text: "Les couleurs jaune et noir, une histoire sportive et une énergie qui rassemble les générations." },
+  { number: "02", href: "/asam", icon: "football", title: "Association sportive ASAM", kicker: "Football · jeunesse", text: "Les couleurs jaune et noir, une histoire sportive et une énergie qui rassemble les générations." },
   { number: "03", href: "/jcam", icon: "柔", title: "Club de judo JCAM", kicker: "Discipline · transmission", text: "Former par le sport, transmettre le respect et accompagner les jeunes vers l’excellence." },
   { number: "04", href: "/association-imache-amar", icon: "✦", title: "Association culturelle Imache Amar", kicker: "Culture · mémoire", text: "Créer, transmettre et retisser les liens autour de la culture et des initiatives de la jeunesse." },
 ] as const;
+
+function ForceIcon({ icon }: { icon: string }) {
+  if (icon === "football") return <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14"/><path d="m20 14 5 3.7-1.9 5.9h-6.2L15 17.7 20 14Zm0 0v-8m5 11.7 7.7-2.5m-9.6 8.4 4.8 6.6m-11-6.6-4.8 6.6M15 17.7l-7.7-2.5M12.1 30.2l-1.5 3m17.3-3 1.5 3"/></svg>;
+  return <>{icon}</>;
+}
 
 export default function LiveInVillagePage() {
   return <>
@@ -71,7 +76,7 @@ export default function LiveInVillagePage() {
           <div className="live-community-grid">
             {villageForces.map((item) => <article id={item.href.slice(1)} key={item.href}>
               <Link href={item.href}>
-                <header><span>{item.number}</span><i aria-hidden="true">{item.icon}</i></header>
+                <header><span>{item.number}</span><i aria-hidden="true"><ForceIcon icon={item.icon} /></i></header>
                 <small>{item.kicker}</small>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>

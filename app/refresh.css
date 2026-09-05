@@ -964,6 +964,7 @@ body{background:var(--paper);font-family:"Avenir Next","Segoe UI",Arial,sans-ser
 .live-community-grid header{display:flex;align-items:center;justify-content:space-between}
 .live-community-grid header>span{color:#dcb970;font:10px Arial,sans-serif;letter-spacing:.14em}
 .live-community-grid header i{display:grid;width:54px;height:54px;place-items:center;border:1px solid #dfbd754d;border-radius:50%;color:#eccb87;font:normal 20px Georgia,serif}
+.live-community-grid header i svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
 .live-community-grid small{margin-top:54px;color:#dcb970;font-size:8px;font-weight:750;letter-spacing:.16em;text-transform:uppercase}
 .live-community-grid h3{max-width:13ch;margin:13px 0 13px;color:#fff;font:clamp(25px,2.1vw,32px)/1.08 Georgia,serif;font-weight:400;letter-spacing:-.025em}
 .live-community-grid p{max-width:39ch;margin:0;color:#aebfb7;font-size:12px;line-height:1.72}
