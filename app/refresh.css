@@ -11,6 +11,69 @@ body{background:var(--paper);font-family:"Avenir Next","Segoe UI",Arial,sans-ser
 .news-awaiting{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:32px;margin-top:50px;padding:32px 36px;border-block:1px solid #d8cfbf}.news-awaiting>span{display:grid;width:70px;height:70px;place-items:center;border:1px solid #aa593c;color:#aa593c;font:30px Georgia,serif}.news-awaiting p{max-width:650px;margin:5px 0;color:#637068;font-size:13px;line-height:1.65}.news-awaiting .news-status{color:#173e32;font:24px Georgia,serif}.news-awaiting a{display:flex;align-items:center;gap:30px;padding:16px 0;border-bottom:1px solid #173e32;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.agenda{background:linear-gradient(135deg,#8e422c,#ad5a38)}.voices-symbol{opacity:.08}.diaspora{background:radial-gradient(circle at 75% 45%,#d1a35d2b,transparent 22%),#0a3027}.contribution{position:relative;display:block;overflow:hidden;background:transparent;text-align:center}.contribution:before,.contribution:after{content:"";position:absolute;top:50%;width:16vw;height:1px;background:#173e3224}.contribution:before{left:0}.contribution:after{right:0}.contribution-symbol{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#173e3208;font:clamp(250px,38vw,560px)/1 Georgia,serif}.contribution-heading{position:relative;z-index:1;max-width:980px;margin:auto}.contribution-heading .eyebrow{margin-bottom:32px;color:#9d4d33}.contribution-heading h2{margin:0 auto;max-width:960px;font-size:clamp(52px,6.5vw,96px);line-height:.95}.contribution-heading>p:not(.eyebrow){max-width:570px;margin:36px auto 0;color:#526159;font-size:15px;line-height:1.85}.contribution-heading ul{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:44px auto 0;padding:26px 0;border-block:1px solid #173e3224;list-style:none}.contribution-heading li{color:#526159;font-size:10px;letter-spacing:.08em;text-transform:uppercase}.contribution-heading li:before{content:"✦";margin-right:10px;color:#a94f32}.contribution-action{display:inline-flex;min-width:270px;align-items:center;justify-content:space-between;gap:50px;margin-top:38px;padding:20px 24px;background:#12382d;color:#fff;font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;transition:transform .25s,background .25s}.contribution-action:hover{transform:translateY(-3px);background:#a94f32}.contribution-action b{color:#e8bd71;font-size:18px;font-weight:400}footer{background:#071f19}
 @media(max-width:900px){.hero-content{max-width:92vw}.site-header nav{gap:15px}.intro{grid-template-columns:1fr}.intro-left{max-width:680px}.intro-visual{min-height:520px}.places-editorial{grid-template-columns:1fr}.places-editorial article{min-height:220px;border-right:0;border-bottom:1px solid #cfc2ae}.places-editorial h3{margin-top:40px}.news-awaiting{grid-template-columns:auto 1fr}.news-awaiting a{grid-column:2}}
 @media(max-width:760px){.site-header{height:78px;padding:0 20px}.brand{gap:6px;font-size:22px}.brand small{margin-top:6px;font-size:7.5px}.hero{min-height:760px;height:100svh}.hero:before{background:linear-gradient(0deg,#061f1bf5 0%,#082a23b0 62%,#08261f5e 100%)}.hero-backdrop{object-position:58% center}.hero-content{padding:27vh 22px 0;max-width:none}.hero h1{font-size:clamp(51px,15vw,72px)}.hero-copy{padding-left:18px;font-size:14px}.hero-buttons{margin-left:18px;flex-direction:column}.hero-buttons a{width:100%}.hero-index,.hero-seal{display:none}.word-river{height:120px}.word-river div{font-size:46px}.intro{gap:48px}.intro-visual{min-height:430px}.intro-caption{align-items:flex-start;flex-direction:column;gap:8px}.memory:before{font-size:160px}.places-editorial article{padding:30px}.news-awaiting{grid-template-columns:1fr;padding:28px 0}.news-awaiting a{grid-column:1}.contribution:before,.contribution:after{display:none}.contribution-heading h2{font-size:clamp(48px,13vw,66px)}.contribution-heading ul{align-items:center;flex-direction:column}.contribution-action{width:100%;min-width:0}}
+
+/* Accueil — contraste et continuité entre diaspora et contribution */
+.diaspora.section-pad{
+  position:relative;
+  isolation:isolate;
+  min-height:680px;
+  margin:0;
+  border:0;
+  border-radius:0;
+  background:
+    radial-gradient(circle at 25% 48%,#d2aa6324 0 8%,transparent 35%),
+    linear-gradient(112deg,#061f1a 0%,#0a3027 55%,#123d31 100%);
+  color:#f8f3e9;
+}
+.diaspora.section-pad:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  opacity:.15;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+}
+.diaspora.section-pad:after{border-color:#e4c47a1c}
+.diaspora.section-pad .world{
+  border-color:#e5c77c42;
+  background:radial-gradient(circle,#dfbd7520 0 10%,transparent 54%);
+  color:#f5dfaa16;
+  box-shadow:inset 0 0 90px #020f0b4d;
+}
+.diaspora.section-pad .world span{color:#f0cb7f;font-weight:700;letter-spacing:.18em;text-shadow:0 2px 16px #000}
+.diaspora.section-pad .diaspora-copy .eyebrow.light{color:#efc978}
+.diaspora.section-pad .diaspora-copy h2{color:#fffaf1}
+.diaspora.section-pad .diaspora-copy h2 em{color:#e6b966}
+.diaspora.section-pad .diaspora-copy p:not(.eyebrow){max-width:580px;color:#cfdbd5;font-size:15px;line-height:1.9}
+.diaspora.section-pad .diaspora-copy .light-link{color:#fff;border-color:#dbaa56}
+
+.contribution.section-pad{
+  position:relative;
+  isolation:isolate;
+  margin:0;
+  border:0;
+  border-radius:0;
+  background:
+    radial-gradient(circle at 50% 40%,#fffdf8 0 16%,transparent 55%),
+    linear-gradient(180deg,#eadfcb 0%,#f8f3e9 100%);
+  color:#173e32;
+}
+.contribution.section-pad:before,.contribution.section-pad:after{background:#173e3230}
+.contribution.section-pad .contribution-symbol{color:#173e3209}
+.contribution.section-pad .contribution-heading .eyebrow{color:#a34f34}
+.contribution.section-pad .contribution-heading h2{color:#143a2f}
+.contribution.section-pad .contribution-heading h2 em{color:#a95337}
+.contribution.section-pad .contribution-heading>p:not(.eyebrow){color:#4e6258}
+.contribution.section-pad .contribution-heading ul{border-color:#173e3230}
+.contribution.section-pad .contribution-heading li{color:#3f564b}
+.contribution.section-pad .contribution-action{background:#12382d;color:#fff;box-shadow:0 18px 42px #0d2d2524}
+.contribution.section-pad .contribution-action:hover{background:#a94f32}
+
+@media(max-width:760px){
+  .diaspora.section-pad{min-height:0;border-radius:0}
+  .diaspora.section-pad .world{width:min(100%,330px)}
+  .contribution.section-pad{margin:0}
+}
 @media(max-width:390px){.hero h1{font-size:48px}.quick-links{grid-template-columns:1fr}.quick-links a{min-height:82px}.intro-visual{min-height:360px}.intro-tifinagh{display:none}}
 @media(prefers-reduced-motion:reduce){.hero-buttons a,.memory-list article,.places-editorial article{transition:none}}
 
