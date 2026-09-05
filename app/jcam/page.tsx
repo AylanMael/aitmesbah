@@ -1,0 +1,31 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+import SiteFooter from "@/components/layout/SiteFooter";
+import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
+
+export const metadata: Metadata = {
+  title: "JCAM — Judo à Aït Mesbah",
+  description: "Découvrez l’histoire du JCAM, club de judo fondé à Aït Mesbah en 1996, sa vocation éducative, ses champions et la salle Taqaats.",
+  alternates: { canonical: "/jcam" },
+};
+
+const values = [["Respect", "Apprendre à considérer son partenaire, son enseignant, les règles et le lieu de pratique."], ["Discipline", "Progresser par la régularité, l’écoute, la maîtrise de soi et le goût de l’effort."], ["Courage", "Faire face à la difficulté, accepter la chute et trouver la force de recommencer."], ["Transmission", "Recevoir une expérience, la faire vivre et la transmettre à son tour aux plus jeunes."]] as const;
+const milestones = [["1996", "Naissance du club", "Le JCAM est créé à Aït Mesbah avec l’ambition d’offrir aux jeunes un cadre de pratique, d’apprentissage et d’épanouissement."], ["Au fil des années", "Une école de formation", "Entraînements, passages de grades et compétitions accompagnent plusieurs générations de judokas du village."], ["Aujourd’hui", "Un héritage à faire vivre", "Le club porte une histoire sportive qui mérite d’être documentée, transmise et prolongée par de nouvelles générations."]] as const;
+const distinctions = ["Champions régionaux", "Champions nationaux", "Champions continentaux"] as const;
+
+export default function JcamPage() {
+  return <>
+    <a className="skip-link" href="#contenu-principal">Aller au contenu principal</a><SiteHeaderClient />
+    <main id="contenu-principal" className="jcam-page" tabIndex={-1}>
+      <header className="jcam-hero"><div className="jcam-hero-copy"><p className="eyebrow light">Judo club d’Aït Mesbah</p><h1>JCAM</h1><p>Depuis 1996, bien plus qu’un sport : une école de discipline, de confiance et de transmission.</p></div><div className="jcam-hero-mark" aria-hidden="true"><span>柔道</span><i>La voie de la souplesse</i></div></header>
+      <nav className="jcam-toc" aria-label="Sommaire de la page"><span>Parcourir la page</span><ol><li><a href="#histoire"><span>01</span>Histoire</a></li><li><a href="#formation"><span>02</span>Formation</a></li><li><a href="#taqaats"><span>03</span>Taqaats</a></li><li><a href="#palmares"><span>04</span>Palmarès</a></li><li><a href="#transmission"><span>05</span>Transmission</a></li></ol></nav>
+      <section id="histoire" className="jcam-origin"><div><p className="eyebrow">Depuis 1996</p><h2>Une aventure sportive née au village</h2></div><div><p className="jcam-lead">Fondé en 1996, le JCAM a permis à des générations d’enfants et de jeunes d’Aït Mesbah de découvrir le judo, de progresser et de se confronter à la compétition.</p><p>Son histoire s’est construite grâce aux entraîneurs, aux dirigeants, aux familles et aux bénévoles qui ont donné de leur temps pour faire vivre le club. Au-delà des résultats, cette continuité constitue l’une de ses plus belles réussites.</p><aside>Les noms des fondateurs, entraîneurs et premiers licenciés seront ajoutés après recueil et validation des archives du club.</aside></div></section>
+      <section className="jcam-history" aria-label="Repères historiques"><div className="jcam-history-line">{milestones.map(([date, title, text], index) => <article key={date}><span>{String(index + 1).padStart(2, "0")}</span><small>{date}</small><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+      <section id="formation" className="jcam-values"><div className="jcam-heading"><p className="eyebrow light">Former par le judo</p><h2>Grandir sur le tatami,<br/>grandir dans la vie</h2><p>Le judo forme le corps, mais aussi le caractère. Chaque entraînement apprend à écouter, se maîtriser, respecter l’autre et progresser avec lui.</p></div><div className="jcam-values-grid">{values.map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+      <section id="taqaats" className="jcam-dojo"><div className="jcam-dojo-mark" aria-hidden="true">畳</div><div><p className="eyebrow">Un lieu emblématique</p><h2>La salle de sport Taqaats</h2><p className="jcam-lead">Taqaats est plus qu’une salle d’entraînement. C’est un lieu d’apprentissage, de rencontres et de souvenirs partagés par plusieurs générations de sportifs.</p><p>On y apprend les gestes, les règles et l’exigence du judo. On y construit aussi des amitiés, une confiance en soi et un attachement durable au club et au village.</p><aside>Une galerie pourra réunir des photographies de la salle, des entraînements, des passages de grades et des compétitions.</aside></div></section>
+      <section id="palmares" className="jcam-honours"><div className="jcam-heading"><p className="eyebrow light">Fierté sportive</p><h2>Du village aux plus hauts podiums</h2><p>Le travail accompli au sein du JCAM a conduit des judokas formés au village vers des titres régionaux, nationaux et même continentaux.</p></div><div className="jcam-honours-grid">{distinctions.map((title, index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><strong>{title}</strong><small>Palmarès individuel à documenter</small></article>)}</div><p className="jcam-honours-note">Cette première présentation ne publie volontairement aucun nom, grade ou résultat précis sans vérification. Les palmarès officiels, diplômes, photographies et témoignages permettront de constituer progressivement les archives sportives du club.</p></section>
+      <section id="transmission" className="jcam-transmission"><p className="eyebrow">Une génération après l’autre</p><h2>Préserver l’histoire.<br/>Préparer la relève.</h2><p>Raconter le JCAM, c’est rendre hommage à celles et ceux qui l’ont construit, mais aussi donner aux plus jeunes l’envie de poursuivre l’aventure. Le prochain chapitre s’écrira avec les pratiquants, les anciens, les familles et les bénévoles.</p><div><Link className="primary" href="/contribuer">Partager une archive du club <span aria-hidden="true">↗</span></Link><Link href="/vivre">Retour à la vie du village</Link></div></section>
+    </main><SiteFooter />
+  </>;
+}

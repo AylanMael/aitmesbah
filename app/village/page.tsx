@@ -42,13 +42,12 @@ export default function VillagePage() {
           <p className="village-lead">Aït Mesbah, appelé At Mesbaḥ en kabyle, est un village de Kabylie situé dans la commune d’Ath Douala, au sein de la wilaya de Tizi Ouzou, en Algérie.</p>
           <p>Établi sur les reliefs de Haute Kabylie, le village se distingue par son histoire, ses traditions artisanales et la vitalité des liens qui unissent ses habitants, au village comme au sein de la diaspora. Aït Mesbah est notamment associé à la couture de la robe kabyle, à la poterie et à la mémoire d’Amar Imache, figure importante du mouvement national algérien.</p>
         </div>
-        <div className="village-hero-visual"><div className="village-hero-photo"><Image src="/ait-mesbah-village.jpg" alt="Vue de Tanajelt à Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 44vw" priority /></div><span className="village-hero-motif" aria-hidden="true">ⵣ</span></div>
       </header>
 
       <nav className="village-toc" aria-label="Sommaire de la page"><span className="village-toc-label">Sur cette page</span><ol>{tableOfContents.map(([label, id], index) => <li key={id}><a href={`#${id}`}><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{label}</a></li>)}</ol></nav>
 
       <section id="territoire" className="village-section village-territory">
-        <ChapterHeading number="01" eyebrow="Géographie" title="Un village établi sur les reliefs de Haute Kabylie" />
+        <ChapterHeading number="01" eyebrow="Géographie" title="Sur les crêtes de Haute Kabylie" />
         <div className="village-territory-content">
           <div className="village-prose"><p>Aït Mesbah se trouve à environ 23 kilomètres au sud de la ville de Tizi Ouzou. Son territoire couvre approximativement 8 km² et s’étend sur un relief composé de crêtes, avec une altitude comprise entre environ 500 et 820 mètres.</p><p>Le point culminant du village est Ikhf Ouguemoune. Tanajelt constitue également l’un des repères importants du territoire, sans en être le point le plus élevé.</p></div>
           <div className="village-boundaries"><h3>Autour du village</h3><dl><div><dt>Au sud</dt><dd>Taguemount Oukerrouche</dd></div><div><dt>Au nord</dt><dd>Tighzert et Ihasnaouene</dd></div><div><dt>À l’ouest</dt><dd>La commune d’Ath Zmenzer</dd></div><div><dt>À l’est</dt><dd>Thaddarth Oufella, Ath Douala-centre, Ath Bouayahia et Icherdiouène</dd></div></dl></div>
@@ -74,22 +73,21 @@ export default function VillagePage() {
       </section>
 
       <section id="quartiers" className="village-districts village-section">
-        <ChapterHeading number="02" eyebrow="Le village habité" title="Un village composé de plusieurs quartiers" />
-        <div className="village-prose"><p>Aït Mesbah est constitué de plusieurs quartiers et ensembles d’habitations répartis sur son territoire. Leur implantation, plus ou moins dispersée, reflète la géographie du village et son développement au fil du temps.</p><ol className="district-list">{districts.map((district, index) => <li key={district}><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{district}</li>)}</ol><p className="village-note">La graphie, les limites et la présentation historique de ces quartiers seront progressivement précisées avec les habitants et les personnes ressources du village.</p></div>
+        <ChapterHeading number="02" eyebrow="Le village habité" title="Les principaux quartiers du village" />
+        <div className="village-prose"><p>Aït Mesbah est constitué de plusieurs quartiers et ensembles d’habitations répartis sur son territoire. Leur implantation, plus ou moins dispersée, reflète la géographie du village et son développement au fil du temps.</p><p className="district-intro">Parmi les principaux quartiers du village :</p><ol className="district-list">{districts.map((district, index) => <li key={district}><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{district}</li>)}</ol></div>
       </section>
 
       <section className="village-gallery" aria-labelledby="village-gallery-title">
         <div className="village-gallery-heading">
-          <p className="eyebrow">Regards sur le village</p>
-          <h2 id="village-gallery-title">Tanajelt, entre habitat et paysage</h2>
-          <p>Une même vue, observée à différentes échelles, révèle la silhouette du village, le tissu des habitations et la présence de la végétation.</p>
+          <p className="eyebrow">Album du village</p>
+          <h2 id="village-gallery-title">Aït Mesbah en images</h2>
+          <p>Un album vivant pour préserver les paysages, les lieux et les visages du village au fil des générations.</p>
         </div>
-        <div className="village-gallery-grid">
-          <figure className="village-gallery-main"><Image src="/ait-mesbah-village.jpg" alt="Vue d’ensemble de Tanajelt à Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 58vw" /><figcaption><span>01</span> Vue d’ensemble</figcaption></figure>
-          <figure className="village-gallery-detail village-gallery-roofs"><Image src="/ait-mesbah-village.jpg" alt="Détail des habitations de Tanajelt à Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 28vw" /><figcaption><span>02</span> Le village habité</figcaption></figure>
-          <figure className="village-gallery-detail village-gallery-landscape"><Image src="/ait-mesbah-village.jpg" alt="Détail du paysage autour de Tanajelt à Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 28vw" /><figcaption><span>03</span> Relief et végétation</figcaption></figure>
+        <div className="village-album" aria-label="Photographies d’Aït Mesbah">
+          <figure><div className="album-photo"><Image src="/ait-mesbah-hero.jpg" alt="Vue panoramique d’Aït Mesbah dans les reliefs de Kabylie" fill sizes="(max-width: 800px) 100vw, 62vw" /></div><figcaption><span>01</span><strong>Le village et ses reliefs</strong><small>Vue panoramique</small></figcaption></figure>
+          <figure><div className="album-photo"><Image src="/ait-mesbah-village.jpg" alt="Vue des habitations d’Aït Mesbah" fill sizes="(max-width: 800px) 100vw, 30vw" /></div><figcaption><span>02</span><strong>Le village habité</strong><small>Maisons et végétation</small></figcaption></figure>
         </div>
-        <p className="village-gallery-credit">Photographie : vue de Tanajelt à Aït Mesbah.</p>
+        <div className="village-album-footer"><p>Ce premier album sera enrichi progressivement par des photographies identifiées et publiées avec l’accord de leurs détenteurs.</p><Link href="/contribuer">Contribuer à l’album <span aria-hidden="true">↗</span></Link></div>
       </section>
 
       <section id="reperes" className="village-facts">

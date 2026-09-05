@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./public.css";
+import "./refresh.css";
 
 const title = "Aït Mesbah — Village & Mémoire";
 const description =

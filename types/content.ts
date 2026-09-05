@@ -1,6 +1,9 @@
 export interface NavigationItem {
   label: string;
   href: string;
+  description?: string;
+  icon?: "committee" | "sport" | "judo" | "culture";
+  children?: NavigationItem[];
 }
 
 export interface QuickLinkItem extends NavigationItem {

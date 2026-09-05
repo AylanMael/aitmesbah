@@ -4,17 +4,19 @@ import Link from "next/link";
 export default function HeroSection() {
   return (
     <section id="accueil" className="hero">
-      <div className="hero-media">
-          <Image
-            className="hero-photo"
-            src="/images/ait-mesbah-hero.webp"
-            alt="Vue de Tanajelt à Aït Mesbah"
-            fill
-            sizes="100vw"
-            preload
-          />
-        <div className="hero-media-shade" />
-        <div className="hero-sunlight" aria-hidden="true" />
+      <Image
+        className="hero-backdrop"
+        src="/ait-mesbah-hero.jpg"
+        alt="Vue panoramique d’Aït Mesbah en Haute Kabylie"
+        fill
+        sizes="100vw"
+        loading="eager"
+        preload
+      />
+      <div className="mountains">
+        <i />
+        <i />
+        <i />
       </div>
       <div className="grain" />
       <div className="hero-content">

@@ -4,7 +4,8 @@ import { contributionTypes } from "@/data/home";
 export default function ContributionSection() {
   return (
     <section id="contribuer" className="contribution section-pad">
-      <div>
+      <span className="contribution-symbol" aria-hidden="true">ⵣ</span>
+      <div className="contribution-heading">
         <p className="eyebrow">Notre mémoire vous appartient</p>
         <h2>
           Vous avez une photo,
@@ -15,17 +16,13 @@ export default function ContributionSection() {
           Contribuez à enrichir la mémoire collective d’Aït Mesbah. Chaque
           témoignage sera étudié et valorisé avec soin.
         </p>
-      </div>
-      <div className="contribution-info">
-        <p>Préparer une contribution utile :</p>
         <ul>
           {contributionTypes.map((type) => (
             <li key={type.label}>{type.label}</li>
           ))}
         </ul>
-        <p>Les dépôts ne sont pas encore ouverts. La page dédiée explique les droits, le consentement et les informations à réunir en amont.</p>
-        <Link className="text-link" href="/contribuer">
-          Découvrir les modalités de contribution <span aria-hidden="true">↗</span>
+        <Link className="contribution-action" href="/contribuer">
+          <span>Partager une mémoire</span><b aria-hidden="true">↗</b>
         </Link>
       </div>
     </section>

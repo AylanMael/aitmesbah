@@ -17,7 +17,6 @@ export default function Home() {
       <SiteHeaderClient />
       <main id="contenu-principal" tabIndex={-1}>
         <HeroSection />
-        <QuickLinks />
         <div className="word-river" aria-hidden="true">
           <div>
             TRANSMISSION <i>✦</i> VILLAGE <i>✦</i> MÉMOIRE <i>✦</i> SOLIDARITÉ <i>✦</i>

@@ -7,9 +7,10 @@ export default function NewsSection() {
           <h2>Actualités</h2>
         </div>
       </div>
-      <div className="section-empty">
-        <p>Les premières actualités du village seront publiées après validation éditoriale.</p>
-        <p>Cette rubrique accueillera les informations locales, les initiatives et les nouvelles de la communauté.</p>
+      <div className="news-awaiting">
+        <span aria-hidden="true">ⵣ</span>
+        <div><p className="news-status">Le fil du village se prépare</p><p>Les informations locales, initiatives et nouvelles de la communauté seront publiées ici après validation éditoriale.</p></div>
+        <a href="/contribuer">Proposer une actualité <b aria-hidden="true">↗</b></a>
       </div>
     </section>
   );
