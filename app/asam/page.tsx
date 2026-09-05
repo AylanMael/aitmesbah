@@ -51,6 +51,19 @@ export default function AsamPage() {
 
       <section className="asam-team-2026"><figure><Image src="/images/asam-2026-finaliste.jpg" alt="L’équipe de l’ASAM, finaliste en 2026, entourée de son encadrement et de ses supporters" fill sizes="100vw" priority={false}/><figcaption><span>ASAM · 2026</span><strong>L’équipe finaliste</strong><small>Une génération, un maillot, tout un village derrière elle.</small></figcaption></figure></section>
 
+      <section className="asam-archive-1990" aria-labelledby="asam-1990-title">
+        <div className="asam-archive-copy">
+          <p className="eyebrow">Archive du club · 1990</p>
+          <h2 id="asam-1990-title">L’année du titre régional</h2>
+          <p>Cette photographie conserve le visage d’une génération entrée dans la mémoire sportive d’Aït Mesbah. En 1990, l’ASAM devient championne de la région et offre au village l’un de ses plus grands repères collectifs.</p>
+          <blockquote>Une équipe, une époque, une fierté toujours transmise.</blockquote>
+        </div>
+        <figure>
+          <div className="asam-archive-photo"><Image src="/images/asam-1990-champions.jpg" alt="L’équipe de l’ASAM en 1990, année de son titre de championne de la région" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
+          <figcaption><span>ASAM 90</span><small>Équipe championne de la région · photographie d’archive</small></figcaption>
+        </figure>
+      </section>
+
       <section id="palmares" className="asam-honours"><div className="asam-heading"><p className="eyebrow">Mémoire des compétitions</p><h2>Des générations qui ont marqué l’histoire</h2><p>Ce premier palmarès rassemble les grands repères transmis par le club. Il pourra être enrichi par les feuilles de match, trophées, photographies et témoignages.</p></div><div className="asam-honours-list">{honours.map(([year, title, text], index) => <article key={year}><span>{String(index + 1).padStart(2, "0")}</span><strong>{year}</strong><div><h3>{title}</h3><p>{text}</p></div></article>)}</div></section>
 
       <section id="stade" className="asam-stadium"><div><p className="eyebrow">Une nécessité pour la jeunesse</p><h2>Donner enfin un terrain à nos ambitions</h2><p className="asam-lead">Pour former, jouer et progresser durablement, les jeunes d’Aït Mesbah ont besoin d’un stade adapté, sûr et accessible.</p><p>Construire cet équipement ne répondrait pas seulement à un besoin sportif. Ce serait créer un lieu de rencontre, d’éducation, de santé et de cohésion pour l’ensemble du village.</p></div><div className="asam-pitch" aria-hidden="true"><span></span><i></i><b>Un stade<br/>pour demain</b></div></section>

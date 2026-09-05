@@ -17,6 +17,13 @@ const sections = [
   ["Repères utiles", "reperes-utiles"],
 ] as const;
 
+const villageForces = [
+  { number: "01", href: "/comite-village", icon: "⌂", title: "Comité du village", kicker: "Représenter · coordonner", text: "Un espace de dialogue, de concertation et d’organisation au service de la vie commune." },
+  { number: "02", href: "/asam", icon: "⚽", title: "Association sportive ASAM", kicker: "Football · jeunesse", text: "Les couleurs jaune et noir, une histoire sportive et une énergie qui rassemble les générations." },
+  { number: "03", href: "/jcam", icon: "柔", title: "Club de judo JCAM", kicker: "Discipline · transmission", text: "Former par le sport, transmettre le respect et accompagner les jeunes vers l’excellence." },
+  { number: "04", href: "/association-imache-amar", icon: "✦", title: "Association culturelle Imache Amar", kicker: "Culture · mémoire", text: "Créer, transmettre et retisser les liens autour de la culture et des initiatives de la jeunesse." },
+] as const;
+
 export default function LiveInVillagePage() {
   return <>
     <a className="skip-link" href="#contenu-principal">Aller au contenu principal</a>
@@ -54,8 +61,26 @@ export default function LiveInVillagePage() {
       </section>
 
       <section id="vie-collective" className="live-community">
-        <div className="live-section-heading"><p className="eyebrow">Initiatives</p><h2>Une énergie collective</h2></div>
-        <div className="live-community-content"><p>La vie du village repose sur l’engagement de ses habitantes et habitants, de son comité et de ses structures associatives. Cet espace présentera progressivement leurs activités, leurs rendez-vous et leurs projets.</p><ul><li id="comite-village"><Link href="/comite-village"><span>01</span><strong>Comité du village</strong><small>Dialogue et initiatives collectives</small></Link></li><li id="asam"><Link href="/asam"><span>02</span><strong>Association sportive ASAM</strong><small>Football, jeunesse et palmarès</small></Link></li><li id="jcam"><Link href="/jcam"><span>03</span><strong>Club de judo JCAM</strong><small>Pratique, formation et rencontres sportives</small></Link></li><li id="imache-amar"><Link href="/association-imache-amar"><span>04</span><strong>Association culturelle Imache Amar</strong><small>Culture, jeunesse et mémoire</small></Link></li></ul><p className="live-caution">Chaque structure sera présentée plus précisément après validation de ses informations et avec son accord.</p></div>
+        <div className="live-community-heading">
+          <p className="eyebrow light">Les forces du village</p>
+          <h2>Une énergie<br /><em>collective</em></h2>
+          <p>Le village vit par celles et ceux qui donnent du temps, transmettent une expérience et font naître des projets.</p>
+        </div>
+        <div className="live-community-content">
+          <p className="live-community-lead">Comité, sport et culture composent une même maison commune. Chacun agit à sa manière, avec une ambition partagée&nbsp;: créer du lien et préparer l’avenir d’Aït Mesbah.</p>
+          <div className="live-community-grid">
+            {villageForces.map((item) => <article id={item.href.slice(1)} key={item.href}>
+              <Link href={item.href}>
+                <header><span>{item.number}</span><i aria-hidden="true">{item.icon}</i></header>
+                <small>{item.kicker}</small>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <b>Découvrir <span aria-hidden="true">↗</span></b>
+              </Link>
+            </article>)}
+          </div>
+          <p className="live-caution">Ces espaces évolueront avec les informations, les rendez-vous et les projets transmis par chaque structure.</p>
+        </div>
       </section>
 
       <section id="reperes-utiles" className="live-practical">
