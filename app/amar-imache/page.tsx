@@ -17,6 +17,7 @@ const chronology = [
   ["1924–1926", "Les ouvriers s’organisent", "À Paris, il prend part à l’organisation politique des ouvriers nord-africains. Cette dynamique précède la fondation de l’Étoile nord-africaine en 1926."],
   ["1933", "Au premier rang de l’Étoile", "Il est élu secrétaire général de l’Étoile nord-africaine et assume la rédaction en chef de son journal, El Ouma. La parole militante devient aussi une œuvre d’écriture et de transmission."],
   ["1934–1936", "Prison, presse et désaccords", "Poursuivi et emprisonné après la dissolution de l’organisation, il reprend son activité à sa libération. Il défend l’indépendance et s’oppose à l’assimilation comme horizon politique."],
+  ["1937", "« Ils nous ont trahis »", "Le 5 février, La Lutte ouvrière publie un article signé Amar Imache. Il y dénonce la dissolution de l’Étoile nord-africaine par le gouvernement du Front populaire et défend le droit des travailleurs nord-africains à s’organiser librement."],
   ["1937–1939", "Écrire pour éclairer", "Ses brochures prolongent son combat. Dans L’Algérie au carrefour puis L’Afrique dans l’angoisse, il interroge le pouvoir colonial, l’avenir de l’Algérie et les impérialismes qui menacent le continent."],
   ["1940–1945", "Déporté dans l’Allemagne en guerre", "Pendant l’Occupation, le régime de Vichy le livre aux autorités allemandes comme prisonnier politique. Déporté dans des camps en Allemagne, il y demeure plusieurs années et n’est libéré qu’à la fin de la Seconde Guerre mondiale. Il revient de cette détention profondément affaibli. Les dates, lieux et parcours exacts de sa captivité restent à établir à partir des archives nominatives."],
   ["1946–1947", "Reprendre la plume", "Après sa libération, Cyclones sur le monde et L’Heure de l’élite témoignent de son regard sur la guerre, les massacres de mai 1945 et la responsabilité politique. Sa Lettre d’adieu aux Algériens résidant en France paraît en 1947."],
@@ -25,6 +26,7 @@ const chronology = [
 ] as const;
 
 const writings = [
+  ["1937", "Ils nous ont trahis", "Article signé dans La Lutte ouvrière du 5 février 1937, consacré à la dissolution de l’Étoile nord-africaine et à la politique du Front populaire."],
   ["1937", "L’Algérie au carrefour", "Une brochure politique également connue sous le sous-titre La marche vers l’inconnu."],
   ["1939", "L’Afrique dans l’angoisse", "Une réflexion qui inscrit la question algérienne dans un horizon africain et international."],
   ["1946", "Cyclones sur le monde", "Un texte marqué par la guerre mondiale et par la place de l’Algérie dans l’ordre qui se recompose."],
@@ -43,7 +45,7 @@ const archiveFamilies = [
 ] as const;
 
 export default function AmarImachePage() {
-  const toc = [["Parcours","parcours"],["Combat","combat"],["Écrits","ecrits"],["Archives","fonds"],["Sources","sources"]];
+  const toc = [["Parcours","parcours"],["Combat","combat"],["Écrits","ecrits"],["Archive 1937","archive-1937"],["Fonds","fonds"],["Sources","sources"]];
   return <><a className="skip-link" href="#contenu-principal">Aller au contenu principal</a><SiteHeaderClient />
     <main id="contenu-principal" className="imache-dossier-page" tabIndex={-1}>
       <header className="imache-dossier-hero">
@@ -63,6 +65,17 @@ export default function AmarImachePage() {
       <section className="imache-dossier-thought" id="combat"><div className="imache-dossier-quote"><span aria-hidden="true">«</span><p>Une indépendance pensée avec la dignité du peuple, la souveraineté et la responsabilité collective.</p></div><div className="imache-dossier-thought-content"><p className="eyebrow">Le sens du combat</p><h2>Ni assimilation,<br/>ni homme providentiel</h2><p>Ses textes défendent le droit des Algériens à décider de leur avenir. Face aux projets d’intégration limitée à la citoyenneté française, il oppose une communauté politique algérienne qui n’a pas à renoncer à elle-même pour accéder aux droits.</p><p>Son attachement aux assemblées villageoises kabyles nourrit également une réflexion sur la démocratie, le mandat et le contrôle des responsables. Ses différends avec Messali Hadj doivent être lus dans ce cadre politique, sans les réduire à une querelle personnelle.</p><div className="imache-dossier-pillars"><div><span>01</span><strong>Souveraineté</strong></div><div><span>02</span><strong>Démocratie</strong></div><div><span>03</span><strong>Dignité ouvrière</strong></div><div><span>04</span><strong>Horizon africain</strong></div></div></div></section>
 
       <section className="imache-dossier-writings" id="ecrits"><div className="imache-dossier-section-head"><p className="eyebrow">Écrits et presse</p><h2>Une pensée laissée sur le papier</h2><p>Cette première bibliographie sera complétée par les notices, reproductions et localisations des exemplaires conservés.</p></div><div className="imache-dossier-library">{writings.map(([year,title,body],i)=><article key={title}><div><span>{year}</span><small>{String(i+1).padStart(2,"0")}</small></div><h3>{title}</h3><p>{body}</p></article>)}</div></section>
+
+      <section className="imache-press-archive" id="archive-1937" aria-labelledby="archive-1937-title">
+        <header className="imache-press-heading"><div><p className="eyebrow light">Archives de presse</p><h2 id="archive-1937-title">Lire les textes<br/><em>dans leur temps</em></h2></div><div><p>Une collection appelée à réunir les articles signés par Amar Imache et les journaux qui rendent compte de son action.</p><span>1 document catalogué</span></div></header>
+        <div className="imache-press-collection">
+          <article className="imache-press-card">
+            <Link className="imache-press-thumb" href="/amar-imache/archives/ils-nous-ont-trahis-1937"><Image src="/images/amar-imache/la-lutte-ouvriere-1937-page-2.jpg" alt="Page 2 de La Lutte ouvrière du 5 février 1937 contenant l’article Ils nous ont trahis signé Amar Imache" fill sizes="(max-width: 700px) 100vw, 360px"/><span>Voir la notice</span></Link>
+            <div className="imache-press-card-copy"><div className="imache-press-card-meta"><span>05.02.1937</span><span>Page 2</span><span>Article signé</span></div><p className="imache-press-publication">La Lutte ouvrière · n° 30</p><h3>« Ils nous ont trahis »</h3><p>Amar Imache dénonce la dissolution de l’Étoile nord-africaine par le gouvernement du Front populaire et défend le droit des travailleurs nord-africains à s’organiser librement.</p><footer><span>Signature : Imache Amar</span><div className="imache-press-card-actions"><Link href="/amar-imache/archives/ils-nous-ont-trahis-1937">Voir le document</Link><Link className="primary" href="/amar-imache/archives/ils-nous-ont-trahis-1937#transcription">Lire la transcription <b aria-hidden="true">→</b></Link></div></footer></div>
+          </article>
+          <aside className="imache-press-next"><span>Le fonds documentaire</span><p>Explorer les archives d’Amar Imache.</p><small>Presse · brochures · tracts · correspondances</small><Link href="/amar-imache/archives">Ouvrir le catalogue <b aria-hidden="true">↗</b></Link></aside>
+        </div>
+      </section>
 
       <section className="imache-dossier-archives" id="fonds"><div><p className="eyebrow light">Le chantier des archives</p><h2>Retrouver, préserver, rendre accessible</h2><p>Le futur fonds Amar Imache ne doit pas être une simple galerie d’hommages. Il doit permettre de lire les pièces, d’en connaître l’origine, la date, le détenteur et les conditions de publication.</p></div><ol>{archiveFamilies.map(([title,body],i)=><li key={title}><span>{String(i+1).padStart(2,"0")}</span><div><h3>{title}</h3><p>{body}</p></div></li>)}</ol></section>
 

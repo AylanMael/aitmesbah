@@ -3,6 +3,7 @@ import Image from "next/image";
 export default function VillageIntro() {
   return (
     <section id="decouvrir" className="intro section-pad">
+      <span className="intro-index" aria-hidden="true">01</span>
       <div className="intro-left">
         <p className="eyebrow">Notre village</p>
         <h2>
@@ -17,10 +18,11 @@ export default function VillageIntro() {
           Une communauté unie par une terre, une culture et des valeurs de solidarité. Ce site a pour vocation de recueillir, préserver et transmettre progressivement la mémoire du village.
         </p>
         <a className="text-link" href="#memoire">
-          L’histoire du village →
+          Découvrir l’histoire <span aria-hidden="true">↗</span>
         </a>
       </div>
       <div className="intro-visual">
+        <span className="intro-photo-mark" aria-hidden="true">ⵣ</span>
         <Image
           src="/ait-mesbah-village.jpg"
           alt="Vue du village d’Aït Mesbah et des montagnes de Kabylie"
@@ -28,10 +30,11 @@ export default function VillageIntro() {
           sizes="(max-width: 760px) 100vw, 48vw"
         />
         <div className="intro-caption">
-          <span>36° 35′ N</span>
-          <p>Entre crêtes, oliviers et mémoire</p>
+          <div><span>36° 35′ N</span><small>Aït Douala · Haute Kabylie</small></div>
+          <p>Entre crêtes,<br />oliviers et mémoire</p>
         </div>
       </div>
+      <span className="intro-place" aria-hidden="true">TERRE · MÉMOIRE · TRANSMISSION</span>
     </section>
   );
 }

@@ -1,0 +1,38 @@
+export const amarImacheArchives = [
+  {
+    slug: "ils-nous-ont-trahis-1937",
+    date: "1937-02-05",
+    displayDate: "5 février 1937",
+    year: "1937",
+    title: "Ils nous ont trahis",
+    publication: "La Lutte ouvrière",
+    issue: "2ᵉ année · n° 30",
+    page: "Page 2",
+    type: "Article signé",
+    signature: "Imache Amar",
+    themes: ["Étoile nord-africaine", "Front populaire", "Organisation politique"],
+    summary: "Amar Imache dénonce la dissolution de l’Étoile nord-africaine par le gouvernement du Front populaire et défend le droit des travailleurs nord-africains à s’organiser librement.",
+    context: "Présenté par le journal comme un article du secrétaire général de l’Étoile nord-africaine, le texte critique la rupture des engagements pris envers les travailleurs nord-africains. Il replace la liberté d’organisation dans le combat anticolonial.",
+    transcription: [
+      "Le Front Populaire est parjure. Le Front Populaire a immolé un de ses membres avec l’appui des Communistes.",
+      "L’Étoile Nord-Africaine, adhérente au Front Populaire, vient d’être dissoute par ce même Front Populaire !",
+      "Le parti politique qui avait le plus recherché l’alliance avec nous et sur qui beaucoup des nôtres croyaient pouvoir compter, s’est fait l’adversaire le plus acharné et le complice du gouvernement qui vient de nous dissoudre.",
+      "Les attaques les plus insensées et les plus injustifiées n’avaient pour but que de préparer l’opinion au coup terrible que le gouvernement s’apprêtait à porter à une organisation de travailleurs musulmans.",
+      "Ali Boukort, que l’on veut placer comme vedette en Algérie, était chargé par ses maîtres de commencer l’attaque, et les accusations les plus stupides étaient imprimées, noir sur blanc, dans La Lutte sociale d’abord, puis dans L’Humanité.",
+      "« Hitlériens », nous qui avons combattu le fascisme et souffert par lui plus qu’aucune organisation ou parti ?",
+      "Hitlériens, nous qui nous sommes placés aux côtés des travailleurs dès la première minute ? Nous qui avons manifesté avec le peuple et qui avons soutenu sa lutte en toutes circonstances ? Allons donc, messieurs les « camarades prolétaires » ! Il n’y a pas un travailleur sensé et honnête qui puisse croire à vos sornettes. Dites plutôt que vous avez pris la place de l’impérialisme ou que vous avez endossé sa livrée et que vous êtes devenus des chauvins de la pire espèce alliés du colonialisme. Il y a d’ailleurs longtemps qu’on s’en doutait et ce n’est un mystère que pour les aveugles ou les fanatiques.",
+      "Car enfin le programme de l’Étoile date de 1926.",
+      "Depuis cette date, vous connaissez son programme et aussi ses dirigeants. Le connaissant, vous l’aviez approuvé par vos déclarations ; mieux, vous l’aviez soutenu et défendu par vos avocats et cela jusqu’en juin 1936. C’est-à-dire tant que vous n’étiez pas au pouvoir. C’est-à-dire avant que vous ne chantiez la Marseillaise et avant que ceux que vous appeliez les « gueules de vaches » ne soient devenus des « camarades généraux ». Du changement ? Certes, il y en a eu, mais pas chez nous. Si la préoccupation de la « défense nationale » vous laissait un peu de répit, vous pourriez peut-être vous rappeler votre ancienne doctrine qui était pour la défense des opprimés et la libération des colonies. Mais c’était à l’époque où vous étiez contre la bourgeoisie et contre la guerre. Aujourd’hui, vous êtes vous-mêmes devenus bourgeois et vous êtes plus qualifiés que quiconque pour faire sur-armer votre patrie et opprimer vos esclaves.",
+      "C’était inattendu, beaucoup des nôtres n’osent pas en croire leurs yeux. Mais chacun sera obligé de se rendre à l’évidence. Chacun y trouvera aussi un avant-goût du paradis qui nous attend quand vous serez complètement au pouvoir, quand le Soviet régnera en maître.",
+      "Nos compatriotes s’en aperçoivent déjà en certaines usines où ils ont à choisir entre la carte du parti, en plus de celle du syndicat, ou la porte. Et l’ombre du malheureux Acherchour est à peine effacée que vous traitez les Nord-Africains d’antifrançais, dans le journal des prolétaires. Ce n’est pas seulement de l’audace, mais de la pure muflerie et c’est une odieuse provocation à l’égard de nos frères. En faisant passer pour fascistes ceux-là même qui se sont attiré la haine du fascisme, vous ne ferez que provoquer un antagonisme entre les ouvriers français et algériens. Mais cela ne vous inquiète peut-être. Le danger fasciste est sans doute écarté maintenant.",
+      "La fraternité avec « les camarades nord-africains » était bonne quand ce danger était menaçant. À ce moment-là, l’appoint de l’Étoile Nord-Africaine était excellent. Vous nous avez admis au Front Populaire.",
+      "Mais maintenant, il faut nous noyer et, pour cela, il faut nous faire passer pour enragés. Soit, messieurs les « défenseurs des opprimés », vous avez la main près du manche, frappez. Mais frappez fort car nous sommes durs à mourir. D’autres, comme vous le savez, ont déjà suffisamment cogné sans résultat ; vos coups, même donnés en traître, ne feront que nous rendre plus vigoureux. Et quelle que soit l’issue du combat, nous serons vainqueurs.",
+      "D’abord parce que l’Algérie et les Algériens sont nôtres, ensuite parce que l’opinion française elle-même vous confondra et vous condamnera si votre conscience ne vous inflige pas le châtiment d’avoir renié votre doctrine, piétiné vos promesses et parjurer le serment du 14 juillet 1935. « Le pain, la paix, la liberté. »",
+      "« La liberté pour tous. » Mais vous ne la voulez que pour vous et pour vous seulement.",
+    ],
+    image: "/images/amar-imache/la-lutte-ouvriere-1937-page-2.jpg",
+    pdf: "/archives/amar-imache/la-lutte-ouvriere-05-fevrier-1937.pdf",
+  },
+] as const;
+
+export type AmarImacheArchive = (typeof amarImacheArchives)[number];
