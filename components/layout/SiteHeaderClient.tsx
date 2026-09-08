@@ -16,6 +16,7 @@ function MenuIcon({ type }: { type?: "committee" | "sport" | "judo" | "culture" 
 export default function SiteHeaderClient() {
   const pathname = usePathname();
   const [menu, setMenu] = useState(false);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -28,7 +29,7 @@ export default function SiteHeaderClient() {
   }, []);
 
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 981px)");
+    const desktop = window.matchMedia("(min-width: 1051px)");
     const closeOnDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setMenu(false);
     };
@@ -53,7 +54,7 @@ export default function SiteHeaderClient() {
       }
       if (event.key !== "Tab" || !navRef.current) return;
       const focusable = [
-        ...navRef.current.querySelectorAll<HTMLAnchorElement>("a[href]"),
+        ...navRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"),
         menuButtonRef.current,
       ].filter(Boolean) as HTMLElement[];
       const first = focusable[0];
@@ -75,10 +76,16 @@ export default function SiteHeaderClient() {
     };
   }, [menu]);
 
+  useEffect(() => {
+    setMenu(false);
+    setExpandedItem(null);
+  }, [pathname]);
+
   function closeMenuAndRestoreFocus() {
     if (!menu) return;
 
     setMenu(false);
+    setExpandedItem(null);
     requestAnimationFrame(() => {
       menuButtonRef.current?.focus({ preventScroll: true });
     });
@@ -93,12 +100,24 @@ export default function SiteHeaderClient() {
         aria-label="Navigation principale"
         className={menu ? "open" : ""}
       >
+        <div className="mobile-nav-intro" aria-hidden="true">
+          <span>Navigation</span>
+          <strong>Explorer Aït Mesbah</strong>
+        </div>
         {mainNavigation.map((item) => (
-          <div className={`${item.children ? "nav-item nav-item-with-submenu" : "nav-item"}${item.href === "/agir" ? " nav-item-highlight" : ""}`} key={item.href}>
+          <div className={`${item.children ? "nav-item nav-item-with-submenu" : "nav-item"}${item.href === "/agir" ? " nav-item-highlight" : ""}${expandedItem === item.href ? " submenu-open" : ""}`} key={item.href}>
             <a href={item.href} onClick={closeMenuAndRestoreFocus} aria-current={pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href)) ? "page" : undefined}>
               {item.label}{item.children && <span className="nav-chevron" aria-hidden="true">⌄</span>}
             </a>
-            {item.children && <div className="nav-submenu" aria-label={`Sous-menu ${item.label}`}>
+            {item.children && <button
+              type="button"
+              className="nav-submenu-toggle"
+              aria-label={`${expandedItem === item.href ? "Replier" : "Déployer"} les rubriques ${item.label}`}
+              aria-expanded={expandedItem === item.href}
+              aria-controls={`submenu-${item.href.replaceAll("/", "")}`}
+              onClick={() => setExpandedItem((current) => current === item.href ? null : item.href)}
+            ><span aria-hidden="true">+</span></button>}
+            {item.children && <div id={`submenu-${item.href.replaceAll("/", "")}`} className="nav-submenu" aria-label={`Sous-menu ${item.label}`}>
               {item.children.map((child) => <a href={child.href} key={child.href} onClick={closeMenuAndRestoreFocus}>
                 <span className="nav-submenu-icon"><MenuIcon type={child.icon} /></span>
                 <span className="nav-submenu-copy"><strong>{child.label}</strong>{child.description && <small>{child.description}</small>}</span>
@@ -107,6 +126,10 @@ export default function SiteHeaderClient() {
             </div>}
           </div>
         ))}
+        <div className="mobile-nav-footer">
+          <Link href="/contribuer" onClick={closeMenuAndRestoreFocus}>Contribuer à la mémoire <span aria-hidden="true">↗</span></Link>
+          <p>Aït Mesbah · Village, mémoire et avenir</p>
+        </div>
       </nav>
       <div className="header-actions">
         <Link
@@ -125,7 +148,7 @@ export default function SiteHeaderClient() {
           aria-controls="navigation-principale"
           aria-label={menu ? "Fermer le menu" : "Ouvrir le menu"}
         >
-          {menu ? "×" : "☰"}
+          <span className="menu-btn-lines" aria-hidden="true"><i /><i /></span>
         </button>
       </div>
     </header>

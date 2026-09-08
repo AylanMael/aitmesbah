@@ -25,6 +25,7 @@ export const mainNavigation: NavigationItem[] = [
 
 export const footerDiscoverLinks: NavigationItem[] = [
   { label: "Le village", href: "/village" },
+  { label: "Carte vivante", href: "/carte-vivante" },
   { label: "Histoire & mémoire", href: "/histoire-memoire" },
   { label: "Diaspora", href: "/diaspora" },
   { label: "Vivre au village", href: "/vivre" },
@@ -34,6 +35,7 @@ export const footerDiscoverLinks: NavigationItem[] = [
 
 export const footerCommunityLinks: FooterCommunityItem[] = [
   { label: "Agir ensemble", href: "/agir" },
+  { label: "Projets du village", href: "/projets" },
   { label: "Diaspora", href: "/diaspora" },
   { label: "Contribuer", href: "/contribuer" },
   { label: "Galerie & archives — bientôt", href: null },

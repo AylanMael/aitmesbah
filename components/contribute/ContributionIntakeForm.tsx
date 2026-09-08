@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const categories = [
   ["photographs_archives", "Photographie ou archive"], ["testimonies_stories", "Témoignage ou récit"],
@@ -19,6 +19,18 @@ export default function ContributionIntakeForm() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [reference, setReference] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const form = document.querySelector<HTMLFormElement>("#envoyer form");
+    if (!form) return;
+    const category = params.get("category");
+    const title = params.get("title");
+    const categoryField = form.elements.namedItem("category") as HTMLSelectElement | null;
+    const titleField = form.elements.namedItem("title") as HTMLInputElement | null;
+    if (category && categoryField && categories.some(([value]) => value === category)) categoryField.value = category;
+    if (title && titleField) titleField.value = title.slice(0, 160);
+  }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

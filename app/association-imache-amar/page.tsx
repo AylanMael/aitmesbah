@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -32,8 +33,9 @@ const restartSteps = ["Écouter les attentes", "Réunir les volontaires", "Défi
 export default function ImacheAmarAssociationPage() {
   return <>
     <a className="skip-link" href="#contenu-principal">Aller au contenu principal</a><SiteHeaderClient />
-    <main id="contenu-principal" className="imache-assoc-page" tabIndex={-1}>
-      <header className="imache-assoc-hero"><div className="imache-assoc-hero-copy"><p className="eyebrow light">Culture · Mémoire · Jeunesse</p><h1>Association<br/>Imache Amar</h1><p>Une histoire culturelle à préserver. Une énergie collective à réveiller.</p></div><div className="imache-assoc-emblem" aria-hidden="true"><span>ⵣ</span><i>Créer · Transmettre · Rassembler</i></div></header>
+    <main id="contenu-principal" className="imache-assoc-page imache-assoc-premium" tabIndex={-1}>
+      <header className="imache-assoc-hero"><div className="imache-assoc-hero-copy"><p className="eyebrow light">Culture · Mémoire · Jeunesse</p><h1>Association<br/><em>Imache Amar</em></h1><p>Une histoire culturelle à préserver. Une énergie collective à réveiller.</p><div className="imache-assoc-hero-actions"><a href="#histoire">Découvrir son histoire <span aria-hidden="true">↓</span></a><a href="https://www.facebook.com/profile.php?id=100090167800201" target="_blank" rel="noreferrer">Suivre l’association <span aria-hidden="true">↗</span></a></div></div><figure className="imache-assoc-portrait"><div><Image src="/images/amar-imache/portrait-amar-imache.jpg" alt="Portrait d’Amar Imache, dont l’association culturelle porte le nom" fill priority sizes="(max-width: 700px) 70vw, 350px"/></div><figcaption><span>Le nom transmis</span><strong>Amar Imache</strong><Link href="/amar-imache">Découvrir son parcours →</Link></figcaption></figure><span className="imache-assoc-era" aria-hidden="true">70</span></header>
+      <div className="imache-assoc-mantra" aria-label="Les trois missions de l’association"><span>Créer</span><i>✦</i><span>Transmettre</span><i>✦</i><span>Rassembler</span></div>
 
       <nav className="imache-assoc-toc" aria-label="Sommaire de la page"><span>Parcourir la page</span><ol><li><a href="#histoire"><span>01</span>Histoire</a></li><li><a href="#age-or"><span>02</span>Âge d’or</a></li><li><a href="#aujourdhui"><span>03</span>Aujourd’hui</a></li><li><a href="#lieux"><span>04</span>Lieux</a></li><li><a href="#relance"><span>05</span>Relance</a></li></ol></nav>
 
@@ -49,7 +51,7 @@ export default function ImacheAmarAssociationPage() {
 
       <section id="relance" className="imache-assoc-restart"><div><p className="eyebrow">Sortir de la léthargie</p><h2>Relancer sans brûler les étapes</h2><p>La relance doit être collective, réaliste et durable. Elle peut commencer par quelques rendez-vous réguliers, un projet clair et une équipe capable de transmettre progressivement les responsabilités.</p></div><ol>{restartSteps.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, "0")}</span><strong>{step}</strong></li>)}</ol></section>
 
-      <section className="imache-assoc-call"><p className="eyebrow light">Un appel aux énergies</p><h2>La jeunesse du village mérite une association culturelle à la hauteur de ses talents</h2><p>Anciens membres, jeunes, parents, artistes, enseignants, associations et diaspora peuvent contribuer à écrire une nouvelle étape, chacun selon son temps et ses possibilités.</p><div><Link className="primary" href="/agir">Participer à la relance <span aria-hidden="true">↗</span></Link><Link href="/contribuer">Partager une archive de l’association</Link></div></section>
+      <section className="imache-assoc-call"><p className="eyebrow light">Un appel aux énergies</p><h2>La jeunesse du village mérite une association culturelle à la hauteur de ses talents</h2><p>Anciens membres, jeunes, parents, artistes, enseignants, associations et diaspora peuvent contribuer à écrire une nouvelle étape, chacun selon son temps et ses possibilités.</p><div><Link className="primary" href="/contribuer?category=events_village_life&title=Participer à la relance de l’association Imache Amar#envoyer">Participer à la relance <span aria-hidden="true">↗</span></Link><Link href="/contribuer?category=photographs_archives&title=Archive de l’association Imache Amar#envoyer">Partager une archive</Link><a href="https://www.facebook.com/profile.php?id=100090167800201" target="_blank" rel="noreferrer">Page Facebook ↗</a></div></section>
     </main><SiteFooter />
   </>;
 }

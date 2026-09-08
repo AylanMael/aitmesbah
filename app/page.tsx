@@ -4,6 +4,7 @@ import HeroSection from "@/components/home/HeroSection";
 import VillageIntro from "@/components/home/VillageIntro";
 import MemorySection from "@/components/home/MemorySection";
 import VillageLifeSection from "@/components/home/VillageLifeSection";
+import VillageAliveSection from "@/components/home/VillageAliveSection";
 import DiasporaSection from "@/components/home/DiasporaSection";
 import ContributionSection from "@/components/home/ContributionSection";
 import QuickLinks from "@/components/home/QuickLinks";
@@ -26,9 +27,10 @@ export default function Home() {
         <VillageIntro />
         <MemorySection />
         <VillageLifeSection />
+        <VillageAliveSection />
+        <VillageFutureSection />
         <DiasporaSection />
         <ContributionSection />
-        <VillageFutureSection />
       </main>
       <SiteFooter />
     </>
