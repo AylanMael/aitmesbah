@@ -38,6 +38,9 @@ env:
   - variable: AITMESBAH_APP_ENV
     value: production
     availability: [RUNTIME]
+  - variable: GCLOUD_PROJECT
+    value: aitmesbah-d945d
+    availability: [RUNTIME]
   - variable: AITMESBAH_CANONICAL_URL
     value: https://ait-mesbah.org
     availability: [RUNTIME]
