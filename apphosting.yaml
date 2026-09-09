@@ -6,3 +6,59 @@ runConfig:
   concurrency: 80
   cpu: 1
   memoryMiB: 512
+
+env:
+  - variable: NEXT_PUBLIC_AITMESBAH_APP_ENV
+    value: production
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: aitmesbah-d945d
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyD5WrPWgFkoz3_40OZZhTfEXq4Y1yyuiF4
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: aitmesbah-d945d.firebaseapp.com
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: 1:689616043423:web:a42e351dbf51fc5a1911aa
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: aitmesbah-d945d.firebasestorage.app
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_USE_EMULATORS
+    value: "false"
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_AITMESBAH_REMOTE_ACTIVATION
+    value: enabled
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_AITMESBAH_APP_CHECK_MODE
+    value: observe
+    availability: [BUILD, RUNTIME]
+  - variable: AITMESBAH_APP_ENV
+    value: production
+    availability: [RUNTIME]
+  - variable: AITMESBAH_CANONICAL_URL
+    value: https://ait-mesbah.org
+    availability: [RUNTIME]
+  - variable: AITMESBAH_ALLOWED_HOSTS
+    value: ait-mesbah.org
+    availability: [RUNTIME]
+  - variable: AITMESBAH_ALLOWED_ORIGINS
+    value: https://ait-mesbah.org
+    availability: [RUNTIME]
+  - variable: AITMESBAH_APP_CHECK
+    value: observe
+    availability: [RUNTIME]
+  - variable: AITMESBAH_RATE_LIMIT_BACKEND
+    value: firestore
+    availability: [RUNTIME]
+  - variable: AITMESBAH_REMOTE_ACTIVATION
+    value: enabled
+    availability: [RUNTIME]
+  - variable: CRM_CURSOR_HMAC_SECRET
+    secret: aitmesbah-crm-cursor-hmac
+    availability: [RUNTIME]
+  - variable: CRM_ACTIVATION_HMAC_SECRET
+    secret: aitmesbah-crm-activation-hmac
+    availability: [RUNTIME]
