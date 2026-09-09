@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
+import LiveAgendaPreview from "@/components/agenda/LiveAgendaPreview";
+import { getUpcomingPublicEvents } from "@/data/public-agenda";
 
 export const metadata: Metadata = {
   title: "Vivre au village — Aït Mesbah",
@@ -30,6 +32,7 @@ function ForceIcon({ icon }: { icon: string }) {
 }
 
 export default function LiveInVillagePage() {
+  const initialEvents = getUpcomingPublicEvents();
   return <>
     <a className="skip-link" href="#contenu-principal">Aller au contenu principal</a>
     <SiteHeaderClient />
@@ -62,7 +65,7 @@ export default function LiveInVillagePage() {
 
       <section id="agenda-village" className="live-agenda">
         <div><p className="eyebrow light">Agenda</p><h2>Les prochains rendez-vous</h2><p>Réunions, activités associatives, événements culturels et sportifs pourront être annoncés ici après confirmation des organisateurs.</p></div>
-        <div className="live-agenda-empty"><span aria-hidden="true">À venir</span><p>Aucun événement confirmé n’est encore publié.</p><small>Les dates apparaîtront ici dans l’ordre chronologique.</small></div>
+        <LiveAgendaPreview initial={initialEvents} />
       </section>
 
       <section id="vie-collective" className="live-community">

@@ -68,6 +68,14 @@ service cloud.firestore {
       }
     }
 
+    match /publicEvents/{publicationId} {
+      allow get, list: if resource.data.status == "published"
+        && resource.data.kind == "event"
+        && resource.data.eventStatus in ["scheduled", "postponed", "cancelled"]
+        && resource.data.schemaVersion == 1;
+      allow create, update, delete: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

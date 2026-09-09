@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
+import { publicEvents } from "@/data/public-agenda";
 
 const baseUrl = "https://ait-mesbah.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
+    ...publicEvents.map(event => ({ url: `${baseUrl}/agenda/${event.slug}`, lastModified: event.updatedAt, changeFrequency: "weekly" as const, priority: 0.72 })),
     {
       url: `${baseUrl}/`,
       changeFrequency: "weekly",
