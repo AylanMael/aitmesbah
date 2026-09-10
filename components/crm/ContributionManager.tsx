@@ -132,7 +132,8 @@ export function ContributionManager({
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [assets, setAssets] = useState<Record<string, EditorialAsset[]>>({}),
-    [selectedPrimary, setSelectedPrimary] = useState<Record<string, string>>({});
+    [selectedPrimary, setSelectedPrimary] = useState<Record<string, string>>({}),
+    [operations, setOperations] = useState<Record<string, string>>({});
   const canDraft = permissions.includes("draft.self.manage"),
     canAssign = permissions.includes("editorial.assign"),
     canPublish = permissions.includes("editorial.ordinary.publish");
@@ -288,9 +289,9 @@ export function ContributionManager({
                   <option value="highly_sensitive">Hautement sensible</option>
                 </select>
               </label>
-              <label>
+              <label className="crm-editor-label">
                 Texte de la contribution
-                <textarea name="body" required maxLength={20000} />
+                <EditorialBodyEditor required />
               </label>
               <button disabled={busy}>Créer le brouillon privé</button>
             </form>
@@ -318,7 +319,9 @@ export function ContributionManager({
           </div>
         ) : (
           <ul className="crm-account-list">
-            {items.map((item) => (
+            {items.map((item) => {
+              const operation = operations[item.contributionId] ?? "editorial_metadata";
+              return (
               <li key={item.contributionId} className="crm-contribution-card">
                 <header>
                   <div>
@@ -356,7 +359,7 @@ export function ContributionManager({
                   >
                     <label>
                       Action à effectuer
-                      <select name="operation">
+                      <select name="operation" value={operation} onChange={(event) => setOperations((current) => ({ ...current, [item.contributionId]: event.target.value }))}>
                         <option
                           value="submit"
                           disabled={item.authorUid !== uid}
@@ -458,7 +461,8 @@ export function ContributionManager({
                         </option>
                       </select>
                     </label>
-                    <label>
+                    <p className="crm-action-context">{operation === "publish_content" ? "Préparez la forme publique et son média principal." : operation === "publish" || operation === "update_publication" ? "Renseignez les informations qui apparaîtront dans l’agenda." : operation === "editorial_metadata" ? "Décrivez la pièce pour préserver son contexte et sa provenance." : operation === "version" ? "Créez une nouvelle version structurée sans écraser la précédente." : "Cette décision sera enregistrée dans le journal d’audit."}</p>
+                    <label hidden={operation !== "documentary"}>
                       Domaine contrôlé
                       <select name="field">
                         <option value="sourceStatus">Provenance</option>
@@ -466,7 +470,7 @@ export function ContributionManager({
                         <option value="consentStatus">Consentement</option>
                       </select>
                     </label>
-                    <label>
+                    <label hidden={!['documentary','completeness','decision'].includes(operation)}>
                       Résultat
                       <input
                         name="value"
@@ -474,16 +478,17 @@ export function ContributionManager({
                         placeholder="verified, cleared…"
                       />
                     </label>
-                    <label>
+                    <label hidden={!['assign','unassign'].includes(operation)}>
                       UID du relecteur
                       <input name="reviewerUid" maxLength={128} />
                     </label>
-                    <label className="crm-editor-label">
+                    <label className="crm-editor-label" hidden={operation !== "version"}>
                       Nouvelle version textuelle
                       <EditorialBodyEditor />
                     </label>
                     <fieldset
                       className="crm-publication-fields"
+                      hidden={!['publish','update_publication'].includes(operation)}
                       disabled={
                         !canPublish ||
                         !["approved", "published"].includes(item.status) ||
@@ -527,6 +532,7 @@ export function ContributionManager({
                     </fieldset>
                     <fieldset
                       className="crm-publication-fields"
+                      hidden={operation !== "publish_content"}
                       disabled={
                         !canPublish ||
                         item.status !== "approved" ||
@@ -568,7 +574,7 @@ export function ContributionManager({
                         fichier préalablement validé.
                       </p>
                     </fieldset>
-                    <fieldset className="crm-publication-fields crm-metadata-fields">
+                    <fieldset className="crm-publication-fields crm-metadata-fields" hidden={operation !== "editorial_metadata"}>
                       <legend>Fiche documentaire</legend>
                       <label>Date ou période<input name="archiveDate" defaultValue={item.editorialMetadata?.archiveDate ?? ""} maxLength={80} placeholder="1892, années 1990…" /></label>
                       <label>Auteur ou producteur<input name="creator" defaultValue={item.editorialMetadata?.creator ?? ""} maxLength={160} /></label>
@@ -585,7 +591,7 @@ export function ContributionManager({
                   </form>
                 </details>
               </li>
-            ))}
+            );})}
           </ul>
         )}
         {nextCursor && (
