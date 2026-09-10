@@ -16,7 +16,16 @@ type Contribution = {
   currentVersion: number;
   assignedReviewerUids: string[];
   version: number;
+  editorialMetadata: {
+    archiveDate: string | null;
+    creator: string | null;
+    location: string | null;
+    provenance: string | null;
+    rightsCredit: string | null;
+    tags: string[];
+  };
 };
+type EditorialAsset = { assetId: string; safeFileName: string; status: string; detectedMimeType: string | null };
 const categories = [
   "photographs_archives",
   "testimonies_stories",
@@ -120,7 +129,9 @@ export function ContributionManager({
 }) {
   const [items, setItems] = useState(initial),
     [notice, setNotice] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [assets, setAssets] = useState<Record<string, EditorialAsset[]>>({}),
+    [selectedPrimary, setSelectedPrimary] = useState<Record<string, string>>({});
   const canDraft = permissions.includes("draft.self.manage"),
     canAssign = permissions.includes("editorial.assign"),
     canPublish = permissions.includes("editorial.ordinary.publish");
@@ -185,8 +196,16 @@ export function ContributionManager({
                 reason,
               }
             : changesContentPublication
-              ? { kind: data.get("publicationKind"), reason }
-            : null,
+              ? { kind: data.get("publicationKind"), primaryAssetId: data.get("primaryAssetId"), reason }
+              : null,
+          metadata: operation === "editorial_metadata" ? {
+            archiveDate: data.get("archiveDate"),
+            creator: data.get("creator"),
+            location: data.get("metadataLocation"),
+            provenance: data.get("provenance"),
+            rightsCredit: data.get("rightsCredit"),
+            tags: data.get("tags"),
+          } : null,
         },
       );
       setItems((current) =>
@@ -209,6 +228,15 @@ export function ContributionManager({
       setNotice(error instanceof Error ? error.message : "Erreur");
     } finally {
       setBusy(false);
+    }
+  }
+  async function loadAssets(contributionId: string) {
+    try {
+      const result = await requestJson(`/api/crm/contributions/${contributionId}/assets`);
+      setAssets((current) => ({ ...current, [contributionId]: result.assets.filter((asset: EditorialAsset) => asset.status === "validated") }));
+      setNotice("Médias validés chargés. Vous pouvez choisir l’image ou le document principal.");
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Impossible de charger les médias.");
     }
   }
   return (
@@ -386,6 +414,9 @@ export function ContributionManager({
                         >
                           Approuver en interne
                         </option>
+                        <option value="editorial_metadata">
+                          Enrichir la fiche documentaire
+                        </option>
                         <option
                           value="publish"
                           disabled={
@@ -502,6 +533,14 @@ export function ContributionManager({
                       }
                     >
                       <legend>Publication éditoriale</legend>
+                      <div className="crm-publication-toolbar">
+                        <button type="button" onClick={() => loadAssets(item.contributionId)}>
+                          Charger les médias validés
+                        </button>
+                        <a href={`/crm/contributions/${item.contributionId}/apercu${selectedPrimary[item.contributionId] ? `?media=${encodeURIComponent(selectedPrimary[item.contributionId])}` : ""}`} target="_blank" rel="noreferrer">
+                          Aperçu privé ↗
+                        </a>
+                      </div>
                       <label>
                         Présentation publique
                         <select name="publicationKind">
@@ -511,11 +550,31 @@ export function ContributionManager({
                           <option value="photo">Photographie</option>
                         </select>
                       </label>
+                      <label>
+                        Média principal
+                        <select name="primaryAssetId" value={selectedPrimary[item.contributionId] ?? ""} onChange={(event) => setSelectedPrimary((current) => ({ ...current, [item.contributionId]: event.target.value }))}>
+                          <option value="">Aucun média</option>
+                          {(assets[item.contributionId] ?? []).map((asset) => (
+                            <option value={asset.assetId} key={asset.assetId}>
+                              {asset.safeFileName}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
                       <p>
                         Le titre, le résumé et la version approuvée composent la
                         page publique. Une archive ou une photographie exige un
                         fichier préalablement validé.
                       </p>
+                    </fieldset>
+                    <fieldset className="crm-publication-fields crm-metadata-fields">
+                      <legend>Fiche documentaire</legend>
+                      <label>Date ou période<input name="archiveDate" defaultValue={item.editorialMetadata?.archiveDate ?? ""} maxLength={80} placeholder="1892, années 1990…" /></label>
+                      <label>Auteur ou producteur<input name="creator" defaultValue={item.editorialMetadata?.creator ?? ""} maxLength={160} /></label>
+                      <label>Lieu<input name="metadataLocation" defaultValue={item.editorialMetadata?.location ?? ""} maxLength={160} /></label>
+                      <label>Provenance<input name="provenance" defaultValue={item.editorialMetadata?.provenance ?? ""} maxLength={300} /></label>
+                      <label>Crédit et droits<input name="rightsCredit" defaultValue={item.editorialMetadata?.rightsCredit ?? ""} maxLength={300} /></label>
+                      <label>Mots-clés<input name="tags" defaultValue={item.editorialMetadata?.tags?.join(", ") ?? ""} maxLength={500} placeholder="école, quartier, diaspora…" /></label>
                     </fieldset>
                     <label>
                       Motif ou commentaire
