@@ -11,6 +11,7 @@ import { normalizeLegacyAudit } from "@/lib/crm/audit-log.mjs";
 
 const MAX_BODY = 26 * 1024 * 1024;
 const MAX_FILES = 4;
+const RATE_LIMITS = { network: 15, email: 5 } as const;
 const PUBLIC_ACTOR = "public-intake";
 const RESPONSE_HEADERS = { "Cache-Control": "private, no-store, max-age=0", "Content-Type": "application/json; charset=utf-8" };
 
@@ -46,12 +47,15 @@ async function enforceRateLimit(request: NextRequest, email: string) {
   const network = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-real-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
   const windowStart = Math.floor(Date.now() / 3_600_000) * 3_600_000;
   const digest = (kind: string, value: string) => createHmac("sha256", secret).update(`${projectId}\0${kind}\0${value.toLowerCase()}\0${windowStart}`).digest("hex");
-  const refs = [database.doc(`publicSubmissionRateLimits/network-${digest("network", network)}`), database.doc(`publicSubmissionRateLimits/email-${digest("email", email)}`)];
+  const counters = [
+    { ref: database.doc(`publicSubmissionRateLimits/network-${digest("network", network)}`), limit: RATE_LIMITS.network },
+    { ref: database.doc(`publicSubmissionRateLimits/email-${digest("email", email)}`), limit: RATE_LIMITS.email },
+  ];
   await database.runTransaction(async (transaction) => {
-    const snapshots = await transaction.getAll(...refs);
-    if (snapshots.some((snapshot) => snapshot.exists && Number(snapshot.data()?.used) >= 3)) throw Object.assign(new Error("trop de tentatives"), { http: 429 });
+    const snapshots = await transaction.getAll(...counters.map(({ ref }) => ref));
+    if (snapshots.some((snapshot, index) => snapshot.exists && Number(snapshot.data()?.used) >= counters[index].limit)) throw Object.assign(new Error("trop de tentatives"), { http: 429 });
     const now = Timestamp.now();
-    refs.forEach((ref, index) => transaction.set(ref, { used: Number(snapshots[index].data()?.used ?? 0) + 1, windowStart, updatedAt: now, expiresAt: Timestamp.fromMillis(windowStart + 3_600_000) }));
+    counters.forEach(({ ref, limit }, index) => transaction.set(ref, { used: Number(snapshots[index].data()?.used ?? 0) + 1, limit, windowStart, updatedAt: now, expiresAt: Timestamp.fromMillis(windowStart + 3_600_000) }));
   });
 }
 

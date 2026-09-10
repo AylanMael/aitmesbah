@@ -14,6 +14,8 @@ test("le consentement public provient réellement de la case cochée", async () 
 test("la soumission publique reste limitée, privée et auditée", async () => {
   const source = await routeSource();
   assert.match(source, /PUBLIC_INTAKE_RATE_LIMIT_SECRET.*CRM_CURSOR_HMAC_SECRET/);
+  assert.match(source, /RATE_LIMITS = \{ network: 15, email: 5 \}/);
+  assert.match(source, /snapshots\.some\(\(snapshot, index\).*counters\[index\]\.limit/);
   assert.match(source, /contributions\/\$\{contributionId\}\/private\/intake/);
   assert.match(source, /transitionAsset\(reserved, "quarantined"/);
   assert.match(source, /normalizeLegacyAudit\(draft\.auditEvent/);
