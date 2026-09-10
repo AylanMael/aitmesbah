@@ -47,6 +47,12 @@ const categoryLabels: Record<string, string> = {
   diaspora: "Diaspora",
   documentary_correction: "Correction documentaire",
 };
+const publicationKinds: Record<string, Array<[string, string]>> = {
+  photographs_archives: [["archive", "Archive"], ["photo", "Photographie"]],
+  testimonies_stories: [["article", "Récit"]], history_memory: [["article", "Article"], ["archive", "Archive"]],
+  places_heritage: [["article", "Article"], ["photo", "Photographie"]], events_village_life: [["news", "Nouvelle"]],
+  craft_knowhow: [["article", "Article"], ["photo", "Photographie"]], diaspora: [["article", "Article"], ["news", "Nouvelle"]],
+};
 const statusLabels: Record<string, string> = {
   draft: "Brouillon",
   submitted: "Soumis",
@@ -241,6 +247,10 @@ export function ContributionManager({
       setNotice(error instanceof Error ? error.message : "Impossible de charger les médias.");
     }
   }
+  function chooseOperation(contributionId: string, operation: string) {
+    setOperations((current) => ({ ...current, [contributionId]: operation }));
+    if (operation === "publish_content" && !assets[contributionId]) void loadAssets(contributionId);
+  }
   return (
     <div className="crm-contribution-manager">
       {notice && (
@@ -359,7 +369,7 @@ export function ContributionManager({
                   >
                     <label>
                       Action à effectuer
-                      <select name="operation" value={operation} onChange={(event) => setOperations((current) => ({ ...current, [item.contributionId]: event.target.value }))}>
+                      <select name="operation" value={operation} onChange={(event) => chooseOperation(item.contributionId, event.target.value)}>
                         <option
                           value="submit"
                           disabled={item.authorUid !== uid}
@@ -551,23 +561,10 @@ export function ContributionManager({
                       <label>
                         Présentation publique
                         <select name="publicationKind">
-                          <option value="article">Article</option>
-                          <option value="news">Nouvelle</option>
-                          <option value="archive">Archive</option>
-                          <option value="photo">Photographie</option>
+                          {(publicationKinds[item.category] ?? []).map(([value, label]) => <option value={value} key={value}>{label}</option>)}
                         </select>
                       </label>
-                      <label>
-                        Média principal
-                        <select name="primaryAssetId" value={selectedPrimary[item.contributionId] ?? ""} onChange={(event) => setSelectedPrimary((current) => ({ ...current, [item.contributionId]: event.target.value }))}>
-                          <option value="">Aucun média</option>
-                          {(assets[item.contributionId] ?? []).map((asset) => (
-                            <option value={asset.assetId} key={asset.assetId}>
-                              {asset.safeFileName}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
+                      <div className="crm-media-picker"><span>Média principal</span><div><label className={!selectedPrimary[item.contributionId] ? "is-selected" : ""}><input type="radio" name="primaryAssetId" value="" checked={!selectedPrimary[item.contributionId]} onChange={() => setSelectedPrimary((current) => ({ ...current, [item.contributionId]: "" }))}/><i>∅</i><strong>Sans média</strong></label>{(assets[item.contributionId] ?? []).map(asset => { const selected = selectedPrimary[item.contributionId] === asset.assetId; return <label className={selected ? "is-selected" : ""} key={asset.assetId}><input type="radio" name="primaryAssetId" value={asset.assetId} checked={selected} onChange={() => setSelectedPrimary((current) => ({ ...current, [item.contributionId]: asset.assetId }))}/>{asset.detectedMimeType?.startsWith("image/") ? <img src={`/api/crm/contributions/${item.contributionId}/assets/${asset.assetId}/download`} alt=""/> : <i>PDF</i>}<strong>{asset.safeFileName}</strong><small>{asset.detectedMimeType?.startsWith("image/") ? "Image validée" : "Document validé"}</small></label>;})}</div>{assets[item.contributionId]?.length === 0 && <p>Aucun média validé. Validez d’abord un fichier dans « Fichiers & droits ».</p>}</div>
                       <p>
                         Le titre, le résumé et la version approuvée composent la
                         page publique. Une archive ou une photographie exige un
