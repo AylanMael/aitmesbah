@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import EditorialBodyEditor from "@/components/editorial/EditorialBodyEditor";
 type Contribution = {
   contributionId: string;
@@ -80,6 +81,17 @@ const checkLabels: Record<string, string> = {
   granted: "Accordé",
   not_required: "Non requis",
 };
+function suggestedOperation(item: Contribution, canAssign: boolean, canPublish: boolean) {
+  if (item.status === "draft") return "submit";
+  if (item.status === "changes_requested") return "version";
+  if (item.status === "submitted") return canAssign ? "assign" : "completeness";
+  if (item.status === "completeness_review") return "completeness";
+  if (item.status === "rights_review") return "documentary";
+  if (item.status === "editorial_review") return "decision";
+  if (item.status === "approved" && canPublish) return item.category === "events_village_life" ? "publish" : "publish_content";
+  if (item.status === "published" && canPublish) return item.category === "events_village_life" ? "update_publication" : "unpublish_content";
+  return "editorial_metadata";
+}
 async function requestJson(url: string, method = "GET", body?: unknown) {
   const headers: Record<string, string> = {};
   if (body !== undefined) {
@@ -139,6 +151,7 @@ export function ContributionManager({
   mode?: "list" | "detail";
   initialFilters?: {status?:string;category?:string;titlePrefix?:string};
 }) {
+  const router = useRouter();
   const [items, setItems] = useState(initial),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
@@ -241,6 +254,7 @@ export function ContributionManager({
               ? "Publication retirée de l’agenda sans supprimer son historique."
               : "Opération enregistrée et auditée. Aucune publication publique.",
       );
+      if (mode === "detail") router.refresh();
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Erreur");
     } finally {
@@ -340,7 +354,7 @@ export function ContributionManager({
         ) : (
           <ul className="crm-account-list">
             {visibleItems.map((item) => {
-              const operation = operations[item.contributionId] ?? "editorial_metadata";
+              const operation = operations[item.contributionId] ?? (mode === "detail" ? suggestedOperation(item, canAssign, canPublish) : "editorial_metadata");
               return (
               <li key={item.contributionId} className="crm-contribution-card">
                 <header>
