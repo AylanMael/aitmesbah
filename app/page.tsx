@@ -9,8 +9,16 @@ import DiasporaSection from "@/components/home/DiasporaSection";
 import ContributionSection from "@/components/home/ContributionSection";
 import QuickLinks from "@/components/home/QuickLinks";
 import VillageFutureSection from "@/components/home/VillageFutureSection";
+import HomeEditorialPulse from "@/components/home/HomeEditorialPulse";
+import { loadPublicContents } from "@/lib/public-contents-server";
+import { loadPublicEvents } from "@/lib/public-events-server";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [contents, events] = await Promise.all([loadPublicContents(), loadPublicEvents()]);
+  const now = Date.now(), nextEvent = events.filter(event => event.status !== "cancelled" && new Date(event.endsAt ?? event.startsAt).getTime() >= now)[0] ?? null;
+  const publications = contents.filter(item => item.kind !== "news").slice(0, 3), initiatives = contents.filter(item => item.kind === "news").slice(0, 3);
   return (
     <>
       <a className="skip-link" href="#contenu-principal">
@@ -28,6 +36,7 @@ export default function Home() {
         <MemorySection />
         <VillageLifeSection />
         <VillageAliveSection />
+        <HomeEditorialPulse publications={publications} event={nextEvent} initiatives={initiatives} />
         <VillageFutureSection />
         <DiasporaSection />
         <ContributionSection />
