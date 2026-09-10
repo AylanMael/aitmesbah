@@ -482,11 +482,11 @@ export function ContributionManager({
                     </label>
                     <label hidden={!['documentary','completeness','decision'].includes(operation)}>
                       Résultat
-                      <input
-                        name="value"
-                        maxLength={32}
-                        placeholder="verified, cleared…"
-                      />
+                      <select name="value">
+                        {operation === "completeness" && <><option value="complete">Complet</option><option value="incomplete">Incomplet — corrections nécessaires</option></>}
+                        {operation === "decision" && <><option value="approve">Avis favorable</option><option value="changes_requested">Corrections demandées</option><option value="reject">Avis défavorable</option></>}
+                        {operation === "documentary" && <><option value="verified">Vérifié</option><option value="declared">Déclaré, à vérifier</option><option value="unknown">À établir</option><option value="cleared">Diffusion autorisée</option><option value="not_applicable">Sans objet</option><option value="granted">Consentement accordé</option><option value="not_required">Consentement non requis</option><option value="pending">En attente</option><option value="withdrawn">Consentement retiré</option></>}
+                      </select>
                     </label>
                     <label hidden={!['assign','unassign'].includes(operation)}>
                       UID du relecteur
