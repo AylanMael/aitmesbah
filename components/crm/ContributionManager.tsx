@@ -1,5 +1,6 @@
 "use client";
 import { FormEvent, useState } from "react";
+import EditorialBodyEditor from "@/components/editorial/EditorialBodyEditor";
 type Contribution = {
   contributionId: string;
   title: string;
@@ -477,9 +478,9 @@ export function ContributionManager({
                       UID du relecteur
                       <input name="reviewerUid" maxLength={128} />
                     </label>
-                    <label>
+                    <label className="crm-editor-label">
                       Nouvelle version textuelle
-                      <textarea name="body" maxLength={20000} />
+                      <EditorialBodyEditor />
                     </label>
                     <fieldset
                       className="crm-publication-fields"

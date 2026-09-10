@@ -1,0 +1,2 @@
+import test from "node:test";import assert from "node:assert/strict";import {prepareVersion} from "../../lib/crm/contribution-management.mjs";
+test("une version conserve la structure éditoriale et normalise les espaces",()=>{const version=prepareVersion("## Titre  \n\n> Citation\n\n- Un\n- Deux","révision",2,"contribution_demo","auteur_demo",{seconds:1});assert.equal(version.body,"## Titre\n\n> Citation\n\n- Un\n- Deux");});
