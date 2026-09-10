@@ -1,5 +1,6 @@
 "use client";
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import EditorialBodyEditor from "@/components/editorial/EditorialBodyEditor";
 type Contribution = {
   contributionId: string;
@@ -128,11 +129,13 @@ export function ContributionManager({
   nextCursor,
   permissions,
   uid,
+  mode = "list",
 }: {
   initial: Contribution[];
   nextCursor: string | null;
   permissions: readonly string[];
   uid: string;
+  mode?: "list" | "detail";
 }) {
   const [items, setItems] = useState(initial),
     [notice, setNotice] = useState(""),
@@ -252,7 +255,7 @@ export function ContributionManager({
     if (operation === "publish_content" && !assets[contributionId]) void loadAssets(contributionId);
   }
   return (
-    <div className="crm-contribution-manager">
+    <div className={`crm-contribution-manager is-${mode}`}>
       {notice && (
         <p className="crm-notice" role="status">
           {notice}
@@ -358,6 +361,7 @@ export function ContributionManager({
                     requise.
                   </p>
                 )}
+                {mode === "list" && <Link className="crm-open-record" href={`/crm/contributions/${item.contributionId}`}><span>Ouvrir la fiche complète</span><b aria-hidden="true">→</b></Link>}
                 <details className="crm-action-drawer">
                   <summary>
                     <span>Examiner et traiter le dossier</span>
