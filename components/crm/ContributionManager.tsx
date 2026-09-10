@@ -1,5 +1,5 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import EditorialBodyEditor from "@/components/editorial/EditorialBodyEditor";
 type Contribution = {
@@ -130,22 +130,28 @@ export function ContributionManager({
   permissions,
   uid,
   mode = "list",
+  initialFilters = {},
 }: {
   initial: Contribution[];
   nextCursor: string | null;
   permissions: readonly string[];
   uid: string;
   mode?: "list" | "detail";
+  initialFilters?: {status?:string;category?:string;titlePrefix?:string};
 }) {
   const [items, setItems] = useState(initial),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [assets, setAssets] = useState<Record<string, EditorialAsset[]>>({}),
     [selectedPrimary, setSelectedPrimary] = useState<Record<string, string>>({}),
-    [operations, setOperations] = useState<Record<string, string>>({});
+    [operations, setOperations] = useState<Record<string, string>>({}),
+    [search,setSearch]=useState(initialFilters.titlePrefix??""),
+    [statusFilter,setStatusFilter]=useState(initialFilters.status??""),
+    [categoryFilter,setCategoryFilter]=useState(initialFilters.category??"");
   const canDraft = permissions.includes("draft.self.manage"),
     canAssign = permissions.includes("editorial.assign"),
     canPublish = permissions.includes("editorial.ordinary.publish");
+  const visibleItems=useMemo(()=>items.filter(item=>(!statusFilter||item.status===statusFilter)&&(!categoryFilter||item.category===categoryFilter)&&(!search||`${item.title} ${item.summary}`.toLocaleLowerCase("fr").includes(search.toLocaleLowerCase("fr").trim()))),[items,statusFilter,categoryFilter,search]);
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -311,6 +317,7 @@ export function ContributionManager({
           </div>
         </details>
       )}
+      {mode === "list" && <section className="crm-queue-controls" aria-label="Filtrer les contributions"><div><p className="crm-kicker">Trouver un dossier</p><h2>Votre file éditoriale</h2></div><label>Recherche<input type="search" value={search} onChange={event=>setSearch(event.target.value)} placeholder="Titre ou mot du résumé…"/></label><label>Étape<select value={statusFilter} onChange={event=>setStatusFilter(event.target.value)}><option value="">Toutes les étapes</option>{Object.entries(statusLabels).map(([value,label])=><option value={value} key={value}>{label}</option>)}</select></label><label>Nature<select value={categoryFilter} onChange={event=>setCategoryFilter(event.target.value)}><option value="">Toutes les natures</option>{categories.map(value=><option value={value} key={value}>{categoryLabels[value]}</option>)}</select></label>{(search||statusFilter||categoryFilter)&&<button type="button" onClick={()=>{setSearch("");setStatusFilter("");setCategoryFilter("")}}>Effacer les filtres</button>}<span><strong>{visibleItems.length}</strong> résultat{visibleItems.length>1?"s":""}</span></section>}
       <section className="crm-panel crm-editorial-queue">
         <div className="crm-panel-title">
           <div>
@@ -318,10 +325,10 @@ export function ContributionManager({
             <h2>Dossiers autorisés</h2>
           </div>
           <span>
-            {items.length} {items.length > 1 ? "dossiers" : "dossier"}
+            {visibleItems.length} {visibleItems.length > 1 ? "dossiers" : "dossier"}
           </span>
         </div>
-        {items.length === 0 ? (
+        {visibleItems.length === 0 ? (
           <div className="crm-empty-state">
             <span>◎</span>
             <strong>Aucun dossier à traiter</strong>
@@ -332,7 +339,7 @@ export function ContributionManager({
           </div>
         ) : (
           <ul className="crm-account-list">
-            {items.map((item) => {
+            {visibleItems.map((item) => {
               const operation = operations[item.contributionId] ?? "editorial_metadata";
               return (
               <li key={item.contributionId} className="crm-contribution-card">
