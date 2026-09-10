@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
+import { loadPublicContents } from "@/lib/public-contents-server";
 
 export const metadata: Metadata = {
   title: "Histoire et mémoire d’Aït Mesbah",
@@ -34,7 +35,10 @@ function TimelineEntry({ id, period, title, status, children }: { id?: string; p
   </article>;
 }
 
-export default function HistoryMemoryPage() {
+export const dynamic = "force-dynamic";
+
+export default async function HistoryMemoryPage() {
+  const publishedArchives = await loadPublicContents("archive");
   return <>
     <a className="skip-link" href="#contenu-principal">Aller au contenu principal</a>
     <SiteHeaderClient />
@@ -104,7 +108,8 @@ export default function HistoryMemoryPage() {
           </Link>
           <div className="history-archive-notice"><div className="history-archive-index"><span>Pièce</span><strong>001</strong></div><p className="eyebrow">Carte & territoire · 1892</p><h3>Carte du douar des Beni Aïssi</h3><p>Cette carte d’époque coloniale représente le territoire du douar des Beni Aïssi. Aït Mesbah y apparaît dans un ensemble plus vaste de chemins, reliefs, parcelles et implantations villageoises.</p><dl><div><dt>Nature</dt><dd>Document cartographique</dd></div><div><dt>État</dt><dd>Notice en cours d’étude</dd></div><div><dt>Lecture</dt><dd>Haute définition</dd></div></dl><Link href="/histoire-memoire/archives/carte-territoriale-1892">Voir la notice complète <span aria-hidden="true">→</span></Link></div>
         </article>
-        <div className="history-archive-footer"><p><strong>Une collection appelée à grandir.</strong> Chaque nouvelle pièce rejoindra un inventaire filtrable par période, nature et lieu.</p><Link href="/contribuer?category=photographs_archives&title=Proposition%20d%27archive">Proposer une archive <span aria-hidden="true">↗</span></Link></div>
+        {publishedArchives.length > 0 && <div className="history-published-archives">{publishedArchives.map((archive, index) => <article key={archive.publicationId}><Link href={`/publications/${archive.slug}`}>{archive.primaryAssetId && archive.primaryAssetMimeType?.startsWith("image/") && <img src={`/api/public/contents/${archive.slug}/media`} alt="" />}<span>Pièce {String(index + 2).padStart(3, "0")}</span><h3>{archive.title}</h3><p>{archive.summary}</p><b>Consulter l’archive →</b></Link></article>)}</div>}
+        <div className="history-archive-footer"><p><strong>Une collection appelée à grandir.</strong> Chaque nouvelle pièce validée dans le CRM rejoint automatiquement cet inventaire.</p><Link href="/contribuer?category=photographs_archives&title=Proposition%20d%27archive">Proposer une archive <span aria-hidden="true">↗</span></Link></div>
       </section>
 
       <section className="history-conclusion"><p className="eyebrow">Une démarche collective</p><h2>Documenter sans figer</h2><p>Préserver la mémoire d’Aït Mesbah ne consiste pas à imposer une version unique de son histoire. Le projet doit permettre de confronter les sources, d’identifier les incertitudes et de conserver la diversité des récits.</p><p>Les habitants, les familles, les associations, les chercheurs et les membres de la diaspora pourront progressivement participer à ce travail, selon des modalités qui seront annoncées ultérieurement.</p><p className="history-editorial-pledge">Aucun document ou témoignage ne sera publié sans vérification éditoriale et sans examen des autorisations nécessaires.</p><div className="history-actions"><Link className="primary" href="/village">Découvrir le village <span aria-hidden="true">↗</span></Link><Link className="history-secondary-link" href="/contribuer">Comment contribuer</Link></div></section>

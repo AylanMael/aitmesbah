@@ -47,6 +47,8 @@ export default function SiteFooter() {
       <div className="footer-bottom">
         <span>© 2026 Aït Mesbah — Projet communautaire</span>
         <nav className="footer-legal" aria-label="Pages légales">
+          <Link href="/publications">Publications</Link>
+          <span aria-hidden="true">·</span>
           <Link href="/mentions-legales">Mentions légales</Link>
           <span aria-hidden="true">·</span>
           <Link href="/confidentialite">Confidentialité</Link>
