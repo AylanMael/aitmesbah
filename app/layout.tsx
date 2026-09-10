@@ -8,7 +8,7 @@ const description =
   "Découvrez Aït Mesbah, son identité et son projet communautaire de préservation de la mémoire du village, en Haute Kabylie.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ait-mesbah.com"),
+  metadataBase: new URL("https://ait-mesbah.org"),
   title,
   description,
   keywords: [

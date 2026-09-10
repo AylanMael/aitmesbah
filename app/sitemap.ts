@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
 import { publicEvents } from "@/data/public-agenda";
+import { loadPublicContents } from "@/lib/public-contents-server";
 
-const baseUrl = "https://ait-mesbah.com";
+const baseUrl = "https://ait-mesbah.org";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const publications = await loadPublicContents();
   return [
+    ...publications.map(item => ({ url: `${baseUrl}/publications/${item.slug}`, lastModified: item.updatedAt, changeFrequency: "monthly" as const, priority: 0.7 })),
     ...publicEvents.map(event => ({ url: `${baseUrl}/agenda/${event.slug}`, lastModified: event.updatedAt, changeFrequency: "weekly" as const, priority: 0.72 })),
     {
       url: `${baseUrl}/`,
@@ -63,6 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    { url: `${baseUrl}/publications`, changeFrequency: "weekly", priority: 0.82 },
     {
       url: `${baseUrl}/agir`,
       changeFrequency: "weekly",
