@@ -7,6 +7,7 @@ import { validateCrmMultipart } from "@/lib/firebase/crm-request";
 import { createDraft, transitionContribution } from "@/lib/crm/editorial-workflow.mjs";
 import { prepareDraftInput, prepareVersion } from "@/lib/crm/contribution-management.mjs";
 import { inspectUpload, reserveAsset, transitionAsset } from "@/lib/crm/private-assets.mjs";
+import { normalizeLegacyAudit } from "@/lib/crm/audit-log.mjs";
 
 const MAX_BODY = 26 * 1024 * 1024;
 const MAX_FILES = 4;
@@ -40,7 +41,7 @@ function text(form: FormData, name: string, max: number, required = true) {
 async function enforceRateLimit(request: NextRequest, email: string) {
   const { database, projectId } = getLocalFirebaseAdmin();
   const production = process.env.NODE_ENV === "production";
-  const secret = process.env.PUBLIC_INTAKE_RATE_LIMIT_SECRET ?? (production ? "" : "local-public-intake-only");
+  const secret = process.env.PUBLIC_INTAKE_RATE_LIMIT_SECRET ?? process.env.CRM_CURSOR_HMAC_SECRET ?? (production ? "" : "local-public-intake-only");
   if (!secret) throw Object.assign(new Error("limiteur indisponible"), { http: 503 });
   const network = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-real-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
   const windowStart = Math.floor(Date.now() / 3_600_000) * 3_600_000;
@@ -89,10 +90,15 @@ export async function POST(request: NextRequest) {
       assets.push(quarantined);
     }
     const batch = database.batch();
+    const correlationId = database.collection("correlations").doc().id;
+    const createdAuditRef = database.collection("auditLogs").doc();
+    const submittedAuditRef = database.collection("auditLogs").doc();
     batch.create(database.doc(`contributions/${contributionId}`), submitted.contribution);
     batch.create(database.doc(`contributions/${contributionId}/versions/v1`), version);
     batch.create(database.doc(`contributions/${contributionId}/private/intake`), { name, email, consent: true, submittedAt: now, fileCount: assets.length });
     for (const asset of assets) batch.create(database.doc(`contributions/${contributionId}/assets/${asset.assetId}`), asset);
+    batch.create(createdAuditRef, normalizeLegacyAudit(draft.auditEvent, { eventId: createdAuditRef.id, correlationId, actorType: "system" } as never));
+    batch.create(submittedAuditRef, normalizeLegacyAudit(submitted.auditEvent, { eventId: submittedAuditRef.id, correlationId, actorType: "system" } as never));
     await batch.commit();
     return NextResponse.json({ ok: true, reference: contributionId }, { status: 201, headers: RESPONSE_HEADERS });
   } catch (error) {
