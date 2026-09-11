@@ -6,7 +6,7 @@ export default function HeroSection() {
     <section id="accueil" className="hero">
       <Image
         className="hero-backdrop"
-        src="/ait-mesbah-hero.jpg"
+        src="/images/aitmesbah.png"
         alt="Vue panoramique d’Aït Mesbah en Haute Kabylie"
         fill
         sizes="100vw"
