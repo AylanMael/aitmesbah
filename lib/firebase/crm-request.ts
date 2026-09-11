@@ -16,6 +16,7 @@ export function crmError(error:unknown){
  const accountExists=providerCode==="auth/email-already-exists"||providerCode==="auth/uid-already-exists";
  const providerUnavailable=["auth/insufficient-permission","auth/internal-error"].includes(providerCode??"");
  const status=value.http??numericCode??(accountExists||providerCode==="quota-exceeded"?409:providerUnavailable?503:value.message?.includes("conflit")?409:value.message?.includes("invalide")||value.message?.includes("inconnu")?422:500);
+ if(status>=500)console.error("crm_request_failed",{code:providerCode??numericCode??"unclassified",type:error instanceof Error?error.name:"UnknownError"});
  const message=accountExists?"Un compte utilise déjà cette adresse électronique.":providerUnavailable?"Le service de gestion des comptes est momentanément indisponible.":status===409?"La modification demandée est impossible.":status===404?"Compte introuvable.":status===401?"Session requise.":status===403?"Action non autorisée.":status===422?"Données invalides.":"Opération impossible.";
  return NextResponse.json({error:message},{status,headers:CRM_HEADERS});
 }
