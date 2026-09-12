@@ -112,8 +112,8 @@ export default async function HistoryMemoryPage() {
           <article><Link href="/histoire-memoire/archives/hiani-debia-1939">
             <Image src="/archives/poterie-1939/14.jpg" alt="Hiani Debia décorant un récipient à anse, photographiée à Aït Mesbah par Thérèse Rivière en 1939" width={920} height={960} sizes="(max-width: 800px) 90vw, 40vw" style={{objectFit:"contain"}} />
             <span>Pièce 002 · Photographie · 1939</span>
-            <h3>Hiani Debia, la poterie d’autrefois</h3>
-            <p>À Aït Mesbah, une potière décore un récipient à la main. Ce cliché de Thérèse Rivière ouvre un documentaire sur les gestes anciens du décor et de la cuisson.</p>
+            <h3>Reportage à Aït Mesbah en 1939</h3>
+            <p>L’artisanat de la poterie : seize photographies pour découvrir les gestes du décor, la cuisson au sol et les objets du quotidien, autour d’un cliché identifié de Thérèse Rivière.</p>
             <p>Source identifiée : musée du quai Branly – Jacques Chirac, notice PP0193025, titre historique « Décor ». Conditions de reproduction à vérifier.</p>
             <b>Découvrir l’archive et le documentaire →</b>
           </Link></article>
