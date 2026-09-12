@@ -1,0 +1,63 @@
+/* Editorial interpretation of regional ceramics: ivory, red-brown bands,
+   paired dark rules. These geometric ornaments carry no asserted symbolism. */
+.pottery-border{display:flex;align-items:center;justify-content:space-between;gap:10px;width:min(180px,100%);height:24px;border-block:1px solid #98472f60;margin:4px 0 24px;color:#98472f;opacity:.3;pointer-events:none}
+.pottery-border>svg{display:block;width:16px;height:18px;flex:none}
+.intro .pottery-border{max-width:140px;margin-bottom:24px}
+.craft-home>.pottery-border{max-width:180px;margin-bottom:28px}
+.craft-home .craft-card{border:1px solid #513c3026;border-top:1px solid #98472f40;box-shadow:none;background:#f4ecde}
+.craft-home .craft-card svg{color:#513c30}
+.craft-home .craft-card .craft-label{color:#98472f}
+.craft-home .craft-card:hover{background:#ede0cd}
+.craft-home .craft-card-link{border-top:1px solid #513c3030}
+.craft-home h2 em{color:#98472f}
+.craft-page .craft-hero{border-bottom:1px solid #98472f55}
+.craft-sources{max-width:850px;margin:0 auto;padding:48px 24px 64px;color:#173e32}
+.craft-sources h2{font:32px/1.2 Georgia,serif;margin:0 0 18px}
+.craft-sources p,.craft-sources li{font:15px/1.8 Arial,sans-serif}
+.craft-sources ul{padding-left:20px}.craft-sources a{text-decoration:underline;text-underline-offset:4px}
+.intro .intro-visual{border-radius:2px;transform:none;border:1px solid #513c3040;box-shadow:12px 12px 0 #e9decb}
+.intro .intro-photo-mark{display:none}
+@media(max-width:650px){.pottery-border{gap:8px}.intro .intro-visual{box-shadow:6px 6px 0 #e9decb}.craft-home>.pottery-border{margin-bottom:32px}}
+@media(min-width:1200px){
+  .pottery-border{width:min(240px,100%);height:30px}
+  .pottery-border>svg{width:21px;height:24px}
+  .intro .pottery-border{max-width:210px}
+  .craft-home>.pottery-border{max-width:240px}
+}
+/* Let the hero grow with its content instead of clipping the calls to action. */
+/* Decorative words: fluid sizing without a large mobile minimum, and no
+   negative offsets that cut off the lettering. Keep functional text untouched. */
+body :is(.home-life,.diaspora-home-premium,.village-hero,.live-hero,
+ .agenda-page-hero,.act-hero,.contribute-new-hero,.committee-hero,
+ .imache-assoc-hero,.imache-dossier-hero,.imache-dossier-call,
+ .imache-dossier-photographs,.imache-press-archive,.agenda-premium-footer,
+ .village-imache,.history-hero,.asam-future,.jcam-premium-final)::after,
+body :is(.village-gallery,.committee-role,.home-alive,.village-future-premium)::before,
+body :is(.craft-hero-word,.war-hero-word,.agenda-premium-word,.imache-assoc-era){
+ font-size:min(8vw,128px);line-height:1.1;letter-spacing:-.045em;
+ max-width:94%;white-space:nowrap;pointer-events:none;user-select:none;
+ right:3%;left:auto;bottom:12px;top:auto;transform:none;
+}
+body :is(.home-alive,.village-future-premium)::before,
+body .imache-dossier-photographs::after{top:16px;bottom:auto}
+@media(max-width:650px){
+ body :is(.home-life,.diaspora-home-premium,.village-hero,.live-hero,
+ .agenda-page-hero,.act-hero,.contribute-new-hero,.committee-hero,
+ .imache-assoc-hero,.imache-dossier-hero,.imache-dossier-call,
+ .imache-dossier-photographs,.imache-press-archive,.agenda-premium-footer,
+ .village-imache,.history-hero,.asam-future,.jcam-premium-final)::after,
+ body :is(.village-gallery,.committee-role,.home-alive,.village-future-premium)::before,
+ body :is(.craft-hero-word,.war-hero-word,.agenda-premium-word,.imache-assoc-era){font-size:7.5vw}
+}
+#accueil.hero{height:auto;min-height:100svh;display:flex;align-items:center}
+#accueil .hero-content{box-sizing:border-box;width:100%;max-width:1440px;padding:clamp(130px,18vh,200px) clamp(24px,8vw,160px) 110px}
+#accueil .hero-buttons{flex-wrap:wrap;margin-top:28px}
+#accueil .hero-buttons a{min-height:48px}
+@media(min-width:1051px) and (max-height:850px){
+  #accueil .hero-content{padding-top:120px;padding-bottom:85px}
+  #accueil h1{font-size:clamp(64px,7vw,106px)}
+  #accueil .hero-copy{margin-top:24px}
+}
+@media(max-width:760px){
+  #accueil .hero-content{padding:125px 22px max(72px,env(safe-area-inset-bottom))}
+}

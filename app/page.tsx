@@ -2,6 +2,7 @@ import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
 import SiteFooter from "@/components/layout/SiteFooter";
 import HeroSection from "@/components/home/HeroSection";
 import VillageIntro from "@/components/home/VillageIntro";
+import CraftSection from "@/components/home/CraftSection";
 import MemorySection from "@/components/home/MemorySection";
 import VillageLifeSection from "@/components/home/VillageLifeSection";
 import VillageAliveSection from "@/components/home/VillageAliveSection";
@@ -33,6 +34,7 @@ export default async function Home() {
           </div>
         </div>
         <VillageIntro />
+        <CraftSection />
         <MemorySection />
         <VillageLifeSection />
         <VillageAliveSection />

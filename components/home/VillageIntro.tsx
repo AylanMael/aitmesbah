@@ -1,10 +1,12 @@
 import Image from "next/image";
+import PotteryBorder from "@/components/home/PotteryBorder";
 
 export default function VillageIntro() {
   return (
     <section id="decouvrir" className="intro section-pad">
       <span className="intro-index" aria-hidden="true">01</span>
       <div className="intro-left">
+        <PotteryBorder/>
         <p className="eyebrow">Notre village</p>
         <h2>
           Là où la montagne
@@ -15,7 +17,7 @@ export default function VillageIntro() {
           Aït Mesbah est un village de la commune d’Aït Douala, dans la wilaya de Tizi Ouzou, en Algérie.
         </p>
         <p>
-          Une communauté unie par une terre, une culture et des valeurs de solidarité. Ce site a pour vocation de recueillir, préserver et transmettre progressivement la mémoire du village.
+          Son identité se raconte aussi dans les mains qui travaillent : la poterie, la couture de robes kabyles, la tapisserie et la confection de burnous en laine de mouton. Des savoir-faire à reconnaître, à documenter et à transmettre avec celles et ceux qui les font vivre.
         </p>
         <a className="text-link" href="#memoire">
           Découvrir l’histoire <span aria-hidden="true">↗</span>
