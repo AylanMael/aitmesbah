@@ -20,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     { url: `${baseUrl}/carte-vivante`, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${baseUrl}/histoire-memoire/archives/pichet-ait-mesbah-peabody`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${baseUrl}/projets`, changeFrequency: "weekly", priority: 0.9 },
     {
       url: `${baseUrl}/histoire-memoire`,

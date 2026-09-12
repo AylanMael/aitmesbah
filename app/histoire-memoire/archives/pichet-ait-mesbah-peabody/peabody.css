@@ -1,0 +1,12 @@
+.peabody-archive .village-archive-hero h1{font-size:clamp(44px,6.8vw,100px);overflow-wrap:break-word}
+.peabody-reference{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,5vw,80px);padding:clamp(36px,6vw,80px) max(24px,7vw);background:#ece2d1;border-bottom:1px solid #d0c0a5;color:#193c31}
+.peabody-reference h2{font:400 clamp(30px,3.8vw,52px)/1.12 Georgia,serif;margin:14px 0 24px;max-width:20ch}
+.peabody-reference p{line-height:1.8;margin:0 0 18px}
+.peabody-reference a{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-height:48px;padding:12px 20px;background:#193c31;color:#fff8e9;text-decoration:none}
+.peabody-reference a:focus-visible{outline:3px solid #9d4f32;outline-offset:4px}
+.peabody-reference small{display:block;max-width:48ch;line-height:1.7;margin-top:16px;color:#536159}
+.peabody-archive dd{overflow-wrap:anywhere}
+.peabody-archive #capture-notice{scroll-margin-top:100px}
+.peabody-capture-credit{margin:0;padding:20px max(24px,7vw);font:13px/1.8 Arial,sans-serif;color:#536159;background:#f5f0e7}
+.peabody-capture-credit a{color:#193c31;text-underline-offset:3px}
+@media(max-width:720px){.peabody-reference{grid-template-columns:1fr}.peabody-archive .village-archive-hero{gap:28px}}
