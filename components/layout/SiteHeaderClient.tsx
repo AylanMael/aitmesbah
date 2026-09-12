@@ -127,11 +127,13 @@ export default function SiteHeaderClient() {
           </div>
         ))}
         <div className="mobile-nav-footer">
+          <Link href="/agir" onClick={closeMenuAndRestoreFocus} aria-current={pathname === "/agir" ? "page" : undefined}>Agir ensemble <span aria-hidden="true">↗</span></Link>
           <Link href="/contribuer" onClick={closeMenuAndRestoreFocus}>Contribuer à la mémoire <span aria-hidden="true">↗</span></Link>
           <p>Aït Mesbah · Village, mémoire et avenir</p>
         </div>
       </nav>
       <div className="header-actions">
+        <Link className="header-act" href="/agir" aria-current={pathname === "/agir" ? "page" : undefined}>Agir ensemble <span aria-hidden="true">↗</span></Link>
         <Link
           className="contribute small"
           href="/contribuer"

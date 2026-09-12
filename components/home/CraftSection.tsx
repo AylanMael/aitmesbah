@@ -7,8 +7,8 @@ export function CraftDrawing({kind}: {kind: string}) {
   return <svg viewBox="0 0 240 210" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     {kind === "poterie" ? <>
       <ellipse cx="120" cy="195" rx="49" ry="3" fill="currentColor" opacity=".07" stroke="none"/>
-      <path d="M98 64C65 39 43 74 58 107c6 14 16 19 23 22M142 64c33-25 55 10 40 43-6 14-16 19-23 22" strokeWidth="7"/>
-      <path d="M99 64C76 51 57 75 65 99c4 11 11 15 15 18M141 64c23-13 42 11 34 35-4 11-11 15-15 18" stroke="#f1e7d5" strokeWidth="2"/>
+      <path d="M98 57C80 43 57 48 52 67c-6 24 3 45 19 52l2-7c-12-6-19-24-14-42 4-14 20-18 35-7Z" fill="#e8cdb0"/>
+      <path d="M142 57c18-14 41-9 46 10 6 24-3 45-19 52l-2-7c12-6 19-24 14-42-4-14-20-18-35-7Z" fill="#e8cdb0"/>
       <path d="M99 25c4 19 6 29-2 41-10 16-29 22-29 57 0 24 13 42 30 56l3 10h38l3-10c17-14 30-32 30-56 0-35-19-41-29-57-8-12-6-22-2-41Z" fill="#e8cdb0"/>
       <path d="M101 37h38M100 44h40M96 69q24 8 48 0M89 78q31 9 62 0M74 103q46 10 92 0M72 111q48 10 96 0M78 150q42 10 84 0M83 160q37 9 74 0M99 179h42" stroke="#98472f" strokeWidth="3"/>
       <ellipse cx="120" cy="25" rx="23" ry="5" fill="#ad7754"/><ellipse cx="120" cy="25" rx="17" ry="2" fill="currentColor" opacity=".5" stroke="none"/>

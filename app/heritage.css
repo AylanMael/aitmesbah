@@ -1,5 +1,18 @@
 /* Editorial interpretation of regional ceramics: ivory, red-brown bands,
    paired dark rules. These geometric ornaments carry no asserted symbolism. */
+.site-header .header-actions :is(.header-act,.contribute.small){display:inline-flex;align-items:center;justify-content:space-between;gap:12px;width:158px;min-height:44px;padding:0 16px;border:1px solid #d8b26b;border-radius:999px;color:#fff;white-space:nowrap;font:700 10px/1.4 Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;transition:filter .2s}
+.site-header .header-actions .header-act{background:#173e32}
+.site-header .header-actions .contribute.small{background:#a94f32}
+.site-header .header-actions :is(.header-act,.contribute.small):hover{filter:brightness(1.12)}
+.site-header .header-actions :is(.header-act,.contribute.small):focus-visible{outline:2px solid #dcb86d;outline-offset:4px}
+@media(max-width:1050px){
+ .site-header .header-actions :is(.header-act,.contribute.small){display:none}
+ .mobile-nav-footer>a+a{margin-top:10px}
+ .site-header nav .mobile-nav-footer>a{min-height:50px;padding:0 18px;border:1px solid #d8b26b;border-radius:999px;color:#fff;font:700 10px/1.4 Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+ .site-header nav .mobile-nav-footer>a[href="/agir"]{background:#173e32}
+ .site-header nav .mobile-nav-footer>a[href="/contribuer"]{background:#a94f32}
+}
+@media(prefers-reduced-motion:reduce){.site-header .header-actions :is(.header-act,.contribute.small){transition:none}}
 .pottery-border{display:flex;align-items:center;justify-content:space-between;gap:10px;width:min(180px,100%);height:24px;border-block:1px solid #98472f60;margin:4px 0 24px;color:#98472f;opacity:.3;pointer-events:none}
 .pottery-border>svg{display:block;width:16px;height:18px;flex:none}
 .intro .pottery-border{max-width:140px;margin-bottom:24px}

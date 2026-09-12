@@ -21,7 +21,6 @@ export const mainNavigation: NavigationItem[] = [
   },
   { label: "Agenda", href: "/agenda" },
   { label: "Diaspora", href: "/diaspora" },
-  { label: "Agir ensemble", href: "/agir" },
 ];
 
 export const footerDiscoverLinks: NavigationItem[] = [
