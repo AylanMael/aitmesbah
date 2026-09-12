@@ -26,6 +26,8 @@ Le fichier reçu `public/archives/poterie-1939/14.jpg` correspond à l’image d
 
 ## Publication et droits
 
+Pièce complémentaire fournie par l’utilisateur : `DOC-20260912-WA0001.pdf`, une page image reproduisant le verso annoté. Lecture visuelle : tampon Thérèse Rivière, film 39-202, Grande Kabylie, village Aït Mesbah, Décor, objet 40.8.86, potière Hiani Debia. Le PDF est conservé sans modification sous `public/archives/poterie-1939/verso-decor-hiani-debia.pdf` ; une capture complète sans recadrage est fournie pour la visionneuse. La capture conserve les inscriptions et le crédit du musée. Ces indications ne résolvent pas la divergence avec le champ de négatif 1939-214 de la notice.
+
 Ces vérifications établissent une provenance pour une image, pas une autorisation de reproduction pour l’ensemble des seize images. La notice reproduit une inscription interdisant la reproduction sans autorisation de l’auteur. Vérifier les conditions actuelles auprès du pôle image, sans inférer de statut juridique de cette seule inscription.
 
 Contact indiqué par le musée : contact-icono@quaibranly.fr.

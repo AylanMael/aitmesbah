@@ -109,7 +109,7 @@ export default async function HistoryMemoryPage() {
           <div className="history-archive-notice"><div className="history-archive-index"><span>Pièce</span><strong>001</strong></div><p className="eyebrow">Carte & territoire · 1892</p><h3>Carte du douar des Beni Aïssi</h3><p>Cette carte d’époque coloniale représente le territoire du douar des Beni Aïssi. Aït Mesbah y apparaît dans un ensemble plus vaste de chemins, reliefs, parcelles et implantations villageoises.</p><dl><div><dt>Nature</dt><dd>Document cartographique</dd></div><div><dt>État</dt><dd>Notice en cours d’étude</dd></div><div><dt>Lecture</dt><dd>Haute définition</dd></div></dl><Link href="/histoire-memoire/archives/carte-territoriale-1892">Voir la notice complète <span aria-hidden="true">→</span></Link></div>
         </article>
         <div className="history-published-archives">
-          <article><Link href="/artisanat/poterie#photographies-1939">
+          <article><Link href="/histoire-memoire/archives/hiani-debia-1939">
             <Image src="/archives/poterie-1939/14.jpg" alt="Hiani Debia décorant un récipient à anse, photographiée à Aït Mesbah par Thérèse Rivière en 1939" width={920} height={960} sizes="(max-width: 800px) 90vw, 40vw" style={{objectFit:"contain"}} />
             <span>Pièce 002 · Photographie · 1939</span>
             <h3>Hiani Debia, la poterie d’autrefois</h3>
