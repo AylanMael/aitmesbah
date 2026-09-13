@@ -61,12 +61,18 @@ test("la langue disponible est présentée honnêtement", () => {
 });
 
 test("le domaine et le média réel restent inchangés", async () => {
-  assert.match(layout, /https:\/\/ait-mesbah\.com/);
-  assert.doesNotMatch(layout, /ait-mesbah\.org/);
-  assert.match(hero, /src="\/images\/ait-mesbah-hero\.webp"/);
+  assert.match(layout, /https:\/\/ait-mesbah\.org/);
+  assert.doesNotMatch(layout, /ait-mesbah\.com/);
+  assert.match(hero, /src="\/images\/aitmesbah\.png"/);
   assert.doesNotMatch(hero, /src="https?:\/\//);
-  await access("public/images/ait-mesbah-hero.webp");
+  await access("public/images/aitmesbah.png");
   await access("public/logo-ait-mesbah.webp");
+});
+
+test("les archives et le parcours sont accessibles depuis la navigation secondaire", () => {
+  assert.match(navigation, /label: "Archives du village", href: "\/histoire-memoire#archives"/);
+  assert.match(navigation, /label: "Le village en cinq minutes", href: "\/decouvrir"/);
+  assert.doesNotMatch(navigation, /Galerie & archives — bientôt/);
 });
 
 test("les routes publiques exigées restent présentes", async () => {

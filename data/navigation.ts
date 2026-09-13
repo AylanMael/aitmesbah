@@ -40,5 +40,5 @@ export const footerCommunityLinks: FooterCommunityItem[] = [
   { label: "Projets du village", href: "/projets" },
   { label: "Diaspora", href: "/diaspora" },
   { label: "Contribuer", href: "/contribuer" },
-  { label: "Galerie & archives — bientôt", href: null },
+  { label: "Archives du village", href: "/histoire-memoire#archives" },
 ];

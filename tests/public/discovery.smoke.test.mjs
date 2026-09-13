@@ -48,3 +48,20 @@ test("le référencement et les commandes de partage sont rendus", () => {
   assert.ok(html.includes("Copier le lien"));
   assert.ok(html.includes('role="status"'));
 });
+
+test("les images réservent leur format réel et se chargent à la demande", () => {
+  const images = html.match(/<img\b[^>]*>/g) || [];
+  for (const [path, width, height] of [
+    ["/ait-mesbah-village.jpg", 720, 540],
+    ["/images/amar-imache/portrait-ancien.jpg", 312, 472],
+    ["/archives/poterie-1939/14.jpg", 910, 950],
+    ["/images/jcam-jeunes-taqaats.jpg", 958, 540],
+    ["/images/asam-2026-finaliste.jpg", 2048, 1536],
+  ]) {
+    const image = images.find(tag => tag.includes(encodeURIComponent(path)));
+    assert.ok(image, `Image absente : ${path}`);
+    assert.ok(image.includes(`width="${width}"`), `Largeur incorrecte : ${path}`);
+    assert.ok(image.includes(`height="${height}"`), `Hauteur incorrecte : ${path}`);
+    assert.ok(image.includes('loading="lazy"'), `Chargement différé absent : ${path}`);
+  }
+});

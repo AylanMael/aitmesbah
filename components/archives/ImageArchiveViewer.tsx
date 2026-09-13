@@ -59,7 +59,7 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
       }}
       onDoubleClick={() => { if (zoom === 100) setZoom(200); else resetZoom(); }}>
       <div className="village-archive-image" style={{ width: `${zoom}%`, aspectRatio }}>
-        <Image src={src} alt={alt} fill priority sizes="(max-width: 900px) 100vw, 65vw" />
+        <Image src={src} alt={alt} fill loading="lazy" sizes="(max-width: 900px) 100vw, 65vw" />
       </div>
     </div>
     <footer className="village-archive-tools"><p>Zoom : + / − · Défilez dans l’image pour l’explorer.</p><a href={src} target="_blank" rel="noreferrer">Ouvrir le fichier seul ↗</a></footer>

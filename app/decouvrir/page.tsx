@@ -27,6 +27,15 @@ export const metadata: Metadata = {
   },
 };
 
+// Dimensions des fichiers originaux : réserve le bon espace avant leur chargement.
+const photoDimensions: Record<string, { width: number; height: number }> = {
+  lieux: { width: 720, height: 540 },
+  memoire: { width: 312, height: 472 },
+  gestes: { width: 910, height: 950 },
+  present: { width: 958, height: 540 },
+  participer: { width: 2048, height: 1536 },
+};
+
 const steps = [
   { id: "lieux", label: "Un territoire", title: "D’abord, situer le village", text: "Aït Mesbah se trouve en Kabylie, dans la commune d’Ath Douala, au sein de la wilaya de Tizi Ouzou. Pour qui y revient ou le découvre de loin, ses reliefs, ses chemins et ses quartiers sont les premiers repères d’une histoire commune.", image: "/ait-mesbah-village.jpg", alt: "Vue des habitations d’Aït Mesbah", caption: "Le village et ses reliefs", href: "/village", action: "Explorer les lieux" },
   { id: "memoire", label: "Une mémoire", title: "Relier les générations", text: "L’histoire du village se découvre à travers des documents, des photographies et des témoignages. Le parcours d’Amar Imache, la guerre d’indépendance et les migrations y occupent une place. La chronologie distingue les faits documentés des mémoires locales qui restent à recouper.", image: "/images/amar-imache/portrait-ancien.jpg", alt: "Portrait ancien d’Amar Imache", caption: "Amar Imache · Portrait présenté dans le dossier historique", href: "/histoire-memoire", action: "Parcourir l’histoire" },
@@ -48,7 +57,7 @@ export default function DiscoveryPage() {
       </header>
       <nav className="journey-nav" aria-label="Les cinq étapes"><ol>{steps.map((step, index) => <li key={step.id}><a href={`#${step.id}`}><span>{String(index + 1).padStart(2, "0")}</span>{step.label}</a></li>)}</ol></nav>
       <div className="journey-stages">{steps.map((step, index) => <section key={step.id} id={step.id} aria-labelledby={`titre-${step.id}`} className="journey-stage">
-        <figure><Image src={step.image} alt={step.alt} width={720} height={720} sizes="(max-width: 760px) 90vw, 450px" /><figcaption>{step.caption}</figcaption></figure>
+        <figure><Image src={step.image} alt={step.alt} width={photoDimensions[step.id].width} height={photoDimensions[step.id].height} loading="lazy" sizes="(max-width: 760px) calc(100vw - 44px), 470px" /><figcaption>{step.caption}</figcaption></figure>
         <div><p className="journey-label">{String(index + 1).padStart(2, "0")} / 05 · {step.label}</p><h2 id={`titre-${step.id}`}>{step.title}</h2><p>{step.text}</p><Link href={step.href}>{step.action} <span aria-hidden="true">↗</span></Link><div className="journey-next"><a href={index < steps.length - 1 ? `#${steps[index + 1].id}` : "#continuer"}>{index < steps.length - 1 ? `Étape suivante : ${steps[index + 1].label.toLowerCase()}` : "Terminer le parcours"}<span aria-hidden="true">↓</span></a></div></div>
       </section>)}</div>
       <section id="continuer" className="journey-ending"><p className="journey-label">La découverte continue</p><h2>Une terre commune,<br />des liens sans frontières.</h2><p>Ce premier regard n’épuise pas l’histoire du village. Prenez le temps d’explorer les archives, de lire un récit ou de découvrir une initiative.</p><Link href="/diaspora">Retrouver les liens de la diaspora →</Link><Link href="/agir">Découvrir « Agir ensemble » →</Link></section>
