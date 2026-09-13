@@ -1,5 +1,6 @@
 .archive-collection{color:#193c31;margin-top:40px}
 .archive-collection-search{max-width:620px;display:grid;gap:10px}
+.archive-collection-search small{font:12px/1.7 Arial,sans-serif;color:#536159}
 .archive-collection-search label{font:700 12px/1.5 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
 .archive-collection-search input{width:100%;min-width:0;min-height:52px;padding:14px 18px;border:1px solid #bfb19b;border-radius:0;background:#fffaf1;color:#193c31;font:16px/1.5 Arial,sans-serif}
 .archive-collection-filters{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 18px}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ArchiveDiscovery from "@/components/archives/ArchiveDiscovery";
 import ImageArchiveViewer from "@/components/archives/ImageArchiveViewer";
 import PotteryPhotoCollection from "@/components/archives/PotteryPhotoCollection";
 import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
@@ -25,5 +26,6 @@ export default function HianiDebiaArchivePage() {
     </dl></section>
     <section className="village-archive-reading" id="source"><div><p className="eyebrow">La trace au verso</p><h2>Le document qui étaye l’identification</h2></div><div><p className="village-archive-lead">La capture transmise reproduit les annotations au dos du tirage. On y lit notamment le nom du village, celui de la potière et le tampon du photographe.</p><p>Elle porte les mentions « Décor », « objet 40.8.86 » et le numéro de film « 39-202 ». Ces repères complètent la notice ; ils ne doivent pas être confondus avec son numéro de gestion PP0193025.</p><p>Le champ « numéro de négatif » de la notice indique 1939-214, tandis que le verso porte 39-202. Nous conservons cette différence sans la corriger par supposition. La date de 1939 est renseignée par la notice du musée.</p><p><a href="/archives/poterie-1939/verso-decor-hiani-debia.pdf" target="_blank" rel="noreferrer">Consulter le PDF transmis (1 page) ↗</a></p><p><a href="https://collections.quaibranly.fr/" target="_blank" rel="noreferrer">Consulter le catalogue du musée ↗</a> — rechercher « PP0193025 » ou « Hiani ».</p><aside><strong>Source et reproduction</strong><p>La capture conserve le crédit du musée et l’inscription relative à l’autorisation de reproduction. L’identification d’une source ne constitue pas une autorisation de réutilisation ; les conditions actuelles restent à vérifier auprès du musée.</p></aside></div></section>
     <ImageArchiveViewer src="/archives/poterie-1939/verso-decor-hiani-debia.png" alt="Capture du verso annoté : tampon Thérèse Rivière, Aït Mesbah, Décor, objet 40.8.86, Hiani Debia et film 39-202" title="Pièce justificative · verso annoté du tirage" aspectRatio="1600 / 1154" />
+    <ArchiveDiscovery current="reportage" />
   </main><SiteFooter /></>;
 }

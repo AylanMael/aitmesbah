@@ -1,0 +1,19 @@
+.home-archive-spotlight{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);align-items:center;gap:clamp(32px,7vw,110px);padding:clamp(44px,6vw,88px) max(24px,calc((100vw - 1180px)/2));background:#eee5d6;color:#193c31;border-bottom:1px solid #d7cab5}
+.home-archive-spotlight figure{margin:0;min-width:0;justify-self:center;width:min(100%,400px)}
+.home-archive-spotlight figure>a{position:relative;display:block;background:#dfd5c5;padding:12px;color:#fff8ea;text-decoration:none}
+.home-archive-spotlight img{display:block;width:100%;height:auto}
+.home-archive-spotlight figure>a>span{display:block;padding:12px;background:#193c31;font:11px/1.5 Arial,sans-serif;letter-spacing:.06em;text-align:center}
+.home-archive-spotlight figcaption{font:11px/1.7 Arial,sans-serif;margin-top:12px;color:#5b675f}
+.home-archive-story{max-width:580px;min-width:0}
+.home-archive-spotlight{scroll-margin-top:85px}
+.home-archive-story .home-archive-eyebrow{font:700 11px/1.6 Arial,sans-serif;text-transform:uppercase;letter-spacing:.18em;color:#91482f;margin:0 0 15px}
+.home-archive-story h2{font:400 clamp(38px,4.8vw,68px)/1.04 Georgia,serif;letter-spacing:-.035em;margin:0 0 26px;color:#193c31}
+.home-archive-story p{font:17px/1.8 Arial,sans-serif;margin:0 0 22px;color:#43584d}
+.home-archive-story .home-archive-place{font:700 12px/1.7 Arial,sans-serif;letter-spacing:.04em;color:#91482f;border-block:1px solid #cdbda4;padding:14px 0}
+.home-archive-place span{display:block;font-weight:400;font-size:11px;color:#5b675f}
+.home-archive-story .home-archive-context{font-size:14px}
+.home-archive-actions{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;margin-top:28px}
+.home-archive-actions a{display:inline-flex;align-items:center;gap:20px;min-height:48px;font:700 11px/1.5 Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#193c31;text-underline-offset:6px}
+.home-archive-actions a:first-child{background:#193c31;color:#fff8ea;padding:14px 18px;text-decoration:none}
+.home-archive-spotlight a:focus-visible{outline:3px solid #a75132;outline-offset:4px}
+@media(max-width:700px){.home-archive-spotlight{grid-template-columns:1fr;gap:30px}.home-archive-story{grid-row:1}.home-archive-spotlight figure{width:min(100%,360px)}.home-archive-story h2{font-size:44px}}

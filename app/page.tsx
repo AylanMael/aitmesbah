@@ -4,6 +4,7 @@ import HeroSection from "@/components/home/HeroSection";
 import VillageIntro from "@/components/home/VillageIntro";
 import CraftSection from "@/components/home/CraftSection";
 import MemorySection from "@/components/home/MemorySection";
+import ArchiveSpotlight from "@/components/home/ArchiveSpotlight";
 import VillageLifeSection from "@/components/home/VillageLifeSection";
 import VillageAliveSection from "@/components/home/VillageAliveSection";
 import DiasporaSection from "@/components/home/DiasporaSection";
@@ -36,6 +37,7 @@ export default async function Home() {
         <VillageIntro />
         <CraftSection />
         <MemorySection />
+        <ArchiveSpotlight />
         <VillageLifeSection />
         <VillageAliveSection />
         <HomeEditorialPulse publications={publications} event={nextEvent} initiatives={initiatives} />

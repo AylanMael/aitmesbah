@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ArchiveDiscovery from "@/components/archives/ArchiveDiscovery";
 import ImageArchiveViewer from "@/components/archives/ImageArchiveViewer";
 import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -44,5 +45,6 @@ export default function PeabodyArchivePage() {
     <section className="village-archive-reading"><div><p className="eyebrow">Une histoire à poursuivre</p><h2>Retrouver le parcours du pichet</h2></div><div><p className="village-archive-lead">Qui l’a façonné ? Quand et dans quelles circonstances a-t-il rejoint la collection ?</p><p>La notice consultée ne permet pas de répondre à ces questions. Les dossiers d’acquisition et la lecture des inscriptions pourraient apporter de nouveaux repères.</p><p>Aucun lien n’est établi avec Hiani Debia ni avec les photographies de 1939. Ces documents peuvent être regardés ensemble pour nourrir la recherche, mais restent deux dossiers distincts.</p><p><Link href="/histoire-memoire/archives/hiani-debia-1939">Découvrir le reportage photographique de 1939 →</Link></p><p><Link href="/artisanat/poterie">Explorer le savoir-faire de la poterie →</Link></p><p><Link href="/contribuer?category=photographs_archives&title=Informations%20sur%20le%20pichet%20Peabody%20975-32-50%2F11891">Apporter une information sur cet objet →</Link></p></div></section>
 
     <section className="village-archive-reading" id="source"><div><p className="eyebrow">Source & reproduction</p><h2>Une notice, pas une attribution définitive</h2></div><div><p>Cette fiche propose une synthèse française du catalogue, consulté le 12 septembre 2026. La capture présente l’état visible de la notice à cette date ; elle ne remplace pas le catalogue du musée, qui peut évoluer.</p><p><a href={source} target="_blank" rel="noreferrer">Consulter la source originale ↗</a></p><p>La présence de la capture ne constitue pas une autorisation de réutilisation. Aucun accord de reproduction du musée n’a été obtenu à ce jour. <a href="https://peabody.harvard.edu/rights-and-reproductions" target="_blank" rel="noreferrer">Droits et reproductions ↗</a></p></div></section>
+    <ArchiveDiscovery current="pitcher" />
   </main><SiteFooter /></>;
 }
