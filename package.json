@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "test:public:journey": "node --test tests/public/discovery.smoke.test.mjs",
     "firebase:emulators": "firebase emulators:start --only auth,firestore,storage --project demo-aitmesbah",
     "test:crm:unit": "node --test --test-concurrency=1 tests/firebase/*.unit.test.mjs",
     "test:firebase:rules": "firebase emulators:exec --only auth,firestore,storage --project demo-aitmesbah \"node --test --test-concurrency=1 tests/firebase/*.test.mjs\""

@@ -19,8 +19,8 @@ export default function VillageIntro() {
         <p>
           Son identité se raconte aussi dans les mains qui travaillent : la poterie, la couture de robes kabyles, la tapisserie et la confection de burnous en laine de mouton. Des savoir-faire à reconnaître, à documenter et à transmettre avec celles et ceux qui les font vivre.
         </p>
-        <a className="text-link" href="#memoire">
-          Découvrir l’histoire <span aria-hidden="true">↗</span>
+        <a className="text-link" href="/decouvrir">
+          Le village en cinq minutes <span aria-hidden="true">↗</span>
         </a>
       </div>
       <div className="intro-visual">

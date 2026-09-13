@@ -24,6 +24,7 @@ export const mainNavigation: NavigationItem[] = [
 ];
 
 export const footerDiscoverLinks: NavigationItem[] = [
+  { label: "Le village en cinq minutes", href: "/decouvrir" },
   { label: "Artisanat & savoir-faire", href: "/artisanat" },
   { label: "Le village", href: "/village" },
   { label: "Carte vivante", href: "/carte-vivante" },
