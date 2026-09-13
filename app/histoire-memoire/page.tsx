@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import ArchiveCollection from "@/components/archives/ArchiveCollection";
 import Link from "next/link";
 
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -101,25 +101,14 @@ export default async function HistoryMemoryPage() {
 
       <section className="history-archives" id="archives">
         <div className="history-archives-heading"><p className="eyebrow">Archives du village</p><h2>Les documents font parler le territoire</h2><p>Cartes, photographies, registres et correspondances sont présentés avec leur contexte, leur provenance et leur degré de certitude.</p></div>
-        <article className="history-archive-feature">
-          <Link className="history-archive-visual" href="/histoire-memoire/archives/carte-territoriale-1892" aria-label="Découvrir la carte territoriale de 1892">
-            <Image src="/archives/village/carte-ait-mesbah-1892.webp" alt="Carte territoriale ancienne du douar des Beni Aïssi datée de 1892" fill sizes="(max-width: 800px) 100vw, 58vw" />
-            <span>Ouvrir l’archive <b aria-hidden="true">↗</b></span>
-          </Link>
-          <div className="history-archive-notice"><div className="history-archive-index"><span>Pièce</span><strong>001</strong></div><p className="eyebrow">Carte & territoire · 1892</p><h3>Carte du douar des Beni Aïssi</h3><p>Cette carte d’époque coloniale représente le territoire du douar des Beni Aïssi. Aït Mesbah y apparaît dans un ensemble plus vaste de chemins, reliefs, parcelles et implantations villageoises.</p><dl><div><dt>Nature</dt><dd>Document cartographique</dd></div><div><dt>État</dt><dd>Notice en cours d’étude</dd></div><div><dt>Lecture</dt><dd>Haute définition</dd></div></dl><Link href="/histoire-memoire/archives/carte-territoriale-1892">Voir la notice complète <span aria-hidden="true">→</span></Link></div>
-        </article>
-        <div className="history-published-archives">
-          <article><Link href="/histoire-memoire/archives/hiani-debia-1939">
-            <Image src="/archives/poterie-1939/14.jpg" alt="Hiani Debia décorant un récipient à anse, photographiée à Aït Mesbah par Thérèse Rivière en 1939" width={920} height={960} sizes="(max-width: 800px) 90vw, 40vw" style={{objectFit:"contain"}} />
-            <span>Pièce 002 · Photographie · 1939</span>
-            <h3>Reportage à Aït Mesbah en 1939</h3>
-            <p>L’artisanat de la poterie : seize photographies pour découvrir les gestes du décor, la cuisson au sol et les objets du quotidien, autour d’un cliché identifié de Thérèse Rivière.</p>
-            <p>Source identifiée : musée du quai Branly – Jacques Chirac, notice PP0193025, titre historique « Décor ». Conditions de reproduction à vérifier.</p>
-            <b>Découvrir l’archive et le documentaire →</b>
-          </Link></article>
-          <article><Link href="/histoire-memoire/archives/pichet-ait-mesbah-peabody"><span>Pièce 003 · Objet & collection · Non daté</span><h3>Un pichet portant la mention Aït Mesbah</h3><p>Au Peabody Museum de Harvard, l’étiquette d’un pichet kabyle conserve le nom du village. Une nouvelle piste pour documenter ses savoir-faire.</p><p>Notice 125189 · Inventaire 975-32-50/11891. Date de fabrication et parcours de l’objet à préciser.</p><b>Découvrir l’objet et sa source →</b></Link></article>
-          {publishedArchives.map((archive, index) => <article key={archive.publicationId}><Link href={`/publications/${archive.slug}`}>{archive.primaryAssetId && archive.primaryAssetMimeType?.startsWith("image/") && <img src={`/api/public/contents/${archive.slug}/media`} alt="" />}<span>Pièce {String(index + 4).padStart(3, "0")}</span><h3>{archive.title}</h3><p>{archive.summary}</p><b>Consulter l’archive →</b></Link></article>)}
-        </div>
+        <ArchiveCollection publications={publishedArchives.map(archive => ({
+          id: `publication-${archive.publicationId}`,
+          title: archive.title, summary: archive.summary,
+          href: `/publications/${archive.slug}`, type: "Documents",
+          date: archive.editorialMetadata.archiveDate || "Date non renseignée",
+          source: archive.editorialMetadata.provenance || "Publication du village · source à préciser",
+          image: archive.primaryAssetId && archive.primaryAssetMimeType?.startsWith("image/") ? `/api/public/contents/${archive.slug}/media` : undefined,
+        }))} />
         <div className="history-archive-footer"><p><strong>Une collection appelée à grandir.</strong> Chaque nouvelle pièce validée dans le CRM rejoint automatiquement cet inventaire.</p><Link href="/contribuer?category=photographs_archives&title=Proposition%20d%27archive">Proposer une archive <span aria-hidden="true">↗</span></Link></div>
       </section>
 
