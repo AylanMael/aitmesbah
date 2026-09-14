@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, useCallback } from "react";
 import "./image-archive-viewer.css";
 
 type Props = { src: string; alt: string; aspectRatio?: string; title?: string };
@@ -11,8 +11,12 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
   const [zoom, setZoom] = useState(100);
   const [fullscreen, setFullscreen] = useState(false);
   const [message, setMessage] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStart = useRef({ x: 0, y: 0, scrollLeft: 0, scrollTop: 0 });
+
   const viewerRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+
   const clamp = (value: number) => Math.min(300, Math.max(75, value));
 
   useEffect(() => {
@@ -21,10 +25,12 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
     return () => document.removeEventListener("fullscreenchange", update);
   }, []);
 
-  function resetZoom() {
+  const resetZoom = useCallback(() => {
     setZoom(100);
-    viewportRef.current?.scrollTo({ top: 0, left: 0 });
-  }
+    if (viewportRef.current) {
+      viewportRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
+  }, []);
 
   async function toggleFullscreen() {
     setMessage("");
@@ -37,31 +43,86 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
     }
   }
 
+  // Mouse / Touch Drag (Pan) logic
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (zoom <= 100 || !viewportRef.current) return;
+    setIsDragging(true);
+    dragStart.current = {
+      x: e.clientX,
+      y: e.clientY,
+      scrollLeft: viewportRef.current.scrollLeft,
+      scrollTop: viewportRef.current.scrollTop
+    };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging || !viewportRef.current) return;
+    const dx = e.clientX - dragStart.current.x;
+    const dy = e.clientY - dragStart.current.y;
+    viewportRef.current.scrollLeft = dragStart.current.scrollLeft - dx;
+    viewportRef.current.scrollTop = dragStart.current.scrollTop - dy;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (isDragging) {
+      setIsDragging(false);
+      try {
+        (e.target as HTMLElement).releasePointerCapture(e.pointerId);
+      } catch {
+        // Ignore if pointer capture release fails
+      }
+    }
+  };
+
   return <section className="village-archive-document" aria-labelledby={titleId} ref={viewerRef}>
     <header className="village-archive-toolbar">
-      <div><p id={titleId}>{title}</p><span>Déplacez-vous dans l’image lorsqu’elle est agrandie</span></div>
+      <div>
+        <p id={titleId}>{title}</p>
+        <span>{zoom > 100 ? "Glissez l'image ou utilisez les flèches pour vous déplacer" : "Double-cliquez ou zoomez pour explorer les détails"}</span>
+      </div>
       <div className="village-archive-zoom" aria-label="Commandes de la visionneuse">
-        <button type="button" disabled={zoom === 75} onClick={() => setZoom(value => clamp(value - 25))} aria-label="Réduire">−</button>
-        <button type="button" onClick={resetZoom} aria-label={`Zoom ${zoom} %. Revenir à la taille initiale`}>{zoom}%</button>
-        <button type="button" disabled={zoom === 300} onClick={() => setZoom(value => clamp(value + 25))} aria-label="Agrandir">+</button>
-        <button type="button" onClick={toggleFullscreen} aria-pressed={fullscreen} aria-label={fullscreen ? "Quitter le plein écran" : "Afficher en plein écran"}>⛶</button>
+        <button type="button" disabled={zoom === 75} onClick={() => setZoom(value => clamp(value - 25))} aria-label="Réduire les dimensions (−)">−</button>
+        <button type="button" onClick={resetZoom} aria-label={`Zoom actuel : ${zoom} %. Cliquer pour réinitialiser à 100%`}>{zoom}%</button>
+        <button type="button" disabled={zoom === 300} onClick={() => setZoom(value => clamp(value + 25))} aria-label="Agrandir (+)">+</button>
+        <button type="button" onClick={toggleFullscreen} aria-pressed={fullscreen} aria-label={fullscreen ? "Quitter le mode plein écran" : "Afficher en plein écran"}>⛶</button>
       </div>
     </header>
-    <p className="archive-viewer-status" role="status">{message || `Zoom : ${zoom} %`}</p>
-    <div className="village-archive-viewport" ref={viewportRef} tabIndex={0} role="region" aria-label={`${title} : image à explorer. Touches plus et moins pour zoomer, zéro pour réinitialiser, flèches pour se déplacer.`}
+    <p className="archive-viewer-status" role="status">{message || `Niveau de zoom : ${zoom} %`}</p>
+    <div
+      className={`village-archive-viewport ${zoom > 100 ? (isDragging ? "is-grabbing" : "is-grabbable") : ""}`}
+      ref={viewportRef}
+      tabIndex={0}
+      role="region"
+      aria-label={`${title} : image à explorer. Touches + et - pour zoomer, 0 pour réinitialiser, flèches directionnelles pour glisser.`}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       onKeyDown={event => {
         if (event.ctrlKey || event.metaKey || event.altKey) return;
         if (["+", "=", "-", "0"].includes(event.key)) {
           event.preventDefault();
           if (event.key === "0") resetZoom();
           else setZoom(value => clamp(value + (event.key === "-" ? -25 : 25)));
+        } else if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key) && viewportRef.current && zoom > 100) {
+          event.preventDefault();
+          const step = 60;
+          if (event.key === "ArrowUp") viewportRef.current.scrollTop -= step;
+          if (event.key === "ArrowDown") viewportRef.current.scrollTop += step;
+          if (event.key === "ArrowLeft") viewportRef.current.scrollLeft -= step;
+          if (event.key === "ArrowRight") viewportRef.current.scrollLeft += step;
         }
       }}
       onDoubleClick={() => { if (zoom === 100) setZoom(200); else resetZoom(); }}>
-      <div className="village-archive-image" style={{ width: `${zoom}%`, aspectRatio }}>
-        <Image src={src} alt={alt} fill loading="lazy" sizes="(max-width: 900px) 100vw, 65vw" />
+      <div className="village-archive-image" style={{ width: `${zoom}%`, aspectRatio, transition: isDragging ? "none" : "width 0.25s cubic-bezier(0.16, 1, 0.3, 1)" }}>
+        <Image src={src} alt={alt} fill loading="lazy" sizes="(max-width: 900px) 100vw, 65vw" draggable={false} />
       </div>
     </div>
-    <footer className="village-archive-tools"><p>Zoom : + / − · Défilez dans l’image pour l’explorer.</p><a href={src} target="_blank" rel="noreferrer">Ouvrir le fichier seul ↗</a></footer>
+    <footer className="village-archive-tools">
+      <p>Zoom : + / − / Double-clic · Glisser-déplacer disponible au-dessus de 100 %.</p>
+      <a href={src} target="_blank" rel="noreferrer">Ouvrir le fichier original HD ↗</a>
+    </footer>
   </section>;
 }
+

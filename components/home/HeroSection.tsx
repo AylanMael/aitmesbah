@@ -11,7 +11,7 @@ export default function HeroSection() {
         fill
         sizes="100vw"
         loading="eager"
-        preload
+        priority
       />
       <div className="mountains">
         <i />

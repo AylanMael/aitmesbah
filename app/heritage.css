@@ -1,5 +1,17 @@
 /* Editorial interpretation of regional ceramics: ivory, red-brown bands,
    paired dark rules. These geometric ornaments carry no asserted symbolism. */
+.memory-document-preview{display:block;position:relative;min-height:350px;overflow:hidden;background:#d8cbb3}
+.memory-document-preview img{object-fit:cover;object-position:50% 55%;transition:transform .3s}
+.memory-document-preview:hover img{transform:scale(1.025)}
+.memory-document-preview>span{position:absolute;inset:auto 0 0;display:flex;justify-content:space-between;padding:18px;color:#fff;background:#12372df2;font:12px/1.5 Arial,sans-serif}
+.memory-document-status{display:block;font:11px/1.6 Arial,sans-serif;color:#74523a;margin:14px 0}
+.memory-list .memory-reading-link{display:inline-flex;align-items:center;gap:22px;padding:12px 0 4px;border-bottom:1px solid #ddbb7860;color:#edd3a3;font:700 11px/1.5 Arial,sans-serif}
+.memory-source-note{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:start;gap:24px;margin-top:35px;padding-top:22px;border-top:1px solid #ffffff26;color:#d6e0d8}
+.memory-source-note>span{font:700 10px/1.7 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#edd3a3}
+.memory-source-note p{margin:0;font:13px/1.8 Arial,sans-serif}.memory-source-note a{font:12px/1.8 Arial,sans-serif;text-decoration:underline;text-underline-offset:4px;color:#edd3a3}
+.memory :is(a):focus-visible{outline:2px solid #dcb86d;outline-offset:5px}
+@media(max-width:760px){.memory-source-note{grid-template-columns:1fr;gap:12px}.memory-document-preview{min-height:280px}}
+@media(prefers-reduced-motion:reduce){.memory-document-preview img{transition:none}.memory-document-preview:hover img{transform:none}}
 .site-header .header-actions :is(.header-act,.contribute.small){display:inline-flex;align-items:center;justify-content:space-between;gap:12px;width:158px;min-height:44px;padding:0 16px;border:1px solid #d8b26b;border-radius:999px;color:#fff;white-space:nowrap;font:700 10px/1.4 Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;transition:filter .2s}
 .site-header .header-actions .header-act{background:#173e32}
 .site-header .header-actions .contribute.small{background:#a94f32}

@@ -5,7 +5,7 @@ export default function VillageAliveSection() {
   return <section className="home-alive" aria-labelledby="home-alive-title">
     <header className="home-alive-head">
       <div><p className="eyebrow">Le village vivant</p><h2 id="home-alive-title">Regarder hier.<br/><em>Prendre part aujourd’hui.</em></h2></div>
-      <div><p>Cette porte d’entrée relie la mémoire, les initiatives et les habitants. Elle évoluera au rythme des archives retrouvées, des rendez-vous confirmés et des projets réellement engagés.</p><span>À découvrir · à documenter · à construire</span></div>
+      <div><p>Reconnaître un visage sur une archive, proposer une action pour un lieu commun ou raconter un apprentissage : trois façons concrètes de participer, même à distance.</p><span>Pistes de contribution · Pas d’actions annoncées comme acquises</span></div>
     </header>
     <div className="home-alive-grid">{villageLiveItems.map((item) => <article className={`home-alive-card ${item.tone}`} key={item.number}>
       <div className="home-alive-card-top"><span>{item.number}</span><small>{item.kind}</small></div><div className="home-alive-mark" aria-hidden="true">{item.tone === "archive" ? "⌁" : item.tone === "action" ? "↗" : "◉"}</div>

@@ -1,6 +1,11 @@
 .village-archive-document .village-archive-zoom button {
   min-width: 44px;
   min-height: 44px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.village-archive-document .village-archive-zoom button:not(:disabled):hover {
+  background: #edd3a3;
+  color: #173e32;
 }
 .village-archive-document .village-archive-zoom button:disabled {
   opacity: .4;
@@ -19,6 +24,15 @@
   color: #173e32;
   font-size: 12px;
   line-height: 1.5;
+  border-bottom: 1px solid #e3ddd2;
+}
+.village-archive-viewport.is-grabbable {
+  cursor: grab;
+  user-select: none;
+}
+.village-archive-viewport.is-grabbing {
+  cursor: grabbing;
+  user-select: none;
 }
 .village-archive-document .village-archive-tools {
   background: #f6f0e5;
@@ -32,6 +46,10 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  transition: color 0.2s ease;
+}
+.village-archive-document .village-archive-tools a:hover {
+  color: #98472f;
 }
 .village-archive-document:fullscreen {
   display: flex;
@@ -44,3 +62,4 @@
   min-height: 0;
   max-height: none;
 }
+

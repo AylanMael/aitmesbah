@@ -13,7 +13,11 @@ export default async function EditorialPreviewPage({ params, searchParams }: { p
   const session = await resolveCrmSession();
   if (session.state !== "authorized") redirect("/connexion");
   let preview;
-  try { preview = await getContributionPreviewRecord(session.uid, (await params).contributionId); } catch { notFound(); }
+  try { preview = await getContributionPreviewRecord(session.uid, (await params).contributionId); } catch (error) {
+    const status = (error as {http?: number} | null)?.http;
+    if (status === 403 || status === 404) notFound();
+    throw error;
+  }
   const { contribution, body, assets } = preview;
   const meta = contribution.editorialMetadata;
   const requestedMedia = (await searchParams).media;

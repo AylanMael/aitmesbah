@@ -30,7 +30,11 @@ function guidance(c:GuideContribution){
 
 export default async function ContributionRecordPage({params}:{params:Promise<{contributionId:string}>}){
  const session=await resolveCrmSession();if(session.state!=="authorized")redirect("/connexion");
- let preview;try{preview=await getContributionPreviewRecord(session.uid,(await params).contributionId);}catch{notFound();}
+ let preview;try{preview=await getContributionPreviewRecord(session.uid,(await params).contributionId);}catch(error){
+  const status=(error as {http?:number}|null)?.http;
+  if(status===403||status===404)notFound();
+  throw error;
+ }
  const {contribution,body,assets}=preview,step=currentStep(contribution.status),meta=contribution.editorialMetadata,guide=guidance(contribution);
  return <main className="crm-shell crm-record-page">
   <CrmPageHeader index={String(contribution.currentVersion).padStart(2,"0")} kicker={categories[contribution.category]??"Contribution"} title={contribution.title} description={contribution.summary} count={assets.length} countLabel="médias validés"/>

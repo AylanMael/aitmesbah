@@ -16,6 +16,8 @@ export interface VillageFact {
 }
 
 export interface MemoryItem {
+  href: string;
+  action: string;
   number: string;
   category: string;
   title: string;

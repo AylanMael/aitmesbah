@@ -13,8 +13,7 @@ export default function ContributionSection() {
           un document, <em>une histoire ?</em>
         </h2>
         <p>
-          Contribuez à enrichir la mémoire collective d’Aït Mesbah. Chaque
-          témoignage sera étudié et valorisé avec soin.
+          Envoyez votre document avec quelques repères : un nom, un lieu, une date même approximative et ce que vous connaissez de son origine. Vous pouvez aussi signaler une erreur. Les contributions sont relues avant publication.
         </p>
         <ul>
           {contributionTypes.map((type) => (

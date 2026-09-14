@@ -21,21 +21,27 @@ export const villageFacts: VillageFact[] = [
 export const memoryItems: MemoryItem[] = [
   {
     number: "02",
-    category: "Archives",
-    title: "Photographies et archives",
-    description: "Des photographies, documents et objets pourront être présentés après identification de leur origine et validation des droits de publication.",
+    category: "Un parcours à découvrir",
+    title: "Amar Imache, ses écrits et son combat",
+    description: "Photographies, repères biographiques et archives de presse : entrez dans le dossier consacré à Amar Imache et à son engagement dans le mouvement national algérien.",
+    href: "/amar-imache",
+    action: "Ouvrir le dossier",
   },
   {
     number: "03",
-    category: "Témoignages",
-    title: "Témoignages",
-    description: "Des témoignages pourront être recueillis avec le consentement des personnes concernées, puis vérifiés et contextualisés avant publication.",
+    category: "Une source à lire",
+    title: "« Ils nous ont trahis »",
+    description: "Un article signé Amar Imache dans La Lutte ouvrière du 5 février 1937. Consultez sa notice et la reproduction du journal pour retrouver le texte dans son contexte.",
+    href: "/amar-imache/archives/ils-nous-ont-trahis-1937",
+    action: "Consulter l’archive",
   },
   {
     number: "04",
     category: "Chronologie",
-    title: "Repères chronologiques",
-    description: "Une chronologie pourra être constituée progressivement à partir de sources identifiées et recoupées.",
+    title: "Se repérer dans l’histoire du village",
+    description: "Parcourez les grandes périodes, des récits d’origine aux migrations contemporaines. Les repères distinguent les sources documentées, la mémoire locale et la tradition orale.",
+    href: "/histoire-memoire",
+    action: "Parcourir la chronologie",
   },
 ];
 
