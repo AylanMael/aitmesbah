@@ -136,16 +136,26 @@ export default function VillageAtlas() {
         <p>{district.note}</p>
         <dl>
           <div>
+            <dt>Situation & Relief</dt>
+            <dd>{district.situation}</dd>
+          </div>
+          <div>
+            <dt>Lieux & Repères emblématiques</dt>
+            <dd className="atlas-landmarks-list">
+              {district.landmarks.map((lm, i) => (
+                <span key={i} className="atlas-landmark-tag">
+                  📍 {lm}
+                </span>
+              ))}
+            </dd>
+          </div>
+          <div>
             <dt>Commune</dt>
             <dd>Aït Douala · Wilaya de Tizi Ouzou</dd>
           </div>
           <div>
-            <dt>État du dossier</dt>
-            <dd>En cours de documentation</dd>
-          </div>
-          <div>
             <dt>Contributions utiles</dt>
-            <dd>Photos · récits d’habitants · noms de lieux</dd>
+            <dd>Photos · récits d’habitants · toponymie locale</dd>
           </div>
         </dl>
         <Link href={`/contribuer?category=places_heritage&title=Mémoire du quartier ${encodeURIComponent(district.name)}#envoyer`}>
