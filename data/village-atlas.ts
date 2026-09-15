@@ -32,7 +32,6 @@ export const villageDistricts: readonly VillageDistrict[] = [
     landmarks: [
       "El Djema n'Ath Salah",
       "Maison natale d'Amar Imache",
-      "Crête secondaire d'Ath Salah",
     ],
   },
   {
@@ -56,7 +55,7 @@ export const villageDistricts: readonly VillageDistrict[] = [
     landmarks: [
       "Mosquée ancienne",
       "Quartier historique (le plus ancien)",
-      "Vue panoramique sur la colline",
+      "Construit sur une colline",
     ],
   },
   {
@@ -79,7 +78,6 @@ export const villageDistricts: readonly VillageDistrict[] = [
     landmarks: [
       "Versant d'Oussamar",
       "Nouvelles bâtisses",
-      "Axe vers Ath Zmenzer",
     ],
   },
   {
@@ -89,7 +87,6 @@ export const villageDistricts: readonly VillageDistrict[] = [
     situation: "Périphérie du village",
     note: "Petit quartier excentré, situé à quelques centaines de mètres en contrebas du cœur du village.",
     landmarks: [
-      "Sources d'El Hammam",
       "Secteur vallonné périphérique",
     ],
   },
