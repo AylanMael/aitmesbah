@@ -7,15 +7,15 @@ import { useState } from "react";
 import { villageDistricts } from "@/data/village-atlas";
 
 const districtCoords = [
-  { x: 61, y: 67 }, // 0: Aït Moussa
-  { x: 54, y: 63 }, // 1: Aït Salah
-  { x: 53, y: 57 }, // 2: Tanajelt
-  { x: 50, y: 50 }, // 3: Tassast
-  { x: 44, y: 44 }, // 4: Lakouyathe
-  { x: 38, y: 56 }, // 5: Timizart Oussamer
-  { x: 64, y: 49 }, // 6: El Hammam
-  { x: 34, y: 70 }, // 7: Ighil Oussamer
-  { x: 70, y: 20 }, // 8: Ighil Hamou
+  { x: 62, y: 64 }, // 0: Aït Moussa (Flanc de crête / Ighf Ouguemoune)
+  { x: 55, y: 60 }, // 1: Aït Salah (Crête secondaire)
+  { x: 52, y: 53 }, // 2: Tanajelte (Centre du village)
+  { x: 48, y: 46 }, // 3: Tassast (Colline / Quartier ancien)
+  { x: 42, y: 40 }, // 4: Lakouyathe (École primaire)
+  { x: 38, y: 50 }, // 5: Timizart Oussamar (Versant Oussamar)
+  { x: 66, y: 46 }, // 6: El Hammam (Sources & vallon)
+  { x: 32, y: 64 }, // 7: Ighil Oussamar (CEM & Huileries, Route Ath Zmenzer)
+  { x: 72, y: 22 }, // 8: Ighil Hammou (Limite Ath Douala / Ath Aïssi)
 ];
 
 export default function VillageAtlas() {
