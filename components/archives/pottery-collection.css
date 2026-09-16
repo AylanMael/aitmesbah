@@ -21,7 +21,7 @@
 .pottery-photo-credit strong{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#8b4b30}
 .pottery-photo-credit p{margin:6px 0}
 .pottery-photo-credit a{color:#193c31;text-decoration:underline;text-underline-offset:3px}
-.pottery-photo{display:block;min-width:0;text-align:left;background:none;border:0;padding:0;color:inherit;cursor:pointer;group:hover}
+.pottery-photo{display:block;min-width:0;text-align:left;background:none;border:0;padding:0;color:inherit;cursor:pointer}
 .pottery-photo-frame{display:block;position:relative;background:#e3ddd2;padding:10px;overflow:hidden;border:1px solid #d5cab7;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),box-shadow 0.35s ease}
 .pottery-photo:hover .pottery-photo-frame{transform:translateY(-3px);box-shadow:0 12px 28px rgba(25,60,49,0.12);border-color:#b76c38}
 .pottery-photo-frame img{display:block;width:100%;height:auto;aspect-ratio:1/1.05;object-fit:contain;transition:transform 0.5s cubic-bezier(0.16,1,0.3,1)}
