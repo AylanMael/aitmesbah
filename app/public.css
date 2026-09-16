@@ -330,7 +330,7 @@ footer{padding:82px max(7vw,calc((100vw - 1280px)/2)) 28px;background:#071f19}.f
 
 .atlas-explorer,
 .atlas-constellation {
-  min-height: 1170px;
+  min-height: 840px;
 }
 
 
