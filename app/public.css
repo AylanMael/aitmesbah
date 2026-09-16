@@ -333,4 +333,219 @@ footer{padding:82px max(7vw,calc((100vw - 1280px)/2)) 28px;background:#071f19}.f
   min-height: 840px;
 }
 
+/* --- Section Methode : Construire avec justesse --- */
+.atlas-method {
+  background: linear-gradient(135deg, #061b16 0%, #0d342a 100%);
+  color: #fff;
+  padding: clamp(90px, 9vw, 140px) max(8vw, calc((100vw - 1320px)/2));
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid #d4ad6033;
+}
+.atlas-method::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(212, 173, 96, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.atlas-method-header {
+  max-width: 780px;
+  margin-bottom: 56px;
+}
+.atlas-method-header h2 {
+  font: clamp(44px, 5.5vw, 76px)/0.96 Georgia, serif;
+  color: #fff9ec;
+  margin: 16px 0 24px;
+  letter-spacing: -0.04em;
+}
+.atlas-method-lead {
+  font: 18px/1.75 Georgia, serif;
+  color: #bfd0c8;
+  max-width: 660px;
+  border-left: 2px solid #d4ad60;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.atlas-method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+.atlas-method-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 173, 96, 0.22);
+  padding: 38px 28px;
+  border-radius: 6px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, background-color 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+}
+.atlas-method-card:hover {
+  transform: translateY(-6px);
+  background: rgba(212, 173, 96, 0.07);
+  border-color: #d4ad60;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+}
+.atlas-method-num {
+  font: 700 clamp(42px, 4vw, 56px)/1 Georgia, serif;
+  color: #d4ad60;
+  margin-bottom: 12px;
+  display: block;
+}
+.atlas-method-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 10px;
+  background: rgba(212, 173, 96, 0.14);
+  border: 1px solid rgba(212, 173, 96, 0.3);
+  border-radius: 4px;
+  color: #f0cf8d;
+  font: 800 9px/1 Arial, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.atlas-method-card h3 {
+  font: clamp(24px, 2.5vw, 32px)/1.1 Georgia, serif;
+  color: #fff9ec;
+  margin: 0 0 14px;
+}
+.atlas-method-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #a6b8af;
+  margin: 0;
+}
+
+/* --- Section Call To Action : Votre quartier, votre memoire --- */
+.atlas-call {
+  background: linear-gradient(135deg, #964228 0%, #6e2c1a 100%);
+  color: #fff;
+  padding: clamp(90px, 9vw, 130px) max(8vw, calc((100vw - 1320px)/2));
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.atlas-call::before {
+  content: "ⵣ";
+  position: absolute;
+  right: 5%;
+  bottom: -15%;
+  font: 260px/1 Georgia, serif;
+  color: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+.atlas-call-container {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.atlas-call-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  color: #fff9ec;
+  font: 800 10px/1 Arial, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  backdrop-filter: blur(4px);
+}
+.atlas-call h2 {
+  font: clamp(38px, 5.2vw, 68px)/1.04 Georgia, serif;
+  color: #fff;
+  margin: 12px 0 22px;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.atlas-call-desc {
+  font: 18px/1.75 Georgia, serif;
+  color: #f6e6db;
+  max-width: 680px;
+  margin: 0 0 36px;
+}
+.atlas-call-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 42px;
+}
+.atlas-call-chips span {
+  padding: 9px 18px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  font-size: 13px;
+  color: #fff9ec;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.atlas-call-chips span:hover {
+  transform: translateY(-2px);
+  border-color: #f0cf8d;
+  background: rgba(0, 0, 0, 0.35);
+}
+.atlas-call-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 38px;
+  background: #fff9ec;
+  color: #173e32;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+.atlas-call-btn:hover {
+  background: #f0cf8d;
+  color: #08251e;
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+.atlas-btn-arrow {
+  font-size: 16px;
+  transition: transform 0.25s ease;
+}
+.atlas-call-btn:hover .atlas-btn-arrow {
+  transform: translate(3px, -3px);
+}
+
+@media(max-width: 1024px) {
+  .atlas-method-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media(max-width: 600px) {
+  .atlas-method-grid {
+    grid-template-columns: 1fr;
+  }
+  .atlas-method-card {
+    padding: 28px 22px;
+  }
+  .atlas-call-chips span {
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+}
+
+
 
