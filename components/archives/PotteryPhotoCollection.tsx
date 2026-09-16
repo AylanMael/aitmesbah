@@ -44,15 +44,31 @@ const source = (id: number) => `/archives/poterie-1939/${id}.jpg`;
 const verifiedCredit = "Thérèse Rivière · 1939 · Aït Mesbah. Musée du quai Branly – Jacques Chirac, ancienne photothèque du musée de l’Homme. Réf. PP0193025.";
 
 export default function PotteryPhotoCollection() {
-  const [group, setGroup] = useState<keyof typeof documentary>("Les décors");
+  const [group, setGroup] = useState<keyof typeof documentary | "Toutes">("Les décors");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "cards">("grid");
   const [selected, setSelected] = useState(0);
   const [zoom, setZoom] = useState(100);
+  const [rotation, setRotation] = useState(0);
+  const [filterMode, setFilterMode] = useState<"normal" | "contrast" | "invert">("normal");
+  const [copiedLink, setCopiedLink] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+
   const dragStart = useRef({ x: 0, y: 0, scrollLeft: 0, scrollTop: 0 });
   const touchSwipeStart = useRef<number | null>(null);
 
   const dialog = useRef<HTMLDialogElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
+
+  const filteredPhotos = photos.filter(photo => {
+    const matchesGroup = group === "Toutes" || photo[1] === group;
+    const matchesSearch = searchQuery.trim() === "" ||
+      photo[2].toLowerCase().includes(searchQuery.toLowerCase()) ||
+      photo[1].toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (photo[0] === 14 ? "hiani debia therese riviere quai branly" : "notice 1939").includes(searchQuery.toLowerCase());
+    return matchesGroup && matchesSearch;
+  });
+
   const photo = photos[selected];
 
   const resetViewportScroll = useCallback(() => {
@@ -64,6 +80,9 @@ export default function PotteryPhotoCollection() {
   function open(index: number) {
     setSelected(index);
     setZoom(100);
+    setRotation(0);
+    setFilterMode("normal");
+    setCopiedLink(false);
     dialog.current?.showModal();
     resetViewportScroll();
   }
@@ -71,7 +90,21 @@ export default function PotteryPhotoCollection() {
   function move(direction: number) {
     setSelected(value => (value + direction + photos.length) % photos.length);
     setZoom(100);
+    setRotation(0);
+    setCopiedLink(false);
     resetViewportScroll();
+  }
+
+  function rotate() {
+    setRotation(r => (r + 90) % 360);
+  }
+
+  function copyDirectLink() {
+    const url = `${window.location.origin}${window.location.pathname}#cliche-${photo[0]}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 3000);
+    });
   }
 
   // Pointer Drag (Pan when zoomed)
@@ -124,6 +157,12 @@ export default function PotteryPhotoCollection() {
     touchSwipeStart.current = null;
   };
 
+  const getFilterStyle = () => {
+    if (filterMode === "contrast") return "contrast(1.4) grayscale(1)";
+    if (filterMode === "invert") return "invert(0.9) contrast(1.2)";
+    return "none";
+  };
+
   return <section className="pottery-collection" id="photographies-1939" aria-labelledby="pottery-collection-title">
     <header className="pottery-collection-heading">
       <p className="craft-label">Archives photographiques · 1939</p>
@@ -131,40 +170,120 @@ export default function PotteryPhotoCollection() {
       <p>En 1939, Thérèse Rivière photographiait la potière Hiani Debia à Aït Mesbah. Une notice du musée du quai Branly – Jacques Chirac identifie ce geste de décoration. Autour de cette image retrouvée, ce dossier rassemble les photographies transmises pour raconter le travail de la poterie autrefois, du décor à la cuisson.</p>
       <p className="pottery-documentary-scope">Un témoignage sur des pratiques anciennes, et non un reportage sur la fabrication actuelle. La préparation de l’argile et le façonnage ne sont pas clairement documentés dans cette série.</p>
     </header>
+
     <div className="pottery-collection-meta">
       <span>1 cliché identifié · 15 notices à retrouver</span>
-      <span>16 photographies</span>
+      <span>16 photographies HD</span>
       <span>Cadrages originaux conservés</span>
+      <span>Recherche &amp; examen scientifique</span>
     </div>
-    <div className="pottery-filters" role="group" aria-label="Parcourir les photographies par thème">
-      {groups.map(item => <button type="button" key={item} aria-pressed={item === group} onClick={() => setGroup(item)}>{item}<span>{photos.filter(photo => photo[1] === item).length.toString().padStart(2, "0")}</span></button>)}
-    </div>
-    <div className="pottery-documentary-text" aria-live="polite">
-      <p className="craft-label">Comprendre les images d’archives</p>
-      <h3>{documentary[group].title}</h3>
-      <p>{documentary[group].text}</p>
-    </div>
-    <div className="pottery-photo-grid">
-      {photos.map((item, index) => item[1] === group && <figure className="pottery-photo-entry" key={item[0]}>
-        <button className="pottery-photo" type="button" onClick={() => open(index)} aria-label={`Agrandir : ${item[2]}`}>
-          <span className="pottery-photo-frame">
-            <Image src={source(item[0])} alt={item[2]} width={920} height={960} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 28vw" />
-            <span className="pottery-photo-enlarge" aria-hidden="true">Agrandir HD ↗</span>
-          </span>
-          <span className="pottery-photo-caption"><small>{String(index + 1).padStart(2, "0")}</small><span>{item[2]}</span></span>
+
+    {/* Controls Bar: Search & View Mode */}
+    <div className="pottery-toolbar">
+      <div className="pottery-search-bar">
+        <label htmlFor="pottery-search-input" className="sr-only">Rechercher une archive</label>
+        <input
+          id="pottery-search-input"
+          type="search"
+          placeholder="Rechercher par mot-clé (ex: Hiani, cuisson, braises, coupe...)"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          aria-label="Rechercher parmi les photographies d'archives"
+        />
+        {searchQuery && (
+          <button type="button" className="pottery-search-clear" onClick={() => setSearchQuery("")} aria-label="Effacer la recherche">
+            ×
+          </button>
+        )}
+      </div>
+
+      <div className="pottery-view-toggle">
+        <button
+          type="button"
+          aria-pressed={viewMode === "grid"}
+          onClick={() => setViewMode("grid")}
+          aria-label="Vue Grille">
+          田 Grille
         </button>
-        <figcaption className="pottery-photo-credit">
-          {item[0] === 14 ? <>
-            <strong>Source identifiée</strong>
-            <p>{verifiedCredit}</p>
-            <a href="https://collections.quaibranly.fr/" target="_blank" rel="noreferrer">Catalogue du musée · rechercher PP0193025 ↗</a>
-          </> : <>
-            <strong>Notice à retrouver</strong>
-            <p>Date de 1939 et attribution à Aït Mesbah transmises avec l’envoi, à confirmer pour ce cliché.</p>
-          </>}
-        </figcaption>
-      </figure>)}
+        <button
+          type="button"
+          aria-pressed={viewMode === "cards"}
+          onClick={() => setViewMode("cards")}
+          aria-label="Vue Fiches">
+          ≡ Fiches
+        </button>
+      </div>
     </div>
+
+    <div className="pottery-filters" role="group" aria-label="Parcourir les photographies par thème">
+      <button
+        type="button"
+        aria-pressed={group === "Toutes"}
+        onClick={() => setGroup("Toutes")}>
+        Toutes les archives <span>16</span>
+      </button>
+      {groups.map(item => (
+        <button
+          type="button"
+          key={item}
+          aria-pressed={item === group}
+          onClick={() => setGroup(item)}>
+          {item} <span>{photos.filter(photo => photo[1] === item).length.toString().padStart(2, "0")}</span>
+        </button>
+      ))}
+    </div>
+
+    {searchQuery && (
+      <p className="pottery-search-results-count" role="status">
+        {filteredPhotos.length} photographie{filteredPhotos.length > 1 ? "s" : ""} trouvée{filteredPhotos.length > 1 ? "s" : ""} pour « {searchQuery} »
+      </p>
+    )}
+
+    {group !== "Toutes" && documentary[group as keyof typeof documentary] && (
+      <div className="pottery-documentary-text" aria-live="polite">
+        <p className="craft-label">Comprendre les images d’archives</p>
+        <h3>{documentary[group as keyof typeof documentary].title}</h3>
+        <p>{documentary[group as keyof typeof documentary].text}</p>
+      </div>
+    )}
+
+    {filteredPhotos.length === 0 ? (
+      <div className="pottery-empty-search">
+        <p>Aucune archive ne correspond à votre recherche « {searchQuery} ».</p>
+        <button type="button" onClick={() => { setSearchQuery(""); setGroup("Toutes"); }}>Réinitialiser les filtres</button>
+      </div>
+    ) : (
+      <div className={`pottery-photo-grid ${viewMode === "cards" ? "is-cards-view" : ""}`}>
+        {filteredPhotos.map((item) => {
+          const originalIndex = photos.findIndex(p => p[0] === item[0]);
+          return (
+            <figure className="pottery-photo-entry" key={item[0]} id={`cliche-${item[0]}`}>
+              <button className="pottery-photo" type="button" onClick={() => open(originalIndex)} aria-label={`Agrandir : ${item[2]}`}>
+                <span className="pottery-photo-frame">
+                  <Image src={source(item[0])} alt={item[2]} width={920} height={960} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 28vw" />
+                  <span className="pottery-photo-enlarge" aria-hidden="true">Agrandir HD ↗</span>
+                </span>
+                <span className="pottery-photo-caption">
+                  <small>{String(originalIndex + 1).padStart(2, "0")}</small>
+                  <span>{item[2]}</span>
+                </span>
+              </button>
+              <figcaption className="pottery-photo-credit">
+                {item[0] === 14 ? <>
+                  <strong>Source identifiée</strong>
+                  <p>{verifiedCredit}</p>
+                  <a href="https://collections.quaibranly.fr/" target="_blank" rel="noreferrer">Catalogue du musée · rechercher PP0193025 ↗</a>
+                </> : <>
+                  <strong>Notice à retrouver</strong>
+                  <p>Date de 1939 et attribution à Aït Mesbah transmises avec l’envoi, à confirmer pour ce cliché.</p>
+                </>}
+              </figcaption>
+            </figure>
+          );
+        })}
+      </div>
+    )}
+
     <details className="pottery-notice">
       <summary>Lire la notice documentaire complète</summary>
       <p><strong>Date et lieu transmis :</strong> 1939, « Douar Bi Aïssi, village Ait Mesbah ». Ces indications restent à rapprocher des notices originales.</p>
@@ -175,6 +294,8 @@ export default function PotteryPhotoCollection() {
       <p>Le parcours est thématique : il ne restitue pas un ordre de prise de vue établi. Ces images montrent surtout le décor et la cuisson ; elles ne permettent pas de présenter toutes les étapes de préparation de l’argile et de façonnage.</p>
       <p>Les références des autres photographies et les conditions de reproduction de l’ensemble restent à vérifier. Un fichier présent deux fois dans l’envoi n’est affiché qu’une seule fois.</p>
     </details>
+
+    {/* Visionneuse HD Augmentée */}
     <dialog
       ref={dialog}
       className="pottery-lightbox"
@@ -182,6 +303,11 @@ export default function PotteryPhotoCollection() {
       onKeyDown={event => {
         if (event.key === "ArrowRight") { event.preventDefault(); move(1); }
         if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
+        if (event.key.toLowerCase() === "r") { event.preventDefault(); rotate(); }
+        if (event.key.toLowerCase() === "f") {
+          event.preventDefault();
+          setFilterMode(prev => prev === "normal" ? "contrast" : prev === "contrast" ? "invert" : "normal");
+        }
       }}>
       <header>
         <div>
@@ -190,13 +316,34 @@ export default function PotteryPhotoCollection() {
         </div>
         <button type="button" onClick={() => dialog.current?.close()} aria-label="Fermer la visionneuse">Fermer ×</button>
       </header>
+
+      {/* Toolbar scientifique dans la Lightbox */}
       <div className="pottery-lightbox-controls">
         <button type="button" onClick={() => move(-1)} aria-label="Photographie précédente (Flèche gauche)">← Précédente</button>
-        <button type="button" disabled={zoom <= 100} onClick={() => setZoom(value => Math.max(100, value - 25))} aria-label="Réduire les dimensions (−)">−</button>
-        <button type="button" onClick={() => { setZoom(100); resetViewportScroll(); }} aria-label="Réinitialiser le zoom à 100%">{zoom} %</button>
+        <button type="button" disabled={zoom <= 100} onClick={() => setZoom(value => Math.max(100, value - 25))} aria-label="Réduire (−)">−</button>
+        <button type="button" onClick={() => { setZoom(100); setRotation(0); resetViewportScroll(); }} aria-label="Réinitialiser">{zoom}%</button>
         <button type="button" disabled={zoom >= 300} onClick={() => setZoom(value => Math.min(300, value + 25))} aria-label="Agrandir (+)">+</button>
+
+        <span className="pottery-controls-separator" aria-hidden="true">|</span>
+
+        <button type="button" onClick={rotate} title="Tourner l'image de 90° (Touche R)">
+          ↻ {rotation}°
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setFilterMode(prev => prev === "normal" ? "contrast" : prev === "contrast" ? "invert" : "normal")}
+          title="Changer le mode de rendu (Touche F)">
+          🧪 {filterMode === "normal" ? "Normal" : filterMode === "contrast" ? "Haut Contraste" : "Inversion / Négatif"}
+        </button>
+
+        <button type="button" onClick={copyDirectLink} title="Copier le lien direct de ce cliché">
+          {copiedLink ? "✓ Lien copié !" : "🔗 Partager"}
+        </button>
+
         <button type="button" onClick={() => move(1)} aria-label="Photographie suivante (Flèche droite)">Suivante →</button>
       </div>
+
       <div
         className={`pottery-lightbox-viewport ${zoom > 100 ? (isDragging ? "is-grabbing" : "is-grabbable") : ""}`}
         ref={viewport}
@@ -209,17 +356,24 @@ export default function PotteryPhotoCollection() {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onDoubleClick={() => { if (zoom === 100) setZoom(200); else setZoom(100); }}>
-        <div style={{ width: `${zoom}%`, transition: isDragging ? "none" : "width 0.25s cubic-bezier(0.16, 1, 0.3, 1)" }}>
+        <div style={{
+          width: `${zoom}%`,
+          transform: `rotate(${rotation}deg)`,
+          filter: getFilterStyle(),
+          transition: isDragging ? "none" : "width 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, filter 0.3s ease"
+        }}>
           <Image src={source(photo[0])} alt={photo[2]} width={920} height={960} sizes="90vw" draggable={false} priority />
         </div>
       </div>
+
       <footer>
         <div>
           <p>{photo[0] === 14 ? verifiedCredit : "Photographe et collection à identifier. Date et lieu transmis avec l’envoi, non confirmés pour ce cliché."}</p>
-          <p>Double-cliquez pour zoomer à 200%. Utilisez le glisser-déplacer pour observer les textures.</p>
+          <p>Astuces : Touche [R] pour tourner · Touche [F] pour ajuster le contraste · Double-clic pour zoomer.</p>
         </div>
-        <a href={source(photo[0])} target="_blank" rel="noreferrer">Ouvrir le fichier reçu HD ↗</a>
+        <a href={source(photo[0])} target="_blank" rel="noreferrer">Ouvrir le fichier original HD ↗</a>
       </footer>
     </dialog>
   </section>;
 }
+

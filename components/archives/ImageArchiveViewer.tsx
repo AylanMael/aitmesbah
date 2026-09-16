@@ -9,6 +9,8 @@ type Props = { src: string; alt: string; aspectRatio?: string; title?: string };
 export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Document original" }: Props) {
   const titleId = useId();
   const [zoom, setZoom] = useState(100);
+  const [rotation, setRotation] = useState(0);
+  const [filterMode, setFilterMode] = useState<"normal" | "contrast" | "invert">("normal");
   const [fullscreen, setFullscreen] = useState(false);
   const [message, setMessage] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -27,6 +29,8 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
 
   const resetZoom = useCallback(() => {
     setZoom(100);
+    setRotation(0);
+    setFilterMode("normal");
     if (viewportRef.current) {
       viewportRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     }
@@ -42,6 +46,12 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
       setMessage("Le navigateur n’a pas autorisé le plein écran. Le zoom reste disponible, ainsi que le lien vers le fichier original.");
     }
   }
+
+  const getFilterStyle = () => {
+    if (filterMode === "contrast") return "contrast(1.4) grayscale(1)";
+    if (filterMode === "invert") return "invert(0.9) contrast(1.2)";
+    return "none";
+  };
 
   // Mouse / Touch Drag (Pan) logic
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -82,9 +92,16 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
         <span>{zoom > 100 ? "Glissez l'image ou utilisez les flèches pour vous déplacer" : "Double-cliquez ou zoomez pour explorer les détails"}</span>
       </div>
       <div className="village-archive-zoom" aria-label="Commandes de la visionneuse">
-        <button type="button" disabled={zoom === 75} onClick={() => setZoom(value => clamp(value - 25))} aria-label="Réduire les dimensions (−)">−</button>
-        <button type="button" onClick={resetZoom} aria-label={`Zoom actuel : ${zoom} %. Cliquer pour réinitialiser à 100%`}>{zoom}%</button>
+        <button type="button" disabled={zoom === 75} onClick={() => setZoom(value => clamp(value - 25))} aria-label="Réduire (−)">−</button>
+        <button type="button" onClick={resetZoom} aria-label={`Zoom actuel : ${zoom} %. Cliquer pour réinitialiser`}>{zoom}%</button>
         <button type="button" disabled={zoom === 300} onClick={() => setZoom(value => clamp(value + 25))} aria-label="Agrandir (+)">+</button>
+        <button type="button" onClick={() => setRotation(r => (r + 90) % 360)} title="Tourner l'image de 90°">↻ {rotation}°</button>
+        <button
+          type="button"
+          onClick={() => setFilterMode(prev => prev === "normal" ? "contrast" : prev === "contrast" ? "invert" : "normal")}
+          title="Mode de rendu pour révéler les détails">
+          🧪 {filterMode === "normal" ? "Normal" : filterMode === "contrast" ? "Contraste" : "Négatif"}
+        </button>
         <button type="button" onClick={toggleFullscreen} aria-pressed={fullscreen} aria-label={fullscreen ? "Quitter le mode plein écran" : "Afficher en plein écran"}>⛶</button>
       </div>
     </header>
@@ -105,6 +122,12 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
           event.preventDefault();
           if (event.key === "0") resetZoom();
           else setZoom(value => clamp(value + (event.key === "-" ? -25 : 25)));
+        } else if (event.key.toLowerCase() === "r") {
+          event.preventDefault();
+          setRotation(r => (r + 90) % 360);
+        } else if (event.key.toLowerCase() === "f") {
+          event.preventDefault();
+          setFilterMode(prev => prev === "normal" ? "contrast" : prev === "contrast" ? "invert" : "normal");
         } else if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key) && viewportRef.current && zoom > 100) {
           event.preventDefault();
           const step = 60;
@@ -115,12 +138,18 @@ export default function ImageArchiveViewer({ src, alt, aspectRatio, title = "Doc
         }
       }}
       onDoubleClick={() => { if (zoom === 100) setZoom(200); else resetZoom(); }}>
-      <div className="village-archive-image" style={{ width: `${zoom}%`, aspectRatio, transition: isDragging ? "none" : "width 0.25s cubic-bezier(0.16, 1, 0.3, 1)" }}>
+      <div className="village-archive-image" style={{
+        width: `${zoom}%`,
+        aspectRatio,
+        transform: `rotate(${rotation}deg)`,
+        filter: getFilterStyle(),
+        transition: isDragging ? "none" : "width 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, filter 0.3s ease"
+      }}>
         <Image src={src} alt={alt} fill loading="lazy" sizes="(max-width: 900px) 100vw, 65vw" draggable={false} />
       </div>
     </div>
     <footer className="village-archive-tools">
-      <p>Zoom : + / − / Double-clic · Glisser-déplacer disponible au-dessus de 100 %.</p>
+      <p>Zoom : + / − / Double-clic · Touche [R] : Rotation · Touche [F] : Filtres d'examen d'archives</p>
       <a href={src} target="_blank" rel="noreferrer">Ouvrir le fichier original HD ↗</a>
     </footer>
   </section>;
