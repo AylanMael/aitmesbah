@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-interface FamilyNotice {
+export interface FamilyNotice {
   id: string;
   name: string;
   quarter: "Aït Salah" | "Aït Moussa" | "Alma Ath Amrane" | "Tanajelte";
@@ -12,52 +12,17 @@ interface FamilyNotice {
   tradition: string;
 }
 
-const familyNotices: FamilyNotice[] = [
-  {
-    id: "imache",
-    name: "Famille Imache (Ath Imache)",
-    quarter: "Aït Salah",
-    diasporaLocations: ["Paris (France)", "Alger", "Marseille"],
-    notableFigures: ["Amar Imache (Pionnier du nationalisme algérien)"],
-    description: "Lignée historique d'Aït Salah associée à la fondation du mouvement nationaliste et à la préservation de la mémoire du village.",
-    tradition: "Calligraphie, écriture & action politique nationale",
-  },
-  {
-    id: "amrane",
-    name: "Famille Ait-Amrane & Ath Amrane",
-    quarter: "Alma Ath Amrane",
-    diasporaLocations: ["Lyon (France)", "Montréal (Canada)", "Tizi Ouzou"],
-    notableFigures: ["Bâtisseurs de la fontaine Alma Ath Amrane"],
-    description: "Famille gardienne de la source haute et des vergers d'oliviers séculaires de la vallée d'Aït Mesbah.",
-    tradition: "Arboriculture, oléiculture & maçonnerie de pierre",
-  },
-  {
-    id: "moussa",
-    name: "Famille Ait-Moussa",
-    quarter: "Aït Moussa",
-    diasporaLocations: ["Strasbourg (France)", "Alger", "Londres"],
-    notableFigures: ["Artisanes potières du reportage 1939"],
-    description: "Lignée renommée pour son savoir-faire dans l'art de la poterie gravée et du vernis naturel à la résine.",
-    tradition: "Artisanat de la poterie & façonnage de la terre",
-  },
-  {
-    id: "kaci",
-    name: "Famille Ath Kaci & Ath Oumghar",
-    quarter: "Tanajelte",
-    diasporaLocations: ["Lille (France)", "Québec", "Oran"],
-    notableFigures: ["Chouhada de la guerre de libération (1954-1962)"],
-    description: "Famille établie sur les hauteurs de Tanajelte, gardienne du mémorial de la Résistance et du panorama sur le Djurdjura.",
-    tradition: "Tissage du burnous & préservation du mémorial",
-  },
-];
+interface FamilyRegistryIndexProps {
+  families?: FamilyNotice[];
+}
 
-export default function FamilyRegistryIndex() {
+export default function FamilyRegistryIndex({ families = [] }: FamilyRegistryIndexProps) {
   const [selectedQuarter, setSelectedQuarter] = useState<string>("Tous");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const filteredFamilies = familyNotices.filter((f) => {
+  const filteredFamilies = families.filter((f) => {
     const matchesQuarter = selectedQuarter === "Tous" || f.quarter === selectedQuarter;
     const matchesQuery = f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       f.diasporaLocations.some(loc => loc.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -80,13 +45,13 @@ export default function FamilyRegistryIndex() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#ffffff15] pb-6">
           <div>
             <span className="bg-[#aa593c] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-2 inline-block">
-              👨‍👩‍👧‍👦 Étape 4 · Registre & Diaspora
+              👨‍👩‍👧‍👦 Registre & Diaspora
             </span>
             <h3 className="font-serif text-2xl md:text-3xl text-white font-bold">
               Le Registre des Lignées Familiales & Liens du Monde
             </h3>
             <p className="text-xs text-[#c8d6d0]">
-              Index collaboratif des familles originaires d&apos;Aït Mesbah et carrefour de la diaspora établis en Algérie et dans le monde.
+              Espace collaboratif destiné aux informations transmises et validées par les familles d&apos;Aït Mesbah et sa diaspora.
             </p>
           </div>
 
@@ -106,7 +71,7 @@ export default function FamilyRegistryIndex() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Rechercher une famille, un nom, une ville de la diaspora (Paris, Lyon...)..."
+              placeholder="Rechercher..."
               className="w-full bg-[#051d17] border border-[#ffffff20] focus:border-[#e9c982] rounded-full px-5 py-2.5 text-xs text-white placeholder-gray-400 focus:outline-none"
             />
             {searchQuery && (
@@ -138,48 +103,62 @@ export default function FamilyRegistryIndex() {
           </div>
         </div>
 
-        {/* Family Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          {filteredFamilies.map((family) => (
-            <div
-              key={family.id}
-              className="bg-[#061f19] border border-[#ffffff15] hover:border-[#d7b56f]/40 p-6 rounded-2xl transition-all space-y-4 shadow-xl flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-bold text-[#efd094] uppercase tracking-wider bg-[#103b30] px-3 py-0.5 rounded-full border border-[#ffffff10]">
-                    📍 Quartier {family.quarter}
-                  </span>
-                  <span className="text-[11px] text-[#e9c982] font-semibold">
-                    {family.tradition}
-                  </span>
+        {/* Family Cards Grid / Empty state */}
+        {filteredFamilies.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            {filteredFamilies.map((family) => (
+              <div
+                key={family.id}
+                className="bg-[#061f19] border border-[#ffffff15] hover:border-[#d7b56f]/40 p-6 rounded-2xl transition-all space-y-4 shadow-xl flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-bold text-[#efd094] uppercase tracking-wider bg-[#103b30] px-3 py-0.5 rounded-full border border-[#ffffff10]">
+                      📍 Quartier {family.quarter}
+                    </span>
+                    <span className="text-[11px] text-[#e9c982] font-semibold">
+                      {family.tradition}
+                    </span>
+                  </div>
+
+                  <h4 className="font-serif text-2xl font-bold text-white mb-2">{family.name}</h4>
+                  <p className="text-xs text-[#c8d6d0] leading-relaxed mb-4">
+                    {family.description}
+                  </p>
+
+                  {family.notableFigures && family.notableFigures.length > 0 && (
+                    <div className="mb-3 text-xs">
+                      <span className="text-[#efd094] font-bold block mb-1">📜 Renseignements :</span>
+                      <ul className="list-disc list-inside text-[#c8d6d0] space-y-0.5">
+                        {family.notableFigures.map((fig, i) => (
+                          <li key={i}>{fig}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
-                <h4 className="font-serif text-2xl font-bold text-white mb-2">{family.name}</h4>
-                <p className="text-xs text-[#c8d6d0] leading-relaxed mb-4">
-                  {family.description}
-                </p>
-
-                {family.notableFigures.length > 0 && (
-                  <div className="mb-3 text-xs">
-                    <span className="text-[#efd094] font-bold block mb-1">📜 Personnalités & Mémoire :</span>
-                    <ul className="list-disc list-inside text-[#c8d6d0] space-y-0.5">
-                      {family.notableFigures.map((fig, i) => (
-                        <li key={i}>{fig}</li>
-                      ))}
-                    </ul>
+                {family.diasporaLocations && family.diasporaLocations.length > 0 && (
+                  <div className="pt-3 border-t border-[#ffffff10] flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span className="text-[#efd094] font-medium">
+                      🌍 Établissements : {family.diasporaLocations.join(", ")}
+                    </span>
                   </div>
                 )}
               </div>
-
-              <div className="pt-3 border-t border-[#ffffff10] flex flex-wrap items-center justify-between gap-2 text-xs">
-                <span className="text-[#efd094] font-medium">
-                  🌍 Diaspora : {family.diasporaLocations.join(", ")}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-[#061f19] border border-[#ffffff15] p-8 rounded-2xl text-center space-y-3">
+            <span className="text-4xl">📜</span>
+            <h4 className="font-serif text-xl font-bold text-white">
+              Aucune notice familiale enregistrée sans validation
+            </h4>
+            <p className="text-xs text-[#c8d6d0] max-w-md mx-auto leading-relaxed">
+              Le registre d&apos;Aït Mesbah respecte la confidentialité. Les notices nominatives et généalogiques seront intégrées au fur et à mesure des transmissions validées par les familles.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Submit Family Notice Modal */}
@@ -201,7 +180,7 @@ export default function FamilyRegistryIndex() {
                   Tanemmirt ! (Merci !)
                 </h4>
                 <p className="text-xs text-[#c8d6d0] leading-relaxed">
-                  Votre notice familiale a bien été soumise. Elle sera modérée avec bienveillance et ajoutée au registre d&apos;Aït Mesbah.
+                  Votre notice familiale a bien été soumise. Elle sera modérée avec bienveillance et ajoutée après vérification.
                 </p>
               </div>
             ) : (
@@ -212,22 +191,22 @@ export default function FamilyRegistryIndex() {
                     Transmettre une notice familiale
                   </h4>
                   <p className="text-xs text-[#c8d6d0]">
-                    Faites connaître votre nom, vos racines au village et les lieux de vie de votre famille dans la diaspora.
+                    Partagez des informations vérifiées relatives à votre famille ou son histoire au village.
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Nom de famille / Lignée</label>
+                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Nom de famille / Groupe familial</label>
                   <input
                     type="text"
                     required
-                    placeholder="Ex: Famille Ait-Amrane"
+                    placeholder="Nom de famille"
                     className="w-full bg-[#051d17] border border-[#ffffff20] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#e9c982]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Quartier d&apos;origine</label>
+                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Quartier du village</label>
                   <select className="w-full bg-[#051d17] border border-[#ffffff20] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#e9c982]">
                     <option value="Aït Salah">Aït Salah</option>
                     <option value="Aït Moussa">Aït Moussa</option>
@@ -237,19 +216,10 @@ export default function FamilyRegistryIndex() {
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Lieux d&apos;établissement (Diaspora)</label>
-                  <input
-                    type="text"
-                    placeholder="Ex: Paris, Lyon, Montréal, Alger..."
-                    className="w-full bg-[#051d17] border border-[#ffffff20] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#e9c982]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Souvenirs ou éléments de mémoire à partager</label>
+                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Éléments d&apos;histoire ou de mémoire</label>
                   <textarea
                     rows={3}
-                    placeholder="Proposez une description, un métier traditionnel ou un récit d'ancêtres..."
+                    placeholder="Informations utiles à transmettre..."
                     className="w-full bg-[#051d17] border border-[#ffffff20] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#e9c982]"
                   />
                 </div>
@@ -258,7 +228,7 @@ export default function FamilyRegistryIndex() {
                   type="submit"
                   className="w-full py-3 bg-[#aa593c] hover:bg-[#ab4a2f] text-white font-bold text-xs rounded-xl transition-all shadow-lg"
                 >
-                  Soumettre pour validation ➔
+                  Soumettre pour vérification ➔
                 </button>
               </form>
             )}

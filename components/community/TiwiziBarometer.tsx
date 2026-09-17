@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-interface TiwiziAction {
+export interface TiwiziAction {
   id: string;
   title: string;
   category: "Environnement" | "Patrimoine" | "Solidarité" | "Jeunesse";
@@ -12,54 +12,19 @@ interface TiwiziAction {
   status: "Réalisé" | "En cours" | "Planifié";
 }
 
-const recentActions: TiwiziAction[] = [
-  {
-    id: "1",
-    title: "Nettoyage et aménagement des abords d'Alma Ath Amrane",
-    category: "Environnement",
-    date: "Mai 2026",
-    participants: 34,
-    impact: "Désherbage, curage du bassin et pose d'assises en pierre",
-    status: "Réalisé",
-  },
-  {
-    id: "2",
-    title: "Reconstitution du muret traditionnel d'Aït Salah",
-    category: "Patrimoine",
-    date: "Février 2026",
-    participants: 18,
-    impact: "Restauration à la chaux et pierres assises avec les maçons du village",
-    status: "Réalisé",
-  },
-  {
-    id: "3",
-    title: "Campagne de reboisement des collines de Tanajelte",
-    category: "Environnement",
-    date: "Novembre 2025",
-    participants: 52,
-    impact: "120 oliviers et figuiers plantés avec les jeunes du JCAM",
-    status: "Réalisé",
-  },
-  {
-    id: "4",
-    title: "Renforcement de l'éclairage éco-solaire des ruelles",
-    category: "Solidarité",
-    date: "Automne 2026",
-    participants: 12,
-    impact: "Installation de 15 points solaires dans les passages isolés",
-    status: "En cours",
-  },
-];
+interface TiwiziBarometerProps {
+  actions?: TiwiziAction[];
+}
 
-export default function TiwiziBarometer() {
+export default function TiwiziBarometer({ actions = [] }: TiwiziBarometerProps) {
   const [activeCategory, setActiveCategory] = useState<string>("Tous");
   const [showPledgeModal, setShowPledgeModal] = useState<boolean>(false);
   const [pledgeSubmitted, setPledgeSubmitted] = useState<boolean>(false);
   const [formData, setFormData] = useState({ name: "", role: "Habitant", contribution: "", availability: "Week-ends" });
 
   const filteredActions = activeCategory === "Tous" 
-    ? recentActions 
-    : recentActions.filter(a => a.category === activeCategory);
+    ? actions 
+    : actions.filter(a => a.category === activeCategory);
 
   const handleSubmitPledge = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,23 +42,23 @@ export default function TiwiziBarometer() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-[#08281f] border border-[#d7b56f]/30 p-5 rounded-2xl text-center space-y-1 shadow-xl">
           <span className="text-3xl">🌿</span>
-          <p className="font-serif text-3xl font-bold text-[#e9c982]">14</p>
-          <p className="text-xs text-[#c8d6d0]">Projets Tiwizi accomplis</p>
+          <p className="font-serif text-3xl font-bold text-[#e9c982]">{actions.length}</p>
+          <p className="text-xs text-[#c8d6d0]">Projets Tiwizi recensés</p>
         </div>
         <div className="bg-[#08281f] border border-[#d7b56f]/30 p-5 rounded-2xl text-center space-y-1 shadow-xl">
           <span className="text-3xl">🌳</span>
-          <p className="font-serif text-3xl font-bold text-[#e9c982]">250+</p>
-          <p className="text-xs text-[#c8d6d0]">Arbres & oliviers plantés</p>
+          <p className="font-serif text-3xl font-bold text-[#e9c982]">—</p>
+          <p className="text-xs text-[#c8d6d0]">Reboisement & Oliviers</p>
         </div>
         <div className="bg-[#08281f] border border-[#d7b56f]/30 p-5 rounded-2xl text-center space-y-1 shadow-xl">
           <span className="text-3xl">⛲</span>
-          <p className="font-serif text-3xl font-bold text-[#e9c982]">4</p>
-          <p className="text-xs text-[#c8d6d0]">Fontaines entretenues</p>
+          <p className="font-serif text-3xl font-bold text-[#e9c982]">—</p>
+          <p className="text-xs text-[#c8d6d0]">Fontaines du village</p>
         </div>
         <div className="bg-[#08281f] border border-[#d7b56f]/30 p-5 rounded-2xl text-center space-y-1 shadow-xl">
           <span className="text-3xl">🤝</span>
-          <p className="font-serif text-3xl font-bold text-[#e9c982]">1 200h</p>
-          <p className="text-xs text-[#c8d6d0]">Heures de bénévolat partagées</p>
+          <p className="font-serif text-3xl font-bold text-[#e9c982]">—</p>
+          <p className="text-xs text-[#c8d6d0]">Volontariat communautaire</p>
         </div>
       </div>
 
@@ -117,7 +82,7 @@ export default function TiwiziBarometer() {
             onClick={() => setShowPledgeModal(true)}
             className="px-6 py-3 bg-[#aa593c] hover:bg-[#ab4a2f] text-white font-bold text-xs rounded-full transition-all duration-300 shadow-xl scale-105 flex items-center gap-2"
           >
-            <span>🤝 Rejoindre l&apos;effort Tiwizi (Prendre un engagement)</span>
+            <span>🤝 Rejoindre l&apos;effort Tiwizi (Proposer un engagement)</span>
           </button>
         </div>
 
@@ -139,34 +104,46 @@ export default function TiwiziBarometer() {
           ))}
         </div>
 
-        {/* Action List Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredActions.map((action) => (
-            <div
-              key={action.id}
-              className="bg-[#061f19] border border-[#ffffff15] hover:border-[#d7b56f]/40 p-5 rounded-2xl transition-all duration-300 space-y-3"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-[#efd094] bg-[#103b30] px-3 py-1 rounded-full border border-[#ffffff10]">
-                  {action.category}
-                </span>
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
-                  action.status === "Réalisé" ? "bg-[#1f5e42] text-[#a4f3ce]" : "bg-[#aa593c] text-white"
-                }`}>
-                  {action.status}
-                </span>
-              </div>
+        {/* Action List Grid / Empty state */}
+        {filteredActions.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredActions.map((action) => (
+              <div
+                key={action.id}
+                className="bg-[#061f19] border border-[#ffffff15] hover:border-[#d7b56f]/40 p-5 rounded-2xl transition-all duration-300 space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-[#efd094] bg-[#103b30] px-3 py-1 rounded-full border border-[#ffffff10]">
+                    {action.category}
+                  </span>
+                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                    action.status === "Réalisé" ? "bg-[#1f5e42] text-[#a4f3ce]" : "bg-[#aa593c] text-white"
+                  }`}>
+                    {action.status}
+                  </span>
+                </div>
 
-              <h4 className="font-serif text-lg font-bold text-white">{action.title}</h4>
-              <p className="text-xs text-[#c8d6d0] leading-relaxed">{action.impact}</p>
+                <h4 className="font-serif text-lg font-bold text-white">{action.title}</h4>
+                <p className="text-xs text-[#c8d6d0] leading-relaxed">{action.impact}</p>
 
-              <div className="pt-3 border-t border-[#ffffff10] flex items-center justify-between text-xs text-[#efd094]">
-                <span>📅 {action.date}</span>
-                <span>👥 {action.participants} volontaires</span>
+                <div className="pt-3 border-t border-[#ffffff10] flex items-center justify-between text-xs text-[#efd094]">
+                  <span>📅 {action.date}</span>
+                  <span>👥 {action.participants} volontaires</span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-[#061f19] border border-[#ffffff15] p-8 rounded-2xl text-center space-y-3">
+            <span className="text-4xl">🌱</span>
+            <h4 className="font-serif text-xl font-bold text-white">
+              Aucune action publiée pour le moment
+            </h4>
+            <p className="text-xs text-[#c8d6d0] max-w-md mx-auto leading-relaxed">
+              Les premières initiatives écologiques et d&apos;aménagement validées par les habitants d&apos;Aït Mesbah et le comité seront publiées dans cet espace.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Engagement / Pledge Modal */}
@@ -188,7 +165,7 @@ export default function TiwiziBarometer() {
                   Tanemmirt ! (Merci !)
                 </h4>
                 <p className="text-xs text-[#c8d6d0] leading-relaxed">
-                  Votre engagement a bien été enregistré. Le comité d&apos;action Tiwizi vous recontactera très rapidement.
+                  Votre proposition a bien été transmise. Elle sera examinée et intégrée avec soin.
                 </p>
               </div>
             ) : (
@@ -196,21 +173,20 @@ export default function TiwiziBarometer() {
                 <div className="text-center space-y-2">
                   <span className="text-3xl">🤝</span>
                   <h4 className="font-serif text-2xl font-bold text-[#efd094]">
-                    Rejoindre l&apos;effort Tiwizi
+                    Proposer un engagement Tiwizi
                   </h4>
                   <p className="text-xs text-[#c8d6d0]">
-                    Qu&apos;il s&apos;agisse de temps, d&apos;outils ou de compétences, chaque geste fortifie Aït Mesbah.
+                    Partagez une idée, un savoir-faire ou du temps pour l&apos;action collective au village.
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Nom / Prénom</label>
+                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Nom / Prénom (Optionnel)</label>
                   <input
                     type="text"
-                    required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Ex: Jugurtha Ait-Amrane"
+                    placeholder="Votre nom"
                     className="w-full bg-[#051d17] border border-[#ffffff20] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#e9c982]"
                   />
                 </div>
@@ -224,18 +200,18 @@ export default function TiwiziBarometer() {
                   >
                     <option value="Habitant">Habitant du village</option>
                     <option value="Diaspora">Membre de la diaspora</option>
-                    <option value="Ami">Ami / Sympathisant du village</option>
+                    <option value="Ami">Sympathisant</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Comment souhaitez-vous aider ?</label>
+                  <label className="block text-xs text-[#efd094] font-semibold mb-1">Votre idée ou contribution</label>
                   <textarea
                     required
                     rows={3}
                     value={formData.contribution}
                     onChange={(e) => setFormData({ ...formData, contribution: e.target.value })}
-                    placeholder="Ex: Participation aux travaux de maçonnerie, apport d'outils, aide au reboisement..."
+                    placeholder="Décrivez brièvement la proposition..."
                     className="w-full bg-[#051d17] border border-[#ffffff20] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#e9c982]"
                   />
                 </div>
@@ -244,7 +220,7 @@ export default function TiwiziBarometer() {
                   type="submit"
                   className="w-full py-3 bg-[#aa593c] hover:bg-[#ab4a2f] text-white font-bold text-xs rounded-xl transition-all shadow-lg"
                 >
-                  Envoyer mon engagement Tiwizi ➔
+                  Transmettre la proposition ➔
                 </button>
               </form>
             )}
