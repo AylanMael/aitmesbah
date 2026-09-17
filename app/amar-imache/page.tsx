@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
+import AmarImacheDossierClient from "@/components/archives/AmarImacheDossierClient";
 
 export const metadata: Metadata = {
   title: "Amar Imache — parcours, écrits et archives",
@@ -19,7 +20,7 @@ const chronology = [
   ["1934–1936", "Prison, presse et désaccords", "Poursuivi et emprisonné après la dissolution de l’organisation, il reprend son activité à sa libération. Il défend l’indépendance et s’oppose à l’assimilation comme horizon politique."],
   ["1937", "« Ils nous ont trahis »", "Le 5 février, La Lutte ouvrière publie un article signé Amar Imache. Il y dénonce la dissolution de l’Étoile nord-africaine par le gouvernement du Front populaire et défend le droit des travailleurs nord-africains à s’organiser librement."],
   ["1937–1939", "Écrire pour éclairer", "Ses brochures prolongent son combat. Dans L’Algérie au carrefour puis L’Afrique dans l’angoisse, il interroge le pouvoir colonial, l’avenir de l’Algérie et les impérialismes qui menacent le continent."],
-  ["1940–1945", "Déporté dans l’Allemagne en guerre", "Pendant l’Occupation, le régime de Vichy le livre aux autorités allemandes comme prisonnier politique. Déporté dans des camps en Allemagne, il y demeure plusieurs années et n’est libéré qu’à la fin de la Seconde Guerre mondiale. Il revient de cette détention profondément affaibli. Les dates, lieux et parcours exacts de sa captivité restent à établir à partir des archives nominatives."],
+  ["1940–1945", "Déporté dans l’Allemagne en guerre", "Pendant l’Occupation, le régime de Vichy le livre aux autorités allemandes comme prisonnier politique. Déporté dans des camps en Allemagne, il y demeure plusieurs années et n’est libéré qu’à la fin de la Seconde Guerre mondiale. Il revient de cette détention profondément affaibli."],
   ["1946–1947", "Reprendre la plume", "Après sa libération, Cyclones sur le monde et L’Heure de l’élite témoignent de son regard sur la guerre, les massacres de mai 1945 et la responsabilité politique. Sa Lettre d’adieu aux Algériens résidant en France paraît en 1947."],
   ["Après-guerre", "Une voix indépendante", "Son itinéraire politique se poursuit hors de la direction de l’Étoile. Les appartenances, initiatives et conditions précises de cette période doivent encore être documentées par des fonds croisés."],
   ["1960", "Retour au village, mémoire nationale", "Revenu à Aït Mesbah, il y meurt le 7 février 1960. Ses écrits et son parcours demeurent une source majeure pour comprendre les premiers courants de l’indépendantisme algérien."],
@@ -46,41 +47,127 @@ const archiveFamilies = [
 
 export default function AmarImachePage() {
   const toc = [["Parcours","parcours"],["Combat","combat"],["Écrits","ecrits"],["Archive 1937","archive-1937"],["Fonds","fonds"],["Sources","sources"]];
-  return <><a className="skip-link" href="#contenu-principal">Aller au contenu principal</a><SiteHeaderClient />
-    <main id="contenu-principal" className="imache-dossier-page" tabIndex={-1}>
-      <header className="imache-dossier-hero">
-        <div className="imache-dossier-kicker"><span>Dossier documentaire</span><span>1895 — 1960</span></div>
-        <div className="imache-dossier-title"><p className="eyebrow light">Un enfant d’Aït Mesbah dans l’histoire nationale</p><h1>Amar<br/><em>Imache</em></h1></div>
-        <div className="imache-dossier-intro"><p>Militant, organisateur et auteur, Amar Imache fut l’une des voix marquantes de l’Étoile nord-africaine.</p><p>Ce chapitre réunit son parcours, ses écrits et les traces d’une pensée politique exigeante — sans effacer les débats ni les zones encore à documenter.</p><a href="#parcours">Entrer dans le dossier <span aria-hidden="true">↓</span></a></div>
-        <figure className="imache-dossier-hero-portrait"><div className="imache-dossier-portrait-frame"><Image src="/images/amar-imache/portrait-ancien.jpg" alt="Portrait historique d’Amar Imache" fill priority sizes="(max-width: 700px) 64vw, 340px"/></div><figcaption><strong>Amar Imache</strong><br/><span>1895 — 1960 · Aït Mesbah</span></figcaption></figure>
-      </header>
-      <nav className="imache-dossier-toc" aria-label="Sommaire du dossier"><span>Amar Imache</span><ol>{toc.map(([label,id],i)=><li key={id}><a href={`#${id}`}><span>{String(i+1).padStart(2,"0")}</span>{label}</a></li>)}</ol></nav>
+  return (
+    <>
+      <a className="skip-link" href="#contenu-principal">Aller au contenu principal</a>
+      <SiteHeaderClient />
+      <main id="contenu-principal" className="imache-dossier-page" tabIndex={-1}>
+        <header className="imache-dossier-hero">
+          <div className="imache-dossier-kicker"><span>Dossier documentaire</span><span>1895 — 1960</span></div>
+          <div className="imache-dossier-title">
+            <p className="eyebrow light">Un enfant d’Aït Mesbah dans l’histoire nationale</p>
+            <h1>Amar<br/><em>Imache</em></h1>
+          </div>
+          <div className="imache-dossier-intro">
+            <p>Militant, organisateur et auteur, Amar Imache fut l’une des voix marquantes de l’Étoile nord-africaine.</p>
+            <p>Ce chapitre réunit son parcours, ses écrits et les traces d’une pensée politique exigeante — avec loupe d&apos;inspection d&apos;archives interactive.</p>
+            <a href="#parcours">Entrer dans le dossier <span aria-hidden="true">↓</span></a>
+          </div>
+          <figure className="imache-dossier-hero-portrait">
+            <div className="imache-dossier-portrait-frame">
+              <Image src="/images/amar-imache/portrait-ancien.jpg" alt="Portrait historique d’Amar Imache" fill priority sizes="(max-width: 700px) 64vw, 340px"/>
+            </div>
+            <figcaption><strong>Amar Imache</strong><br/><span>1895 — 1960 · Aït Mesbah</span></figcaption>
+          </figure>
+        </header>
 
-      <section className="imache-dossier-opening"><div><p className="eyebrow">Portrait politique</p><h2>Une trajectoire entre village, émigration et émancipation</h2><figure className="imache-dossier-cameo"><Image src="/images/amar-imache/portrait-amar-imache.jpg" alt="Portrait colorisé d’Amar Imache" width={960} height={1280}/><figcaption>Portrait conservé<br/><span>Provenance à documenter</span></figcaption></figure></div><div><p className="imache-dossier-lead">Son histoire commence à Aït Mesbah et se déploie dans les milieux ouvriers immigrés, là où se forge l’une des premières revendications organisées d’indépendance algérienne.</p><p>Amar Imache ne fut pas seulement un responsable politique. Il fut aussi une plume, un contradicteur et un penseur attentif aux formes de représentation collective. Son itinéraire éclaire les tensions qui traversent le mouvement national : indépendance ou assimilation, démocratie interne ou personnalisation du pouvoir, enracinement local et solidarité nord-africaine.</p><aside><strong>Principe éditorial</strong><p>Ce dossier sépare les faits attestés des interprétations historiques. Il sera enrichi à mesure que des documents originaux, témoignages et travaux de recherche pourront être consultés et recoupés.</p></aside></div></section>
+        <nav className="imache-dossier-toc" aria-label="Sommaire du dossier">
+          <span>Amar Imache</span>
+          <ol>{toc.map(([label,id],i)=><li key={id}><a href={`#${id}`}><span>{String(i+1).padStart(2,"0")}</span>{label}</a></li>)}</ol>
+        </nav>
 
-      <section className="imache-dossier-chronology" id="parcours"><div className="imache-dossier-section-head"><p className="eyebrow light">Itinéraire</p><h2>Les repères d’une vie de combat</h2><p>Une chronologie appelée à gagner en précision au fil des archives retrouvées.</p></div><div className="imache-dossier-years">{chronology.map(([year,title,body],i)=><article key={year} className={year === "1910" ? "imache-dossier-year-with-archive" : undefined}><span className="imache-dossier-year">{year}</span><div><small>{String(i+1).padStart(2,"0")}</small><h3>{title}</h3><p>{body}</p>{year === "1910" && <figure className="imache-dossier-certificate"><div><Image src="/images/amar-imache/certificat-etudes-petit-kabyle-1910.png" alt="Résultats du certificat d’études spécial aux écoles indigènes publiés dans Le Petit Kabyle du 9 juillet 1910, avec le nom d’Imache" fill sizes="(max-width: 700px) 82vw, 360px"/></div><figcaption><span>Archive scolaire · 09 juillet 1910</span><strong><em>Le Petit Kabyle</em></strong><p>Résultats de l’école de Taguemount Oukerrouche. Amar Imache y figure avec quatre autres lauréats d’Aït Mesbah : Guernine, Halès, Hemdani et Haouili (transcrit « Houili » dans le journal).</p></figcaption></figure>}</div></article>)}</div></section>
+        <section className="imache-dossier-opening">
+          <div>
+            <p className="eyebrow">Portrait politique</p>
+            <h2>Une trajectoire entre village, émigration et émancipation</h2>
+            <figure className="imache-dossier-cameo">
+              <Image src="/images/amar-imache/portrait-amar-imache.jpg" alt="Portrait colorisé d’Amar Imache" width={960} height={1280}/>
+              <figcaption>Portrait conservé<br/><span>Provenance à documenter</span></figcaption>
+            </figure>
+          </div>
+          <div>
+            <p className="imache-dossier-lead">Son histoire commence à Aït Mesbah et se déploie dans les milieux ouvriers immigrés, là où se forge l’une des premières revendications organisées d’indépendance algérienne.</p>
+            <p>Amar Imache ne fut pas seulement un responsable politique. Il fut aussi une plume, un contradicteur et un penseur attentif aux formes de représentation collective.</p>
+            <aside>
+              <strong>Principe éditorial</strong>
+              <p>Ce dossier sépare les faits attestés des interprétations historiques. Vous pouvez cliquer sur tout document d&apos;archive pour l&apos;examiner avec la loupe virtuelle.</p>
+            </aside>
+          </div>
+        </section>
 
-      <section className="imache-dossier-photographs" aria-labelledby="imache-photographs-title"><div className="imache-dossier-photo-head"><p className="eyebrow">Documents photographiques</p><h2 id="imache-photographs-title">Au cœur de l’Étoile nord-africaine</h2><p>Deux images collectives replacent Amar Imache parmi les responsables et interlocuteurs du mouvement. Le cadrage original et les légendes d’époque sont conservés comme éléments documentaires.</p></div><div className="imache-dossier-photo-grid"><figure><div><Image src="/images/amar-imache/delegation-ena-geneve.jpg" alt="Délégation de l’Étoile nord-africaine à Genève, Amar Imache deuxième à droite" fill sizes="(max-width: 800px) 100vw, 58vw"/></div><figcaption><span>Document 01</span><strong>Délégation de l’ENA à Genève</strong><p>Amar Imache apparaît deuxième à droite, selon la légende reproduite au bas du document.</p></figcaption></figure><figure><div><Image src="/images/amar-imache/delegation-ministere-interieur.jpg" alt="Délégation de l’Étoile nord-africaine au ministère de l’Intérieur, Amar Imache premier à droite" fill sizes="(max-width: 800px) 100vw, 34vw"/></div><figcaption><span>Document 02</span><strong>Délégation au ministère de l’Intérieur</strong><p>Amar Imache est identifié au premier rang, à droite. Date et provenance restent à préciser.</p></figcaption></figure></div><p className="imache-dossier-photo-note">Identification issue des indications accompagnant les fichiers transmis. La source matérielle, la date exacte, l’auteur et les droits de reproduction devront être renseignés dans la notice définitive.</p></section>
+        {/* Client Component with Timeline & Archive Inspector Modal */}
+        <AmarImacheDossierClient
+          chronology={chronology}
+          writings={writings}
+          archiveFamilies={archiveFamilies}
+        />
 
-      <section className="imache-dossier-thought" id="combat"><div className="imache-dossier-quote"><span aria-hidden="true">«</span><p>Une indépendance pensée avec la dignité du peuple, la souveraineté et la responsabilité collective.</p></div><div className="imache-dossier-thought-content"><p className="eyebrow">Le sens du combat</p><h2>Ni assimilation,<br/>ni homme providentiel</h2><p>Ses textes défendent le droit des Algériens à décider de leur avenir. Face aux projets d’intégration limitée à la citoyenneté française, il oppose une communauté politique algérienne qui n’a pas à renoncer à elle-même pour accéder aux droits.</p><p>Son attachement aux assemblées villageoises kabyles nourrit également une réflexion sur la démocratie, le mandat et le contrôle des responsables. Ses différends avec Messali Hadj doivent être lus dans ce cadre politique, sans les réduire à une querelle personnelle.</p><div className="imache-dossier-pillars"><div><span>01</span><strong>Souveraineté</strong></div><div><span>02</span><strong>Démocratie</strong></div><div><span>03</span><strong>Dignité ouvrière</strong></div><div><span>04</span><strong>Horizon africain</strong></div></div></div></section>
+        <section className="imache-dossier-thought" id="combat">
+          <div className="imache-dossier-quote">
+            <span aria-hidden="true">«</span>
+            <p>Une indépendance pensée avec la dignité du peuple, la souveraineté et la responsabilité collective.</p>
+          </div>
+          <div className="imache-dossier-thought-content">
+            <p className="eyebrow">Le sens du combat</p>
+            <h2>Ni assimilation,<br/>ni homme providentiel</h2>
+            <p>Ses textes défendent le droit des Algériens à décider de leur avenir. Face aux projets d’intégration limitée à la citoyenneté française, il oppose une communauté politique algérienne qui n’a pas à renoncer à elle-même pour accéder aux droits.</p>
+            <p>Son attachement aux assemblées villageoises kabyles nourrit également une réflexion sur la démocratie, le mandat et le contrôle des responsables.</p>
+            <div className="imache-dossier-pillars">
+              <div><span>01</span><strong>Souveraineté</strong></div>
+              <div><span>02</span><strong>Démocratie</strong></div>
+              <div><span>03</span><strong>Dignité ouvrière</strong></div>
+              <div><span>04</span><strong>Horizon africain</strong></div>
+            </div>
+          </div>
+        </section>
 
-      <section className="imache-dossier-writings" id="ecrits"><div className="imache-dossier-section-head"><p className="eyebrow">Écrits et presse</p><h2>Une pensée laissée sur le papier</h2><p>Cette première bibliographie sera complétée par les notices, reproductions et localisations des exemplaires conservés.</p></div><div className="imache-dossier-library">{writings.map(([year,title,body],i)=><article key={title}><div><span>{year}</span><small>{String(i+1).padStart(2,"0")}</small></div><h3>{title}</h3><p>{body}</p></article>)}</div></section>
+        <section className="imache-dossier-writings" id="ecrits">
+          <div className="imache-dossier-section-head">
+            <p className="eyebrow">Écrits et presse</p>
+            <h2>Une pensée laissée sur le papier</h2>
+            <p>Cette première bibliographie sera complétée par les notices, reproductions et localisations des exemplaires conservés.</p>
+          </div>
+          <div className="imache-dossier-library">
+            {writings.map(([year,title,body],i)=><article key={title}><div><span>{year}</span><small>{String(i+1).padStart(2,"0")}</small></div><h3>{title}</h3><p>{body}</p></article>)}
+          </div>
+        </section>
 
-      <section className="imache-press-archive" id="archive-1937" aria-labelledby="archive-1937-title">
-        <header className="imache-press-heading"><div><p className="eyebrow light">Archives de presse</p><h2 id="archive-1937-title">Lire les textes<br/><em>dans leur temps</em></h2></div><div><p>Une collection appelée à réunir les articles signés par Amar Imache et les journaux qui rendent compte de son action.</p><span>1 document catalogué</span></div></header>
-        <div className="imache-press-collection">
-          <article className="imache-press-card">
-            <Link className="imache-press-thumb" href="/amar-imache/archives/ils-nous-ont-trahis-1937"><Image src="/images/amar-imache/la-lutte-ouvriere-1937-page-2.jpg" alt="Page 2 de La Lutte ouvrière du 5 février 1937 contenant l’article Ils nous ont trahis signé Amar Imache" fill sizes="(max-width: 700px) 100vw, 360px"/><span>Voir la notice</span></Link>
-            <div className="imache-press-card-copy"><div className="imache-press-card-meta"><span>05.02.1937</span><span>Page 2</span><span>Article signé</span></div><p className="imache-press-publication">La Lutte ouvrière · n° 30</p><h3>« Ils nous ont trahis »</h3><p>Amar Imache dénonce la dissolution de l’Étoile nord-africaine par le gouvernement du Front populaire et défend le droit des travailleurs nord-africains à s’organiser librement.</p><footer><span>Signature : Imache Amar</span><div className="imache-press-card-actions"><Link href="/amar-imache/archives/ils-nous-ont-trahis-1937">Voir le document</Link><Link className="primary" href="/amar-imache/archives/ils-nous-ont-trahis-1937#transcription">Lire la transcription <b aria-hidden="true">→</b></Link></div></footer></div>
-          </article>
-          <aside className="imache-press-next"><span>Le fonds documentaire</span><p>Explorer les archives d’Amar Imache.</p><small>Presse · brochures · tracts · correspondances</small><Link href="/amar-imache/archives">Ouvrir le catalogue <b aria-hidden="true">↗</b></Link></aside>
-        </div>
-      </section>
+        <section className="imache-dossier-archives" id="fonds">
+          <div>
+            <p className="eyebrow light">Le chantier des archives</p>
+            <h2>Retrouver, préserver, rendre accessible</h2>
+            <p>Le futur fonds Amar Imache ne doit pas être une simple galerie d’hommages. Il doit permettre de lire les pièces, d’en connaître l’origine, la date, le détenteur et les conditions de publication.</p>
+          </div>
+          <ol>{archiveFamilies.map(([title,body],i)=><li key={title}><span>{String(i+1).padStart(2,"0")}</span><div><h3>{title}</h3><p>{body}</p></div></li>)}</ol>
+        </section>
 
-      <section className="imache-dossier-archives" id="fonds"><div><p className="eyebrow light">Le chantier des archives</p><h2>Retrouver, préserver, rendre accessible</h2><p>Le futur fonds Amar Imache ne doit pas être une simple galerie d’hommages. Il doit permettre de lire les pièces, d’en connaître l’origine, la date, le détenteur et les conditions de publication.</p></div><ol>{archiveFamilies.map(([title,body],i)=><li key={title}><span>{String(i+1).padStart(2,"0")}</span><div><h3>{title}</h3><p>{body}</p></div></li>)}</ol></section>
+        <section className="imache-dossier-sources" id="sources">
+          <div>
+            <p className="eyebrow">Premiers jalons</p>
+            <h2>Sources consultées et pistes de recherche</h2>
+            <p>La recherche commence avec les fonds institutionnels, les publications scientifiques et les éditions des écrits.</p>
+          </div>
+          <div className="imache-dossier-source-list">
+            <a href="https://francearchives.gouv.fr/facomponent/892a7f41583cc37f9e1bf3f0de25bf5f6f8617a0" target="_blank" rel="noreferrer"><small>Archive publique</small><strong>FranceArchives — Étoile nord-africaine</strong><span>Consulter ↗</span></a>
+            <a href="https://recherche-anom.culture.gouv.fr/data/files/anom.diffusion/pdf/inventaires/FRANOM_01230_all.pdf" target="_blank" rel="noreferrer"><small>Instrument de recherche</small><strong>ANOM — cabinet du préfet d’Alger</strong><span>Consulter ↗</span></a>
+            <a href="https://asjp.cerist.dz/en/article/164298" target="_blank" rel="noreferrer"><small>Article scientifique</small><strong>Le rôle médiatique d’Amar Imache</strong><span>Consulter ↗</span></a>
+            <a href="https://search.worldcat.org/es/title/L%27Algerie-au-carrefour-la-marche-vers-l%27inconnu/oclc/949189249" target="_blank" rel="noreferrer"><small>Notice bibliographique</small><strong>L’Algérie au carrefour — édition 2012</strong><span>Consulter ↗</span></a>
+          </div>
+          <p className="imache-dossier-bibliography">À intégrer au chantier bibliographique : Omar Carlier, <em>Le Cri du révolté : Imache Amar, un itinéraire militant</em> (1986) ; Amar Imache, <em>L’Algérie au carrefour : la marche vers l’inconnu</em>, édition réunie et préfacée (2012) ; Mohamed Imache, <em>Amar Imache, le pionnier occulté</em> (2017).</p>
+        </section>
 
-      <section className="imache-dossier-sources" id="sources"><div><p className="eyebrow">Premiers jalons</p><h2>Sources consultées et pistes de recherche</h2><p>La recherche commence avec les fonds institutionnels, les publications scientifiques et les éditions des écrits. Les sources commémoratives ou familiales restent précieuses, mais doivent être signalées et recoupées.</p></div><div className="imache-dossier-source-list"><a href="https://francearchives.gouv.fr/facomponent/892a7f41583cc37f9e1bf3f0de25bf5f6f8617a0" target="_blank" rel="noreferrer"><small>Archive publique</small><strong>FranceArchives — Étoile nord-africaine</strong><span>Consulter ↗</span></a><a href="https://recherche-anom.culture.gouv.fr/data/files/anom.diffusion/pdf/inventaires/FRANOM_01230_all.pdf" target="_blank" rel="noreferrer"><small>Instrument de recherche</small><strong>ANOM — cabinet du préfet d’Alger</strong><span>Consulter ↗</span></a><a href="https://asjp.cerist.dz/en/article/164298" target="_blank" rel="noreferrer"><small>Article scientifique</small><strong>Le rôle médiatique d’Amar Imache</strong><span>Consulter ↗</span></a><a href="https://search.worldcat.org/es/title/L%27Algerie-au-carrefour-la-marche-vers-l%27inconnu/oclc/949189249" target="_blank" rel="noreferrer"><small>Notice bibliographique</small><strong>L’Algérie au carrefour — édition 2012</strong><span>Consulter ↗</span></a></div><p className="imache-dossier-bibliography">À intégrer au chantier bibliographique : Omar Carlier, <em>Le Cri du révolté : Imache Amar, un itinéraire militant</em> (1986) ; Amar Imache, <em>L’Algérie au carrefour : la marche vers l’inconnu</em>, édition réunie et préfacée (2012) ; Mohamed Imache, <em>Amar Imache, le pionnier occulté</em> (2017).</p></section>
-
-      <section className="imache-dossier-call"><p className="eyebrow light">Archives ouvertes</p><h2>Vous conservez une trace<br/>d’Amar Imache&nbsp;?</h2><p>Photographie, lettre, brochure, numéro d’<em>El Ouma</em>, souvenir familial ou indication de fonds : chaque pièce peut aider à restituer un parcours avec justesse.</p><div><Link href="/contribuer" className="primary">Proposer une archive <span aria-hidden="true">↗</span></Link><Link href="/histoire-memoire">Revenir à l’histoire du village</Link></div></section>
-    </main><SiteFooter /></>;
+        <section className="imache-dossier-call">
+          <p className="eyebrow light">Archives ouvertes</p>
+          <h2>Vous conservez une trace<br/>d’Amar Imache&nbsp;?</h2>
+          <p>Photographie, lettre, brochure, numéro d’<em>El Ouma</em>, souvenir familial ou indication de fonds : chaque pièce peut aider à restituer un parcours avec justesse.</p>
+          <div>
+            <Link href="/contribuer" className="primary">Proposer une archive <span aria-hidden="true">↗</span></Link>
+            <Link href="/histoire-memoire">Revenir à l’histoire du village</Link>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
+  );
 }
+
