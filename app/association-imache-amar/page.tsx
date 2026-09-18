@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeaderClient from "@/components/layout/SiteHeaderClient";
+import ImageArchiveViewer from "@/components/archives/ImageArchiveViewer";
 
 export const metadata: Metadata = {
   title: "Association culturelle Imache Amar — Aït Mesbah",
@@ -34,7 +35,7 @@ export default function ImacheAmarAssociationPage() {
   return <>
     <a className="skip-link" href="#contenu-principal">Aller au contenu principal</a><SiteHeaderClient />
     <main id="contenu-principal" className="imache-assoc-page imache-assoc-premium" tabIndex={-1}>
-      <header className="imache-assoc-hero"><div className="imache-assoc-hero-copy"><p className="eyebrow light">Culture · Mémoire · Jeunesse</p><h1>Association<br/><em>Imache Amar</em></h1><p>Une histoire culturelle à préserver. Une énergie collective à réveiller.</p><div className="imache-assoc-hero-actions"><a href="#histoire">Découvrir son histoire <span aria-hidden="true">↓</span></a><a href="https://www.facebook.com/profile.php?id=100090167800201" target="_blank" rel="noreferrer">Suivre l’association <span aria-hidden="true">↗</span></a></div></div><figure className="imache-assoc-portrait"><div><Image src="/images/amar-imache/portrait-amar-imache.jpg" alt="Portrait d’Amar Imache, dont l’association culturelle porte le nom" fill priority sizes="(max-width: 700px) 70vw, 350px"/></div><figcaption><span>Le nom transmis</span><strong>Amar Imache</strong><Link href="/amar-imache">Découvrir son parcours →</Link></figcaption></figure><span className="imache-assoc-era" aria-hidden="true">70</span></header>
+      <header className="imache-assoc-hero"><div className="imache-assoc-hero-copy"><p className="eyebrow light">Culture · Mémoire · Jeunesse</p><h1>Association<br/><em>Imache Amar</em></h1><p>Une histoire culturelle à préserver. Une énergie collective à réveiller.</p><div className="imache-assoc-hero-actions"><a href="#histoire">Découvrir son histoire <span aria-hidden="true">↓</span></a><a href="https://www.facebook.com/profile.php?id=100090167800201" target="_blank" rel="noreferrer">Suivre l’association <span aria-hidden="true">↗</span></a></div></div><figure className="imache-assoc-portrait"><div><Image src="/images/amar-imache/portrait-amar-imache.jpg" alt="Portrait d’Amar Imache, dont l’association culturelle porte le nom" fill priority sizes="(max-width: 700px) 70vw, 350px"/></div><figcaption><span>Le nom transmitted</span><strong>Amar Imache</strong><Link href="/amar-imache">Découvrir son parcours →</Link></figcaption></figure><span className="imache-assoc-era" aria-hidden="true">70</span></header>
       <div className="imache-assoc-mantra" aria-label="Les trois missions de l’association"><span>Créer</span><i>✦</i><span>Transmettre</span><i>✦</i><span>Rassembler</span></div>
 
       <nav className="imache-assoc-toc" aria-label="Sommaire de la page"><span>Parcourir la page</span><ol><li><a href="#histoire"><span>01</span>Histoire</a></li><li><a href="#age-or"><span>02</span>Âge d’or</a></li><li><a href="#aujourdhui"><span>03</span>Aujourd’hui</a></li><li><a href="#lieux"><span>04</span>Lieux</a></li><li><a href="#relance"><span>05</span>Relance</a></li></ol></nav>
@@ -43,7 +44,24 @@ export default function ImacheAmarAssociationPage() {
 
       <section className="imache-assoc-timeline" aria-label="Repères historiques"><div>{eras.map(([period, title, text], index) => <article id={index === 2 ? "age-or" : index === 4 ? "aujourdhui" : undefined} key={period}><span>{String(index + 1).padStart(2, "0")}</span><small>{period}</small><h3>{title}</h3><p>{text}</p></article>)}</div></section>
 
-      <section className="imache-assoc-golden"><div><p className="eyebrow light">Les années 1990</p><h2>Quand la culture mettait le village en mouvement</h2></div><div><p className="imache-assoc-golden-lead">Cette décennie demeure dans les mémoires comme l’âge d’or de l’association : une période où les activités, les rencontres et l’engagement des bénévoles créaient une dynamique visible dans tout le village.</p><p>Retrouver cet élan ne signifie pas reproduire le passé. Il s’agit d’en retrouver l’esprit : donner aux jeunes un cadre, faire circuler les idées, créer des occasions de se rencontrer et transformer les talents individuels en énergie collective.</p><blockquote>La nostalgie devient utile lorsqu’elle inspire une nouvelle génération.</blockquote></div></section>
+      <section className="imache-assoc-golden"><div><p className="eyebrow light">Les années 1990 · L’apogée</p><h2>Quand la culture mettait le village en mouvement</h2></div><div><p className="imache-assoc-golden-lead">Cette décennie demeure dans les mémoires comme l’âge d’or de l’association : une période où les activités, les rencontres et l’engagement des bénévoles créaient une dynamique visible dans tout le village.</p><p>Parmi les trésors d’archives de cette époque florissante, les portraits de potières et doyennes du village témoignent de la mise en valeur passionnée de l’artisanat d’Aït Mesbah par l’association :</p>
+      
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", margin: "1.5rem 0" }}>
+        <div>
+          <ImageArchiveViewer src="/archives/poterie-1990/madame-haouili-potiere-1990.jpg" alt="Madame Haouili peignant une jarre d'argile" title="Madame Haouili peignant une jarre" aspectRatio="1 / 1" />
+          <h4 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "0.75rem" }}>Madame Haouili</h4>
+          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.8)" }}>Potière peignant les décors géométriques d’une jarre (Début des années 90).</p>
+          <Link style={{ color: "#d97706", fontWeight: "600", fontSize: "0.9rem" }} href="/histoire-memoire/archives/potiere-haouili-1990">Fiche archive Mme Haouili →</Link>
+        </div>
+        <div>
+          <ImageArchiveViewer src="/archives/poterie-1990/madame-guernine-poterie-1990.jpg" alt="Madame Guernine posant auprès de l'Akufi et des poteries" title="Madame Guernine au milieu des objets artisanaux" aspectRatio="1 / 1" />
+          <h4 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "0.75rem" }}>Madame Guernine</h4>
+          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.8)" }}>Posant en tenue traditionnelle auprès d’un grand Akufi et de poteries (Début des années 90).</p>
+          <Link style={{ color: "#d97706", fontWeight: "600", fontSize: "0.9rem" }} href="/histoire-memoire/archives/madame-guernine-1990">Fiche archive Mme Guernine →</Link>
+        </div>
+      </div>
+
+      <blockquote>La nostalgie devient utile lorsqu’elle inspire une nouvelle génération.</blockquote></div></section>
 
       <section className="imache-assoc-actions"><div className="imache-assoc-heading"><p className="eyebrow">Un projet culturel vivant</p><h2>Ce que l’association peut à nouveau rendre possible</h2><p>Une programmation régulière, même modeste, peut recréer des habitudes, révéler des talents et renforcer les liens entre les habitants.</p></div><div className="imache-assoc-action-grid">{culturalActions.map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
 

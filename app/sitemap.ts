@@ -23,6 +23,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/decouvrir`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/histoire-memoire/archives/retour-des-champs-1966`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${baseUrl}/histoire-memoire/archives/pichet-ait-mesbah-peabody`, changeFrequency: "monthly", priority: 0.65 },
+    { url: `${baseUrl}/histoire-memoire/archives/potiere-haouili-1990`, changeFrequency: "monthly", priority: 0.65 },
+    { url: `${baseUrl}/histoire-memoire/archives/madame-guernine-1990`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${baseUrl}/projets`, changeFrequency: "weekly", priority: 0.9 },
     {
       url: `${baseUrl}/histoire-memoire`,
