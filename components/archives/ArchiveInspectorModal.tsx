@@ -14,6 +14,7 @@ interface ArchiveInspectorModalProps {
   signature?: string;
   transcription?: readonly string[] | string;
   pdfUrl?: string;
+  externalUrl?: string;
 }
 
 export default function ArchiveInspectorModal({
@@ -27,7 +28,9 @@ export default function ArchiveInspectorModal({
   signature,
   transcription,
   pdfUrl,
+  externalUrl,
 }: ArchiveInspectorModalProps) {
+
   const [activeTab, setActiveTab] = useState<"visual" | "text">("visual");
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [magnifierActive, setMagnifierActive] = useState<boolean>(false);
@@ -250,6 +253,16 @@ export default function ArchiveInspectorModal({
         <div className="px-6 py-3 bg-[#08221b] border-t border-[#ffffff1a] flex items-center justify-between text-xs text-[#b6c3bd]">
           <span>Survoler l&apos;image avec la loupe pour examiner les détails d&apos;archive.</span>
           <div className="flex items-center gap-4">
+            {externalUrl && (
+              <a
+                href={externalUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-[#efd094] hover:underline font-semibold bg-[#103b30] px-3 py-1 rounded-full border border-[#d7b56f]/30"
+              >
+                🏛️ Notice Archives Nationales (SIV) ↗
+              </a>
+            )}
             {pdfUrl && (
               <a
                 href={pdfUrl}
@@ -269,6 +282,7 @@ export default function ArchiveInspectorModal({
             </button>
           </div>
         </div>
+
       </div>
     </div>
   );

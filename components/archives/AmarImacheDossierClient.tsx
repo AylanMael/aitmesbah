@@ -28,6 +28,7 @@ export default function AmarImacheDossierClient({
     signature?: string;
     transcription?: readonly string[] | string;
     pdfUrl?: string;
+    externalUrl?: string;
   }>({
     isOpen: false,
     imageSrc: "",
@@ -43,6 +44,7 @@ export default function AmarImacheDossierClient({
     signature?: string;
     transcription?: readonly string[] | string;
     pdfUrl?: string;
+    externalUrl?: string;
   }) => {
     setSelectedArchive({
       isOpen: true,
@@ -54,8 +56,10 @@ export default function AmarImacheDossierClient({
       signature: archive.signature,
       transcription: archive.transcription,
       pdfUrl: archive.pdfUrl,
+      externalUrl: archive.externalUrl,
     });
   };
+
 
   const handleOpen1937Archive = () => {
     const archive1937 = amarImacheArchives[0];
@@ -175,69 +179,97 @@ export default function AmarImacheDossierClient({
         </div>
       </section>
 
-      {/* Feature Section Archive 1937 "Ils nous ont trahis" */}
-      <section className="imache-press-archive" id="archive-1937" aria-labelledby="archive-1937-title">
+      {/* Feature Section Archives numérisées & Inspecteur */}
+      <section className="imache-press-archive" id="archives-numerisees" aria-labelledby="archive-heading-title">
         <header className="imache-press-heading">
           <div>
-            <p className="eyebrow light">Archives de presse & Inspecteur</p>
-            <h2 id="archive-1937-title">
-              Lire les textes<br />
-              <em>dans leur temps</em>
+            <p className="eyebrow light">Archives numérisées & Inspecteur</p>
+            <h2 id="archive-heading-title">
+              Lire les documents<br />
+              <em>dans leur vérité historique</em>
             </h2>
           </div>
           <div>
-            <p>Une collection intégrant l&apos;inspecteur d&apos;archives à loupe virtuelle.</p>
-            <span>1 document numérisé interactif</span>
+            <p>Collection numérisée d&apos;archives publiques et de presse avec inspecteur à loupe virtuelle.</p>
+            <span>{amarImacheArchives.length} documents numérisés interactifs</span>
           </div>
         </header>
 
-        <div className="imache-press-collection">
-          <article className="imache-press-card">
-            <div
-              className="imache-press-thumb cursor-pointer relative group"
-              onClick={handleOpen1937Archive}
-            >
-              <Image
-                src="/images/amar-imache/la-lutte-ouvriere-1937-page-2.jpg"
-                alt="Page 2 de La Lutte ouvrière du 5 février 1937"
-                fill
-                sizes="(max-width: 700px) 100vw, 360px"
-              />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white p-4">
-                <span className="text-2xl">🔎</span>
-                <span className="bg-[#aa593c] text-xs font-bold px-3 py-1.5 rounded-full shadow">
-                  Ouvrir la Loupe d&apos;Archive
-                </span>
-              </div>
-            </div>
-
-            <div className="imache-press-card-copy">
-              <div className="imache-press-card-meta">
-                <span>05.02.1937</span>
-                <span>Page 2</span>
-                <span>Article signé</span>
-              </div>
-              <p className="imache-press-publication">La Lutte ouvrière · n° 30</p>
-              <h3>« Ils nous ont trahis »</h3>
-              <p>
-                Amar Imache dénonce la dissolution de l’Étoile nord-africaine par le gouvernement du Front populaire et défend le droit des travailleurs nord-africains à s’organiser librement.
-              </p>
-              <footer>
-                <span>Signature : Imache Amar</span>
-                <div className="imache-press-card-actions">
-                  <button
-                    type="button"
-                    onClick={handleOpen1937Archive}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#aa593c] hover:bg-[#ab4a2f] text-white text-xs font-bold rounded-full transition-colors"
-                  >
-                    <span>🔎 Inspecter le document (Loupe & Zoom)</span>
-                  </button>
+        <div className="imache-press-collection grid grid-cols-1 md:grid-cols-2 gap-8">
+          {amarImacheArchives.map((archive) => (
+            <article key={archive.slug} className="imache-press-card bg-[#08281f] border border-[#d7b56f]/30 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+              <div>
+                <div
+                  className="imache-press-thumb cursor-pointer relative group rounded-xl overflow-hidden h-72 mb-5 border border-[#ffffff15]"
+                  onClick={() =>
+                    handleOpenInspector({
+                      title: archive.title,
+                      imageSrc: archive.image,
+                      date: archive.displayDate,
+                      publication: `${archive.publication} · ${archive.issue}`,
+                      signature: archive.signature,
+                      transcription: archive.transcription,
+                      pdfUrl: archive.pdf,
+                      externalUrl: archive.sivUrl,
+                    })
+                  }
+                >
+                  <Image
+                    src={archive.image}
+                    alt={archive.title}
+                    fill
+                    sizes="(max-width: 700px) 100vw, 450px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white p-4">
+                    <span className="text-3xl">🔎</span>
+                    <span className="bg-[#aa593c] text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                      Ouvrir la Loupe d&apos;Inspection
+                    </span>
+                  </div>
                 </div>
-              </footer>
-            </div>
-          </article>
+
+                <div className="imache-press-card-copy space-y-3">
+                  <div className="imache-press-card-meta flex flex-wrap items-center gap-2 text-xs font-mono text-[#efd094]">
+                    <span>📅 {archive.displayDate}</span>
+                    <span>• {archive.page || archive.type}</span>
+                  </div>
+                  <p className="text-xs text-[#c8d6d0] font-semibold">{archive.publication}</p>
+                  <h3 className="font-serif text-2xl font-bold text-white leading-tight">
+                    {archive.title}
+                  </h3>
+                  <p className="text-xs text-[#c8d6d0] leading-relaxed">
+                    {archive.summary}
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-4 mt-6 border-t border-[#ffffff15] flex flex-wrap items-center justify-between gap-3 text-xs">
+                <span className="text-[#efd094] italic">{archive.signature}</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleOpenInspector({
+                      title: archive.title,
+                      imageSrc: archive.image,
+                      date: archive.displayDate,
+                      publication: `${archive.publication} · ${archive.issue}`,
+                      signature: archive.signature,
+                      transcription: archive.transcription,
+                      pdfUrl: archive.pdf,
+                      externalUrl: archive.sivUrl,
+                    })
+                  }
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#aa593c] hover:bg-[#ab4a2f] text-white text-xs font-bold rounded-full transition-colors shadow"
+                >
+                  <span>🔎 Inspecter le document ➔</span>
+                </button>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
+
 
       {/* Modal Inspector Component */}
       <ArchiveInspectorModal
@@ -251,7 +283,9 @@ export default function AmarImacheDossierClient({
         signature={selectedArchive.signature}
         transcription={selectedArchive.transcription}
         pdfUrl={selectedArchive.pdfUrl}
+        externalUrl={selectedArchive.externalUrl}
       />
     </>
   );
 }
+

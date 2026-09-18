@@ -1,4 +1,50 @@
-export const amarImacheArchives = [
+export interface AmarImacheArchiveItem {
+  slug: string;
+  date: string;
+  displayDate: string;
+  year: string;
+  title: string;
+  publication: string;
+  issue: string;
+  cote?: string;
+  page?: string;
+  type: string;
+  signature: string;
+  themes: readonly string[];
+  summary: string;
+  context: string;
+  sivUrl?: string;
+  transcription: readonly string[];
+  image: string;
+  pdf?: string;
+}
+
+export const amarImacheArchives: readonly AmarImacheArchiveItem[] = [
+  {
+    slug: "carte-souscription-el-ouma-1935",
+    date: "1935-03-01",
+    displayDate: "Mars 1935",
+    year: "1935",
+    title: "Imache, Messali, Radjef, vive la liberté pour tous",
+    publication: "Archives Nationales (Direction générale de la Sûreté nationale)",
+    issue: "Surveillance des associations · Cote 20010216/173, dossier n° 5916, folio 81",
+    cote: "20010216/173, dossier n° 5916, folio 81",
+    page: "Folio 81 · Carte n° 139",
+    type: "Carte de souscription & Document de propagande ENA",
+    signature: "Comités de défense du journal El Ouma (Imache, Messali, Radjef)",
+    themes: ["Étoile nord-africaine", "El Ouma", "Comités de défense", "Code de l'indigénat", "Liberté pour tous"],
+    summary: "Carte de souscription à 1 Franc en arabe et en français, illustrée des portraits d'Imache Amar, Messali Hadj et Radjef Belkacem, diffusée par les comités de défense du journal El Ouma contre le Code de l'indigénat.",
+    context: "Conservé aux Archives Nationales de France dans le fonds de la Sûreté nationale (Dossiers sur les colonies et coloniaux, 1918-1940), ce document illustre l'action d'Imache Amar, secrétaire général de l'Étoile nord-africaine, appelant à la solidarité populaire et politique.",
+    sivUrl: "https://www.siv.archives-nationales.culture.gouv.fr/siv/rechercheconsultation/consultation/ir/consultationIR.action?irId=FRAN_IR_057715&udId=c-7lormwkae--p1xv79rjg9zk&details=true&numberImage=FRAN_0227_0017_L#",
+    transcription: [
+      "PRIX : 1 Franc",
+      "IMACHE · MESSALI · RADJEF",
+      "VIVE LA LIBERTÉ POUR TOUS",
+      "Musulmans Nord-Africains !... Pour vos droits et vos libertés politiques, pour vous solidariser avec vos frères arrêtés et inculpés : Messali, Messaoui, Sebar, Imache, Radjef, Boudjnah, Bendif et Boukort, souscrivez en masse, formez partout vos comités de défense autour d'El Ouma qui lutte pour votre émancipation. À bas le code infâme de l'indigénat. « Pour notre journal El Ouma ».",
+      "7383 - Imp. Benoist, 63, Rue du Château; Paris-14e - 3-1935",
+    ],
+    image: "/images/amar-imache/carte-souscription-el-ouma-1935.jpg",
+  },
   {
     slug: "ils-nous-ont-trahis-1937",
     date: "1937-02-05",
@@ -18,7 +64,7 @@ export const amarImacheArchives = [
       "L’Étoile Nord-Africaine, adhérente au Front Populaire, vient d’être dissoute par ce même Front Populaire !",
       "Le parti politique qui avait le plus recherché l’alliance avec nous et sur qui beaucoup des nôtres croyaient pouvoir compter, s’est fait l’adversaire le plus acharné et le complice du gouvernement qui vient de nous dissoudre.",
       "Les attaques les plus insensées et les plus injustifiées n’avaient pour but que de préparer l’opinion au coup terrible que le gouvernement s’apprêtait à porter à une organisation de travailleurs musulmans.",
-      "Ali Boukort, que l’on veut placer comme vedette en Algérie, était chargé par ses maîtres de commencer l’attaque, et les accusations les plus stupides étaient imprimées, noir sur blanc, dans La Lutte sociale d’abord, puis dans L’Humanité.",
+      "Ali Boukort, que l’on veut placer comme vedette en Algérie, était charged par ses maîtres de commencer l’attaque, et les accusations les plus stupides étaient imprimées, noir sur blanc, dans La Lutte sociale d’abord, puis dans L’Humanité.",
       "« Hitlériens », nous qui avons combattu le fascisme et souffert par lui plus qu’aucune organisation ou parti ?",
       "Hitlériens, nous qui nous sommes placés aux côtés des travailleurs dès la première minute ? Nous qui avons manifesté avec le peuple et qui avons soutenu sa lutte en toutes circonstances ? Allons donc, messieurs les « camarades prolétaires » ! Il n’y a pas un travailleur sensé et honnête qui puisse croire à vos sornettes. Dites plutôt que vous avez pris la place de l’impérialisme ou que vous avez endossé sa livrée et que vous êtes devenus des chauvins de la pire espèce alliés du colonialisme. Il y a d’ailleurs longtemps qu’on s’en doutait et ce n’est un mystère que pour les aveugles ou les fanatiques.",
       "Car enfin le programme de l’Étoile date de 1926.",
@@ -33,6 +79,6 @@ export const amarImacheArchives = [
     image: "/images/amar-imache/la-lutte-ouvriere-1937-page-2.jpg",
     pdf: "/archives/amar-imache/la-lutte-ouvriere-05-fevrier-1937.pdf",
   },
-] as const;
+];
 
 export type AmarImacheArchive = (typeof amarImacheArchives)[number];
