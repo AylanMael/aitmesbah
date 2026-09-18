@@ -195,79 +195,72 @@ export default function AmarImacheDossierClient({
           </div>
         </header>
 
-        <div className="imache-press-collection grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="imache-press-collection">
           {amarImacheArchives.map((archive) => (
-            <article key={archive.slug} className="imache-press-card bg-[#08281f] border border-[#d7b56f]/30 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
-              <div>
-                <div
-                  className="imache-press-thumb cursor-pointer relative group rounded-xl overflow-hidden h-72 mb-5 border border-[#ffffff15]"
-                  onClick={() =>
-                    handleOpenInspector({
-                      title: archive.title,
-                      imageSrc: archive.image,
-                      date: archive.displayDate,
-                      publication: `${archive.publication} · ${archive.issue}`,
-                      signature: archive.signature,
-                      transcription: archive.transcription,
-                      pdfUrl: archive.pdf,
-                      externalUrl: archive.sivUrl,
-                    })
-                  }
-                >
-                  <Image
-                    src={archive.image}
-                    alt={archive.title}
-                    fill
-                    sizes="(max-width: 700px) 100vw, 450px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white p-4">
-                    <span className="text-3xl">🔎</span>
-                    <span className="bg-[#aa593c] text-xs font-bold px-4 py-2 rounded-full shadow-lg">
-                      Ouvrir la Loupe d&apos;Inspection
-                    </span>
-                  </div>
-                </div>
-
-                <div className="imache-press-card-copy space-y-3">
-                  <div className="imache-press-card-meta flex flex-wrap items-center gap-2 text-xs font-mono text-[#efd094]">
-                    <span>📅 {archive.displayDate}</span>
-                    <span>• {archive.page || archive.type}</span>
-                  </div>
-                  <p className="text-xs text-[#c8d6d0] font-semibold">{archive.publication}</p>
-                  <h3 className="font-serif text-2xl font-bold text-white leading-tight">
-                    {archive.title}
-                  </h3>
-                  <p className="text-xs text-[#c8d6d0] leading-relaxed">
-                    {archive.summary}
-                  </p>
-                </div>
+            <article key={archive.slug} className="imache-press-card">
+              <div
+                className="imache-press-thumb cursor-pointer"
+                onClick={() =>
+                  handleOpenInspector({
+                    title: archive.title,
+                    imageSrc: archive.image,
+                    date: archive.displayDate,
+                    publication: `${archive.publication} · ${archive.issue}`,
+                    signature: archive.signature,
+                    transcription: archive.transcription,
+                    pdfUrl: archive.pdf,
+                    externalUrl: archive.sivUrl,
+                  })
+                }
+              >
+                <Image
+                  src={archive.image}
+                  alt={archive.title}
+                  fill
+                  sizes="(max-width: 700px) 100vw, 360px"
+                  className="object-cover"
+                />
+                <span>Inspecter l&apos;archive 🔎</span>
               </div>
 
-              <div className="pt-4 mt-6 border-t border-[#ffffff15] flex flex-wrap items-center justify-between gap-3 text-xs">
-                <span className="text-[#efd094] italic">{archive.signature}</span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleOpenInspector({
-                      title: archive.title,
-                      imageSrc: archive.image,
-                      date: archive.displayDate,
-                      publication: `${archive.publication} · ${archive.issue}`,
-                      signature: archive.signature,
-                      transcription: archive.transcription,
-                      pdfUrl: archive.pdf,
-                      externalUrl: archive.sivUrl,
-                    })
-                  }
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#aa593c] hover:bg-[#ab4a2f] text-white text-xs font-bold rounded-full transition-colors shadow"
-                >
-                  <span>🔎 Inspecter le document ➔</span>
-                </button>
+              <div className="imache-press-card-copy">
+                <div className="imache-press-card-meta">
+                  <span>{archive.displayDate}</span>
+                  <span>{archive.page || archive.type}</span>
+                </div>
+
+                <p className="imache-press-publication">{archive.publication}</p>
+                <h3>{archive.title}</h3>
+                <p>{archive.summary}</p>
+
+                <footer>
+                  <span>Signature : {archive.signature}</span>
+                  <div className="imache-press-card-actions">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleOpenInspector({
+                          title: archive.title,
+                          imageSrc: archive.image,
+                          date: archive.displayDate,
+                          publication: `${archive.publication} · ${archive.issue}`,
+                          signature: archive.signature,
+                          transcription: archive.transcription,
+                          pdfUrl: archive.pdf,
+                          externalUrl: archive.sivUrl,
+                        })
+                      }
+                      className="primary cursor-pointer"
+                    >
+                      Inspecter le document <b>➔</b>
+                    </button>
+                  </div>
+                </footer>
               </div>
             </article>
           ))}
         </div>
+
       </section>
 
 
