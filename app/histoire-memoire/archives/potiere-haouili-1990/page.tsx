@@ -7,8 +7,8 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import "../hiani-debia-1939/reportage.css";
 
 export const metadata: Metadata = {
-  title: "Madame Haouili peignant une jarre (Début des années 90) — Archives d’Aït Mesbah",
-  description: "Photographie d'archive de Madame Haouili, potière d'Aït Mesbah, peignant une jarre traditionnelle. Prise au début des années 1990 lors de l'apogée de l'Association Culturelle Imache Amar.",
+  title: "La peinture des engobes sur une jarre (Début des années 90) — Archives d’Aït Mesbah",
+  description: "Photographie d'archive montrant l'application minutieuse des engobes rouges sur une jarre traditionnelle à Aït Mesbah au début des années 1990.",
   alternates: { canonical: "/histoire-memoire/archives/potiere-haouili-1990" },
 };
 
@@ -22,40 +22,40 @@ export default function PotiereHaouiliArchivePage() {
             <Link href="/histoire-memoire#archives">← Retour aux archives</Link>
             <p className="eyebrow light">Photographie d’archive · Début des années 1990</p>
             <h1>
-              Madame Haouili<br />
-              <em>peignant une jarre</em>
+              La peinture des engobes<br />
+              <em>sur une jarre</em>
             </h1>
           </div>
           <div>
-            <h2>L’apogée de l’Association Culturelle Imache Amar</h2>
+            <h2>Le geste et le savoir-faire de la terre</h2>
             <p>
-              Prise au début des années 1990, cette photographie témoigne de la vitalité de l’artisanat de la poterie à Aït Mesbah et du travail de préservation porté par l’Association Culturelle Imache Amar.
+              Prise au début des années 1990, cette photographie illustre la délicate étape de décoration à l’engobe rouge sur une poterie en terre cuite, lors des activités portées par l’Association Culturelle Imache Amar.
             </p>
           </div>
         </header>
 
         <section className="village-archive-reading">
           <div>
-            <p className="eyebrow">Le geste et la matière</p>
-            <h2>La précision du décor aux engobes</h2>
+            <p className="eyebrow">Technique &amp; Geste</p>
+            <h2>La précision du tracé manuel</h2>
           </div>
           <div>
             <p className="village-archive-lead">
-              Sur ce cliché, Madame Haouili est assise à même le sol, tenant délicatement un pinceau pour appliquer l’engobe rouge sur les contours et les motifs géométriques d’une grande jarre en terre cuite.
+              Sur ce cliché, la potière travaille assise au sol, appliquant avec un fin pinceau les lignes et motifs géométriques traditionnels sur la panse et le col d’une grande jarre.
             </p>
             <p>
-              Aux côtés d’un récipient en pierre servant à préparer le pigment et de coupes en céramique contenant les pinceaux et couleurs, l’artisane perpétue des gestes séculaires transmis de génération en génération au village.
+              À ses côtés reposent les outils de travail : un mortier en pierre servant à broyer les minéraux pour former l’engobe rouge, ainsi qu’une coupe en céramique contenant les pigments.
             </p>
             <p>
-              Cette photographie fait partie des clichés marquants réalisés au début des années 1990, lors de la période florissante de l’Association Culturelle Imache Amar, qui œuvrait pour la mémoire, la culture et la valorisation du patrimoine artisanal d’Aït Mesbah.
+              Cette archive témoigne de la continuité des techniques de façonnage et de décoration au village. Selon les témoignages transmis pour ce site, la personne photographiée a été identifiée comme Madame Haouili.
             </p>
           </div>
         </section>
 
         <ImageArchiveViewer
           src="/archives/poterie-1990/madame-haouili-potiere-1990.jpg"
-          alt="Madame Haouili, potière d'Aït Mesbah, peignant les motifs d'une jarre avec un pinceau"
-          title="Madame Haouili peignant une jarre · Début des années 1990"
+          alt="Application au pinceau de l'engobe rouge sur les motifs géométriques d'une jarre traditionnelle"
+          title="La peinture des engobes sur une jarre · Début des années 1990"
           aspectRatio="1 / 1"
         />
 
@@ -63,28 +63,28 @@ export default function PotiereHaouiliArchivePage() {
           <p className="eyebrow">Notice et repères archivistiques</p>
           <dl>
             <div>
-              <dt>Personne photographiée</dt>
-              <dd>Madame Haouili</dd>
+              <dt>Sujet / Geste</dt>
+              <dd>Application de l’engobe et peinture des décors traditionnels</dd>
             </div>
             <div>
-              <dt>Activité / Métier</dt>
-              <dd>Potière (peinture et décor traditionnel)</dd>
+              <dt>Objet visible</dt>
+              <dd>Jarre à anses, mortier en pierre et récipients à pigments</dd>
+            </div>
+            <div>
+              <dt>Personne identifiée (mémoire locale)</dt>
+              <dd>Madame Haouili</dd>
             </div>
             <div>
               <dt>Période de prise de vue</dt>
               <dd>Début des années 1990</dd>
             </div>
             <div>
-              <dt>Contexte historique</dt>
-              <dd>Apogée de l’Association Culturelle Imache Amar</dd>
+              <dt>Contexte documentaire</dt>
+              <dd>Archives de l’Association Culturelle Imache Amar d’Aït Mesbah</dd>
             </div>
             <div>
               <dt>Lieu</dt>
               <dd>Aït Mesbah, Grande Kabylie</dd>
-            </div>
-            <div>
-              <dt>Collection / Source</dt>
-              <dd>Archives de l’Association Culturelle Imache Amar</dd>
             </div>
           </dl>
         </section>
@@ -96,7 +96,7 @@ export default function PotiereHaouiliArchivePage() {
           </div>
           <div>
             <p className="village-archive-lead">
-              Retrouvez l’histoire de la poterie d’Aït Mesbah, ses outils, ses décors et d’autres figures d’artisanes sur la page dédiée aux savoir-faire du village.
+              Retrouvez l’histoire de la poterie d’Aït Mesbah, ses outils, ses décors et d’autres repères documentaires sur la page dédiée aux savoir-faire du village.
             </p>
             <Link className="craft-link" href="/artisanat/poterie">
               Découvrir la rubrique Poterie &amp; Savoir-faire →

@@ -48,16 +48,16 @@ export default function ImacheAmarAssociationPage() {
       
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", margin: "1.5rem 0" }}>
         <div>
-          <ImageArchiveViewer src="/archives/poterie-1990/madame-haouili-potiere-1990.jpg" alt="Madame Haouili peignant une jarre d'argile" title="Madame Haouili peignant une jarre" aspectRatio="1 / 1" />
-          <h4 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "0.75rem" }}>Madame Haouili</h4>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.8)" }}>Potière peignant les décors géométriques d’une jarre (Début des années 90).</p>
-          <Link style={{ color: "#d97706", fontWeight: "600", fontSize: "0.9rem" }} href="/histoire-memoire/archives/potiere-haouili-1990">Fiche archive Mme Haouili →</Link>
+          <ImageArchiveViewer src="/archives/poterie-1990/madame-haouili-potiere-1990.jpg" alt="Application au pinceau des engobes rouges sur une jarre" title="Application des engobes sur une jarre" aspectRatio="1 / 1" />
+          <h4 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "0.75rem" }}>Application des engobes rouges</h4>
+          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.8)" }}>Tracé au pinceau des décors géométriques d’une jarre (personne identifiée : Mme Haouili).</p>
+          <Link style={{ color: "#d97706", fontWeight: "600", fontSize: "0.9rem" }} href="/histoire-memoire/archives/potiere-haouili-1990">Consulter la fiche archive →</Link>
         </div>
         <div>
-          <ImageArchiveViewer src="/archives/poterie-1990/madame-guernine-poterie-1990.jpg" alt="Madame Guernine posant auprès de l'Akufi et des poteries" title="Madame Guernine au milieu des objets artisanaux" aspectRatio="1 / 1" />
-          <h4 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "0.75rem" }}>Madame Guernine</h4>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.8)" }}>Posant en tenue traditionnelle auprès d’un grand Akufi et de poteries (Début des années 90).</p>
-          <Link style={{ color: "#d97706", fontWeight: "600", fontSize: "0.9rem" }} href="/histoire-memoire/archives/madame-guernine-1990">Fiche archive Mme Guernine →</Link>
+          <ImageArchiveViewer src="/archives/poterie-1990/madame-guernine-poterie-1990.jpg" alt="Récipients de conservation et Akufi traditionnel" title="Récipients et Akufi traditionnel" aspectRatio="1 / 1" />
+          <h4 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "0.75rem" }}>Objets artisanaux &amp; Akufi</h4>
+          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.8)" }}>Présentation auprès d’un grand Akufi peint et de pichets en terre cuite (personne identifiée : Mme Guernine).</p>
+          <Link style={{ color: "#d97706", fontWeight: "600", fontSize: "0.9rem" }} href="/histoire-memoire/archives/madame-guernine-1990">Consulter la fiche archive →</Link>
         </div>
       </div>
 
