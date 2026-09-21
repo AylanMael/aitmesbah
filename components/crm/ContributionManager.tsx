@@ -2,6 +2,10 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { contributionPageHref } from "@/lib/crm/contribution-navigation.mjs";
+import ContributionDraftForm from "./ContributionDraftForm";
+import AccountPicker from "./AccountPicker";
+import {useDraftWorkspace} from "./DraftWorkspace";
 import EditorialBodyEditor from "@/components/editorial/EditorialBodyEditor";
 type Contribution = {
   contributionId: string;
@@ -92,8 +96,9 @@ function suggestedOperation(item: Contribution, canAssign: boolean, canPublish: 
   if (item.status === "published" && canPublish) return item.category === "events_village_life" ? "update_publication" : "unpublish_content";
   return "editorial_metadata";
 }
-async function requestJson(url: string, method = "GET", body?: unknown) {
+async function requestJson(url: string, method = "GET", body?: unknown, requestKey?:string) {
   const headers: Record<string, string> = {};
+  if(requestKey)headers["Idempotency-Key"]=requestKey;
   if (body !== undefined) {
     const response = await fetch("/api/auth/csrf", { cache: "no-store" }),
       { csrfToken } = await response.json();
@@ -107,7 +112,7 @@ async function requestJson(url: string, method = "GET", body?: unknown) {
       cache: "no-store",
     }),
     value = await response.json();
-  if (!response.ok) throw new Error(value.error ?? "Opération impossible.");
+  if (!response.ok) throw Object.assign(new Error(value.error ?? "Opération impossible."),{status:response.status});
   return value;
 }
 const empty = {
@@ -152,6 +157,7 @@ export function ContributionManager({
   initialFilters?: {status?:string;category?:string;titlePrefix?:string};
 }) {
   const router = useRouter();
+  const {creationPending: creationPendingRef, creationAttemptRef, setRetrying, saving, setSaving, clear: clearDraft} = useDraftWorkspace();
   const [items, setItems] = useState(initial),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
@@ -167,11 +173,14 @@ export function ContributionManager({
   const visibleItems=useMemo(()=>items.filter(item=>(!statusFilter||item.status===statusFilter)&&(!categoryFilter||item.category===categoryFilter)&&(!search||`${item.title} ${item.summary}`.toLocaleLowerCase("fr").includes(search.toLocaleLowerCase("fr").trim()))),[items,statusFilter,categoryFilter,search]);
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if(creationPendingRef.current)return false;
+    creationPendingRef.current=true;
+    setSaving(true);
     setBusy(true);
     const form = event.currentTarget,
       data = new FormData(form);
     try {
-      const created = await requestJson("/api/crm/contributions", "POST", {
+      if(!creationAttemptRef.current)creationAttemptRef.current={key:crypto.randomUUID(),body:{
         title: data.get("title"),
         summary: data.get("summary"),
         category: data.get("category"),
@@ -179,14 +188,23 @@ export function ContributionManager({
         body: data.get("body"),
         organizationId: null,
         organizationRepresentation: null,
-      });
+      }};
+      const attempt=creationAttemptRef.current;
+      const created = await requestJson("/api/crm/contributions", "POST", attempt.body, attempt.key);
       setItems((current) => [created, ...current]);
-      form.reset();
-      setNotice("Brouillon privé créé. Rien n’a été publié.");
+      setNotice("Brouillon privé confirmé. Ouverture de sa fiche…");
+      clearDraft();
+      router.push(`/crm/contributions/${encodeURIComponent(created.contributionId)}`);
+      return true;
     } catch (error) {
-      setNotice(error instanceof Error ? error.message : "Erreur");
-    } finally {
+      const invalid=(error as {status?:number}).status===422;
+      if(invalid)creationAttemptRef.current=null;
+      setRetrying(!invalid && Boolean(creationAttemptRef.current));
+      setNotice(invalid?"Vérifiez les champs du brouillon avant de réessayer.":"La création n’a pas pu être confirmée. Réessayez la même tentative : si le brouillon existe déjà, sa fiche sera retrouvée sans nouvelle création. Gardez cet onglet ouvert.");
+      creationPendingRef.current=false;
+      setSaving(false);
       setBusy(false);
+      return false;
     }
   }
   async function act(item: Contribution, event: FormEvent<HTMLFormElement>) {
@@ -281,12 +299,12 @@ export function ContributionManager({
           {notice}
         </p>
       )}
-      {canDraft && (
+      {canDraft && mode === "list" && (
         <details className="crm-create-drawer">
           <summary>
             <span>
               <small>Nouveau dossier</small>
-              <strong>Créer un brouillon éditorial</strong>
+              <strong>Nouvelle contribution</strong>
             </span>
             <i>＋</i>
           </summary>
@@ -295,44 +313,13 @@ export function ContributionManager({
               Commencez avec l’essentiel. Le dossier restera privé jusqu’à une
               décision explicite de publication.
             </p>
-            <form className="crm-account-form" onSubmit={create}>
-              <label>
-                Titre
-                <input name="title" required maxLength={160} />
-              </label>
-              <label>
-                Résumé
-                <textarea name="summary" required maxLength={2000} />
-              </label>
-              <label>
-                Catégorie
-                <select name="category">
-                  {categories.map((x) => (
-                    <option key={x} value={x}>
-                      {categoryLabels[x]}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Sensibilité
-                <select name="sensitivity">
-                  <option value="ordinary">Ordinaire</option>
-                  <option value="sensitive">Sensible</option>
-                  <option value="highly_sensitive">Hautement sensible</option>
-                </select>
-              </label>
-              <label className="crm-editor-label">
-                Texte de la contribution
-                <EditorialBodyEditor required />
-              </label>
-              <button disabled={busy}>Créer le brouillon privé</button>
-            </form>
+            <ContributionDraftForm busy={busy || saving} categories={categories} labels={categoryLabels} onSubmit={create} />
           </div>
         </details>
       )}
       {mode === "list" && <section className="crm-queue-controls" aria-label="Filtrer les contributions"><div><p className="crm-kicker">Trouver un dossier</p><h2>Votre file éditoriale</h2></div><label>Recherche<input type="search" value={search} onChange={event=>setSearch(event.target.value)} placeholder="Titre ou mot du résumé…"/></label><label>Étape<select value={statusFilter} onChange={event=>setStatusFilter(event.target.value)}><option value="">Toutes les étapes</option>{Object.entries(statusLabels).map(([value,label])=><option value={value} key={value}>{label}</option>)}</select></label><label>Nature<select value={categoryFilter} onChange={event=>setCategoryFilter(event.target.value)}><option value="">Toutes les natures</option>{categories.map(value=><option value={value} key={value}>{categoryLabels[value]}</option>)}</select></label>{(search||statusFilter||categoryFilter)&&<button type="button" onClick={()=>{setSearch("");setStatusFilter("");setCategoryFilter("")}}>Effacer les filtres</button>}<span><strong>{visibleItems.length}</strong> résultat{visibleItems.length>1?"s":""}</span></section>}
       <section className="crm-panel crm-editorial-queue">
+        {mode === "list" && <p className="crm-notice">Les filtres s’appliquent aux dossiers de cette page. Ils sont conservés quand vous passez à la page suivante ; le compteur n’est pas un total de toute la collection.</p>}
         <div className="crm-panel-title">
           <div>
             <p className="crm-kicker">File de travail</p>
@@ -345,10 +332,9 @@ export function ContributionManager({
         {visibleItems.length === 0 ? (
           <div className="crm-empty-state">
             <span>◎</span>
-            <strong>Aucun dossier à traiter</strong>
+            <strong>Aucun dossier affiché sur cette page</strong>
             <p>
-              Les nouvelles contributions apparaîtront ici selon vos
-              permissions.
+              Vérifiez vos filtres ou poursuivez vers la page suivante lorsqu’elle est disponible. Seuls les dossiers autorisés sont affichés.
             </p>
           </div>
         ) : (
@@ -513,10 +499,10 @@ export function ContributionManager({
                         {operation === "documentary" && <><option value="verified">Vérifié</option><option value="declared">Déclaré, à vérifier</option><option value="unknown">À établir</option><option value="cleared">Diffusion autorisée</option><option value="not_applicable">Sans objet</option><option value="granted">Consentement accordé</option><option value="not_required">Consentement non requis</option><option value="pending">En attente</option><option value="withdrawn">Consentement retiré</option></>}
                       </select>
                     </label>
-                    <label hidden={!['assign','unassign'].includes(operation)}>
-                      UID du relecteur
-                      <input name="reviewerUid" maxLength={128} />
-                    </label>
+                    {['assign','unassign'].includes(operation)&&<label>
+                      Relecteur concerné
+                      <AccountPicker name="reviewerUid" canRead={permissions.includes("profile.assigned.read")} excludeUid={item.authorUid} reviewersOnly />
+                    </label>}
                     <label className="crm-editor-label" hidden={operation !== "version"}>
                       Nouvelle version textuelle
                       <EditorialBodyEditor />
@@ -619,7 +605,7 @@ export function ContributionManager({
         {nextCursor && (
           <a
             className="crm-next"
-            href={`?cursor=${encodeURIComponent(nextCursor)}`}
+            href={contributionPageHref(nextCursor, {status: statusFilter, category: categoryFilter, titlePrefix: search})}
           >
             Afficher la page suivante →
           </a>

@@ -1,0 +1,11 @@
+.crm-app .crm-draft-form{display:grid;gap:24px;max-width:880px}
+.crm-app .crm-draft-form fieldset{display:grid;gap:18px;min-width:0;margin:0;padding:22px;border:1px solid #d8cbb7;background:#fffdf7}
+.crm-app .crm-draft-form legend{padding:0 8px;color:#173e32;font-weight:700;font-size:16px}
+.crm-app .crm-draft-form label{display:grid;gap:8px;color:#294b3e;font-size:14px;font-weight:600}
+.crm-app .crm-draft-form :is(input,textarea,select){padding:12px;border:1px solid #a99f8d;background:#fff;color:#173e32;font:16px/1.5 Arial,sans-serif}
+.crm-app .crm-draft-form p{margin:0;color:#526158;font-size:14px;line-height:1.7}
+.crm-app .crm-draft-form .crm-draft-reassurance{padding:16px;border-left:3px solid #9b753f;background:#eee7d8;color:#173e32}
+.crm-app .crm-draft-save{display:grid;gap:12px}.crm-app .crm-draft-save span{font-size:13px;color:#526158}
+.crm-app .crm-draft-save>button{padding:16px;background:#173e32;border:1px solid #173e32;color:#fff;font-weight:700;min-height:48px}
+.crm-app .crm-draft-form [disabled]{opacity:.65}.crm-app .crm-draft-form button:disabled{cursor:wait}
+@media(max-width:600px){.crm-app .crm-draft-form fieldset{padding:16px}.crm-app .crm-draft-form legend{font-size:14px}}

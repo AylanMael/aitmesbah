@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import "./crm-navigation.css";
 import { usePathname } from "next/navigation";
 import { LogoutButton } from "@/components/crm/LogoutButton";
 
@@ -31,7 +32,7 @@ export function CrmNavigation({displayName,permissions}:{displayName:string;perm
   return <aside className="crm-nav" aria-label="Navigation du CRM">
     <div className="crm-nav-brand"><Link href="/">Aït Mesbah</Link><span>Mémoire & village</span></div>
     <div className="crm-nav-context"><small>Espace de gestion</small><strong>Maison des archives</strong></div>
-    <nav>{visible.map(item=>{const active=item.href==="/crm"?pathname===item.href:pathname.startsWith(item.href);return <Link key={item.href} href={item.href} className={active?"is-active":""} aria-current={active?"page":undefined}><span className="crm-nav-icon"><Icon name={item.icon}/></span><span><strong>{item.label}</strong><small>{item.detail}</small></span><i>→</i></Link>})}</nav>
+    <nav>{visible.map(item=>{const active=item.href==="/crm"?pathname===item.href:pathname.startsWith(item.href);return <Link key={item.href} href={item.href} aria-label={item.label} title={item.label} className={active?"is-active":""} aria-current={active?"page":undefined}><span className="crm-nav-icon"><Icon name={item.icon}/></span><span><strong>{item.label}</strong><small>{item.detail}</small></span><i>→</i></Link>})}</nav>
     <div className="crm-nav-footer"><div className="crm-user-mark">{displayName.trim().slice(0,1).toUpperCase()}</div><div><small>Session ouverte</small><strong>{displayName}</strong></div><LogoutButton/></div>
   </aside>;
 }
